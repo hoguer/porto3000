@@ -1,4 +1,4 @@
-# The Smallest Starting Point
+# Class Project
 
 So, you want to build a full-stack JavaScript application with:
 
