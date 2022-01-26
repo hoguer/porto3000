@@ -9,7 +9,9 @@ async function buildTables() {
     client.connect();
 
     // drop tables in correct order
-
+      await client.query(
+        `DROP TABLE IF EXISTS users, products, orders, order_products `
+      )
     // build tables in correct order
 
   } catch (error) {
