@@ -447,6 +447,78 @@ async function populateInitialData() {
         price: "$9",
         category: "cheese"
       },
+      {
+        productId: 37,
+        name: "Extra Mature Real Yorkshire Wensleydalee",
+        description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
+        imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
+        inStock: false,
+        price: "no longer available",
+        category: "cheese"
+      },
+      {
+        productId: 38,
+        name: "Red Leicester",
+        description: "A traditional hard English cheese made from unpasteurised cow’s milk.",
+        imgURL: "https://artofeating.com/wp-content/uploads/2019/03/Red-Leicester-2-1024x655.jpg",
+        inStock: true,
+        price: "$15",
+        category: "cheese"
+      },
+      {
+        productId: 39,
+        name: "Olavidia Goat Cheese",
+        description: "World’s Best Cheese in 2021 from the Spanish producer Quesos y Beso; the soft goat's cheese topped the list of 4,079 entries from 45 countries.",
+        imgURL: "https://img.republicworld.com/republic-prod/stories/promolarge/xhdpi/fnzdwfwwqpkgtorg_1636286263.jpeg?tr=w-1200,h-900",
+        inStock: true,
+        price: "$300",
+        category: "cheese"
+      },
+      {
+        productId: 40,
+        name: "Oscypek",
+        description: "spindle-shaped smoked cheese hailing from the Tatra highlands. Maybe this one deserves its own cracker.",
+        imgURL: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Oscypki.jpg",
+        inStock: true,
+        price: "$500",
+        category: "cheese"
+      },
+      {
+        productId: 41,
+        name: "Gorgonzola dolce",
+        description: "Gorgonzola dolce is a traditional Italian variety of Gorgonzola cheese. The cheese is made from pasteurized cow's milk and it's left to age for at least 45 days before consumption",
+        imgURL: "https://www.salumeriaitaliana.com/sites/default/files/imagecache/product_full/products/gorg.%20dolce_0.jpg",
+        inStock: true,
+        price: "$40",
+        category: "cheese"
+      },
+      {
+        productId: 42,
+        name: "Gorgonzola dolce",
+        description: "Queijo de coalho is a traditional cow's milk cheese from the northeastern regions of Brazil. The cheese is characterized by its firm, yet elastic texture and a slightly yellow color. Coalho is often sold on sticks for roasting, because it can withstand high temperatures and does not melt easily.",
+        imgURL: "https://c8.alamy.com/comp/GF5EJK/brazilian-traditional-cheese-queijo-coalho-on-wooden-board-selective-GF5EJK.jpg",
+        inStock: true,
+        price: "$5",
+        category: "cheese"
+      },
+      {
+        productId: 43,
+        name: "Redykołka ",
+        description: "Redykołka is a small, semi-hard cheese made from half-fat sheep's milk in the Podhale region in Poland.",
+        imgURL: "https://catalog-cs.info/img-cs/259_1.jpg.pagespeed.ce.yGTQVD4ZrD.jpg",
+        inStock: true,
+        price: "$21",
+        category: "cheese"
+      },
+      {
+        productId: 44,
+        name: "Gorgonzola dolce & Porto 3000",
+        description: "Perfect for a reserved table and an evening with us at Porto3000, our signature wine with Gorgonzola dolce is a traditional Italian variety of Gorgonzola cheese.",
+        imgURL: "https://en.gorgonzola.com/wp-content/uploads/sites/2/2020/01/abbinamenti-head.jpg",
+        inStock: true,
+        price: "$50",
+        category: "Wine & Cheese"
+      },
     ]
 
   } catch (error) {
