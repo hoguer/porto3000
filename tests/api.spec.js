@@ -1,0 +1,135 @@
+const axios = require('axios');
+require('dotenv').config();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
+const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
+const { JWT_SECRET = 'neverchane' } = process.env;
+const { rebuildDB } = require('../db/seedData');
+const { getUserById, createActivity, getPublicRoutinesByUser, getPublicRoutinesByActivity, getAllPublicRoutines, getRoutineById, createRoutine, getRoutineActivityById } = require('../db');
+const client = require('../db/client')
+
+describe('API', () => {
+  let token, registeredUser;
+  let wineProductToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
+  beforeAll(async() => {
+    await rebuildDB();
+  })
+  afterAll(async() => {
+    await client.end();
+  })
+  it('responds to a request at /api/health with a message specifying it is healthy', async () => {
+    const res = await axios.get(`${API_URL}/api/health`);
+
+    expect(typeof res.data.message).toEqual('string');
+  });
+
+  describe('Users', () => {
+    let newUser = { username: 'Ricky', password: 'BrownBrown' };
+    let newUserShortPassword = { username: 'rickyShort', password: 'Brown' };
+    describe('POST /users/register', () => {
+      let tooShortSuccess, tooShortResponse;
+      beforeAll(async() => {
+        const successResponse = await axios.post(`${API_URL}/api/users/register`, newUser);
+        registeredUser = successResponse.data.user;
+        try {
+          tooShortSuccess = await axios.post(`${API_URL}/api/users/register`, newUserShortPassword);
+        } catch(err) {
+          tooShortResponse = err.response;
+        }
+      })
+      it('Creates a new user.', () => {
+        expect(typeof registeredUser).toEqual('object');
+        expect(registeredUser.username).toEqual(newUser.username);
+      });
+      it('Requires username and password. Requires all passwords to be at least 8 characters long.', () => {
+        expect(newUser.password.length).toBeGreaterThan(7);
+      });
+      it('EXTRA CREDIT: Hashes password before saving user to DB.', async () => {
+        const {rows: [queriedUser]} = await client.query(`
+          SELECT *
+          FROM users
+          WHERE id = $1;
+        `, [registeredUser.id]);
+        expect(queriedUser.password).not.toBe(newUser.password);
+        expect(await bcrypt.compare(newUser.password, queriedUser.password)).toBe(true);
+      });
+      it('Throws errors for duplicate username', async () => {
+        let duplicateSuccess, duplicateErrResp;
+        try {
+          duplicateSuccess = await axios.post(`${API_URL}/api/users/register`, newUser);
+        } catch (err) {
+          duplicateErrResp = err.response;
+        }
+        expect(duplicateSuccess).toBeFalsy();
+        expect(duplicateErrResp.data).toBeTruthy();
+      });
+      it('Throws errors for password-too-short.', async () => {
+        expect(tooShortSuccess).toBeFalsy();
+        expect(tooShortResponse.data).toBeTruthy();
+      });
+    });
+
+//**************************************************************** */
+    describe('POST /users/login', () => {
+      it('Logs in the user. Requires username and password, and verifies that hashed login password matches the saved hashed password.', async () => {
+        const {data} = await axios.post(`${API_URL}/api/users/login`, newUser);
+        token = data.token;
+        expect(data.token).toBeTruthy();
+      });
+      it('Returns a JSON Web Token. Stores the id and username in the token.', async () => {
+        const parsedToken = jwt.verify(token, JWT_SECRET);
+        expect(parsedToken.id).toEqual(registeredUser.id);
+        expect(parsedToken.username).toEqual(registeredUser.username);
+      });
+    })
+
+//**************************************************************** */
+    describe('GET /users/me', () => {
+      it('sends back users data if valid token is supplied in header', async () => {
+        const {data} = await axios.get(`${API_URL}/api/users/me`, {
+          headers: {'Authorization': `Bearer ${token}`}
+        });        
+        expect(data.username).toBeTruthy();
+        expect(data.username).toBe(registeredUser.username);
+      });
+      it('rejects requests with no valid token', async () => {
+        let noTokenResp, noTokenErrResp;
+        try {
+          noTokenResp = await axios.get(`${API_URL}/api/users/me`);
+        } catch (err) {
+          noTokenErrResp = err.response;
+        }
+        expect(noTokenResp).toBeFalsy();
+        expect(noTokenErrResp.data).toBeTruthy();
+      });
+    });
+
+
+//**************************************************************** */
+  describe('products', () => {
+    let cheeseAndWineToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
+    describe('GET /products', () => {
+      it('Just returns a list of all products in the database', async () => {
+        const wine = { name: 'Grenache', inStock: true };
+        const createdProduct = await createProduct(wine);
+        const {data: products} = await axios.get(`${API_URL}/api/products`);
+        expect(Array.isArray(products)).toBe(true);
+        expect(products.length).toBeGreaterThan(0);
+        expect(products[0].name).toBeTruthy();
+        expect(products[0].description).toBeTruthy();
+        const [filteredProduct] = products.filter(product => product.name === createdProduct.name);
+        expect(filteredProduct.name).toEqual(wine.name);
+        expect(filteredProduct.inStock).toEqual(wine.inStock);
+      });
+    });
+
+//**************************************************************** */
+    describe('POST /products (*)', () => {
+      it('Creates a new prduct', async () => {
+        const {data: respondedProduct} = await axios.post(`${API_URL}/api/products`, wineProductToUpdate, { headers: {'Authorization': `Bearer ${token}`} });
+        expect(respondedProduct.name).toEqual(wineToUpdate.name);
+        expect(respondedProduct.inStock.toEqual(wineProductToUpdate.inStock);
+        wineProductToUpdate = respondedProduct;
+      });
+    });
