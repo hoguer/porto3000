@@ -1,4 +1,5 @@
 const productsRouter = require("express").Router();
+
 const { getProductById, getAllProducts, createProduct, getProductByName } = require("../db")
 
 productsRouter.get("/", async (req, res, next) =>{
