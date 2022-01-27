@@ -40,5 +40,3 @@ productsRouter.post("/newproduct", async (req, res, next) => {
 })
 
 module.exports = productsRouter;
-
-
