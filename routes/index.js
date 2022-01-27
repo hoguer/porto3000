@@ -3,8 +3,8 @@ const apiRouter = require('express').Router();
 const productsRouter = require("./products");
 apiRouter.use("/product", productsRouter)
 
-const usersRouter = require("./users");
-apiRouter.use("/users", usersRouter)
+// const usersRouter = require("./users");
+// apiRouter.use("/users", usersRouter)
 
 // apiRouter.get("/", (req, res, next) => {
 //   res.send({
