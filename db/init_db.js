@@ -469,6 +469,7 @@ async function populateInitialData() {
         price: "$50",
         category: "Wine & Cheese"
       },
+
     ]
 
   } catch (error) {
