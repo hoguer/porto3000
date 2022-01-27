@@ -12,14 +12,14 @@ productsRouter.get("/", async (req, res, next) =>{
 
 productsRouter.get("/:productId", async (req, res, next) => {
     try {
-        const products = await getProductById(id);
-        res.send(products)
+        const product = await getProductById(id);
+        res.send(product)
     } catch (error) {
         throw error
     }
 });
 
-productsRouter.post("/newproduct", async (req, res, next) => {
+productsRouter.post("/", async (req, res, next) => {
     const { name, description, price, imgURL, inStock, category} = req.body;
     if(!name || !description || !price || !category) {
         next({ 
