@@ -11,7 +11,7 @@ async function getProductById(id) {
         throw error;
     };
 };
-​
+
 async function getAllProducts() {
     try {
         const {rows} = await client.query(`
@@ -22,7 +22,7 @@ async function getAllProducts() {
         throw error;
     };
 };
-​
+
 async function createProduct({name, description, price, imgURL, inStock, category}) {
     try {
         const {rows: [newProduct]} = await client.query(`
