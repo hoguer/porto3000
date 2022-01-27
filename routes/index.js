@@ -1,6 +1,6 @@
 const apiRouter = require('express').Router();
 
-const productsRouter = require("./product");
+const productsRouter = require("./products");
 apiRouter.use("/product", productsRouter)
 
 const usersRouter = require("./users");

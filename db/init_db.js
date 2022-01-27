@@ -2,7 +2,7 @@
 const {
   client
   // createUser, createProducts, etc. 
-} = require('./index');
+} = require('./client');
 
 async function buildTables() {
   try {
