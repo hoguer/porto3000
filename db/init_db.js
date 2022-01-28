@@ -68,7 +68,7 @@ async function populateInitialData() {
       {
         name: "Port Wine",
         description: "2016, Red Wine from Portugal: One of our most desired wines, also known as  vinho do Porto. It has a seductive, rich aroma of ripe plums, cherries, and dark chocolate notes. Pairs well with dark chocolate and goat cheese.  19.5% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$88",
         category: "wine"
@@ -76,7 +76,7 @@ async function populateInitialData() {
       {
         name: "Cabernet Sauvignon",
         description: "2018, Red Wine: Our Cabernet explodes with blueberry, blackberry pie, elderberry, plum jam, slight cigar box, and mocha oak notes. Pairs well with our aged cheddar, gorgonzola, or gouda. 14% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$35",
         category: "wine"
@@ -84,7 +84,7 @@ async function populateInitialData() {
       {
         name: "Pinot Noir",
         description: "2019, Red Wine: Our Pinot Noir has a wonderful body and deep color with the varietal signature notes of crushed raspberry, cranberry, and lilacs, with subtle hints of vanilla and toasted oak. Pairs well with our pecorino toscano. 14.5% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$28",
         category: "wine"
@@ -92,7 +92,7 @@ async function populateInitialData() {
       {
         name: "Merlot",
         description: "2017, Red Wine: Our Merlot is energetic and fresh, revealing blueberry, blackberry, and black cherry notes with a neon tinge of violets and smoke that are tightly knit with fine-grained, elongated tannins. Pairs well with our gouda, brie, and gorgonzola. 14.6% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$80",
         category: "wine"
@@ -100,7 +100,7 @@ async function populateInitialData() {
       {
         name: "Zinfandel",
         description: "2019, Red Wine: Our Zinfandel is richly concentrated with ripe boysenberry, caramel, and cooking spice and finishes with luscious tannins, a hint of bright raspberry, and perfect balance. Pairs well with our feta, manchego, and cheddar. 15.5% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$50",
         category: "wine"
@@ -108,7 +108,7 @@ async function populateInitialData() {
       {
         name: "Petite Sirah",
         description: "2017, Red Wine: Our Sirah has well-balanced flavors of cherry, spices and summer savory lead to a lengthy finish with silky tannins. Pairs well with our gouda cheese. 16% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$60",
         category: "wine"
@@ -116,7 +116,7 @@ async function populateInitialData() {
       {
         name: "Sauvignon Blanc",
         description: "2020, White Wine: Our Sauvignon Blanc is a treat! Bright flavors of lime, melon, and guava are vibrant and juicy. Pairs well with our havarti, cheddar, and gouda cheeses. 13.5% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$28",
         category: "wine"
@@ -124,7 +124,7 @@ async function populateInitialData() {
       {
         name: "Chardonnay",
         description: "2018, White Wine: Our Chardonnay is  packed full of tropical and stone fruit flavors with oak and vanilla complexity and a long, luscious, finish. Pairs well with our goat, gruyere, and gouda cheeses. 14.5% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$35",
         category: "wine"
@@ -132,95 +132,95 @@ async function populateInitialData() {
       {
         name: "Pinot Gris",
         description: "2020, White Wine: our Pinot Gris has exquisite flavors of pear, apple and citrus fruits. This wine has bright acidity and was aged without oak to highlight the fresh fruit. Pairs well with our fiore sardo or pecorino toscano cheeses. 14.5% ABV",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$28",
         category: "wine"
       },
       {
         name: "Rose",
-        description: "2018, Rose Wine (More...)",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2018, Rose Wine: Our Rosé has generous aromas of fresh strawberry and floral notes leading to bright flavors of ripe berry, cherry, and hints of spring flowers. Pairs well with our feta and cheddar cheeses. 13% ABV",
+        imgURL: "https://i.ibb.co/SX4hBNT/rose.jpg",
         inStock: true,
         price: "$28",
         category: "wine"
       },
       {
         name: "Cabernet Franc",
-        description: "2015, Red Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2015, Red Wine: Savor flavors of wild berries, toasted fennel seed, high-toned spice, and a hint of savoriness, all of it lingering with coffee and cocoa powder. Pairs well with our feta, goat cheese, and brie.13% ABV ",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$35",
         category: "wine"
       },
       {
         name: "Carmenere",
-        description: "2017, Red Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2017, Red Wine:  Pronounced, delicious aromas of ripe red and black fruit melt into inviting chocolate, mocha and brioche. Pairs well with our brie and manchego cheeses. 14.5% ABV",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$15",
         category: "wine"
       },
       {
         name: "Gewurztraminer",
-        description: "2014, White Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2014, White Wine: Our Gewurztraminer begins with a pleasing aroma full of tropical fruit, citrus, honeysuckle and a touch of petrol. Pairs well with our gruyere cheese. 12% ABV",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$25",
         category: "wine"
       },
       {
         name: "Grenache",
-        description: "2019, Red Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2019, Red Wine: Our Grenache showcases aromas of black and white peppercorns, crushed cherries, and dried herbs, with a hint of grenadine before flavors of darker cherries, gently toasted vanilla pod, black raspberries, and boysenberries. Pairs well with any of our cheeses, but we recommend our goat cheese. 15% ABV",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$375",
         category: "wine"
       },
       {
         name: "Nebbiolo",
-        description: "2008, Red Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2008, Red Wine: Our Nebbiolo offers plenty of oak aromas with vanilla and apricot. Pairs well with our brie, feta, or goat cheeses. 13% ABV ",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$115",
         category: "wine"
       },
       {
         name: "Malbec",
-        description: "2013, Red Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2013, Red Wine:  Intense floral and fruity notes. Presence of violets, ripe black cherry and plum aromas.Pairs well with our aged cheddar or gouda. 14% ABV ",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$20",
         category: "wine"
       },
       {
         name: "Muscat Ottonel",
-        description: "2015, White Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2015, White Wine: A wine that combines sweetness and elegance in balance. Spice and cinnamon flavors give it an exotic perfumed appeal. Pairs well with our Pairs well with our brie, feta, or goat cheeses. 12.7% ABV ",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$15",
         category: "wine"
       },
       {
         name: "Riesling",
-        description: "2015, White Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2015, White Wine: Our Riesling offers delicious flavors of lime and pineapple with perfectly balanced acidity that leads to a crisp and refreshing finish. Pairs well with our havarti or gorgonzola cheeses. 9% ABV",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$68",
         category: "wine"
       },
       {
         name: "Semillon",
-        description: "2021, White Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2021, White Wine: Our Semillon has vibrant fruit and balanced acidity, this wine shows fragrant citrus blossom and honey aromas, with pretty layers of lemon bar, apricot and keylime expanding on a balanced finish. Pairs well with our gruyere, manchego, gouda, or smoked gouda. 14.5% ABV",
+        imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "$20",
         category: "wine"
       },
       {
         name: "Tempranillo",
-        description: "2019, Red Wine",
-        imgURL: "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",
+        description: "2019, Red Wine: Black cherry, tobacco, vanilla and earthy flavors mingle in this supple, rich, complex red. Pairs well with our manchego or pecorino toscano. 13% ABV ",
+        imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "$35",
         category: "wine"
