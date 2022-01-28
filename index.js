@@ -22,7 +22,7 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-const { client } = require('./db/client');
+const client = require('./db/client');
 
 
 // connect to the server
