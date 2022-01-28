@@ -6,7 +6,7 @@ const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 const { JWT_SECRET = 'neverchane' } = process.env;
 const { rebuildDB } = require('../db/seedData');
-const { getUserById, createActivity, getPublicRoutinesByUser, getPublicRoutinesByActivity, getAllPublicRoutines, getRoutineById, createRoutine, getRoutineActivityById } = require('../db');
+const { createUser, getUser, getUserById, getUserByUsername } = require('../db');
 const client = require('../db/client')
 
 describe('API', () => {
