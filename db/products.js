@@ -9,8 +9,9 @@ async function getProductById(id) {
         return product;
     } catch (error) {
         throw error;
-    };
-};
+    }
+}
+
 
 async function getAllProducts() {
     try {
@@ -20,8 +21,8 @@ async function getAllProducts() {
         return rows;
     } catch (error) {
         throw error;
-    };
-};
+    }
+}
 
 async function createProduct({name, description, price, imgURL, inStock, category}) {
     try {
@@ -33,8 +34,8 @@ async function createProduct({name, description, price, imgURL, inStock, categor
         return newProduct;
     } catch (error) {
         throw error;
-    };
-};
+    }
+}
 
 async function getProductByName(name) {
     try {
@@ -45,8 +46,9 @@ async function getProductByName(name) {
         return product;
     } catch (error) {
         throw error;
-    };
-};
+    }
+}
+
  module.exports = {
      getProductById,
      getAllProducts,

@@ -3,7 +3,6 @@ const {
   client
   // createUser, createProducts, etc. 
 } = require('./client');
-
 async function buildTables() {
   try {
     client.connect();
@@ -35,7 +34,6 @@ async function buildTables() {
       category STRING
     );
   `);
-
   await client.query(`
   CREATE TABLE orders(
     id SERIAL PRIMARY KEY, 
@@ -44,7 +42,6 @@ async function buildTables() {
     "datePlaced" DEFAULT current time
   );
 `);
-
 await client.query(`
   CREATE TABLE order_products(
     id SERIAL PRIMARY KEY, 
@@ -61,17 +58,12 @@ await client.query(`
   }
 }
 /* 
-
 Seed data 
-
 */
-
-
 async function populateInitialData() {
   try {
     // create useful starting data
     console.log("populating our wine and cheese tables")
-
     const wineAndCheeseData = [
       {
         name: "Port Wine",
@@ -426,12 +418,10 @@ async function populateInitialData() {
         category: "Wine & Cheese"
       },
     ]
-
   } catch (error) {
     throw error;
   }
 }
-
 buildTables()
   .then(populateInitialData)
   .catch(console.error)
