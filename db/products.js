@@ -1,4 +1,4 @@
-const client = require("../db/client");
+const client = require("./client");
 
 async function getProductById(id) {
     try {
@@ -16,7 +16,7 @@ async function getAllProducts() {
     try {
         const {rows} = await client.query(`
             SELECT * FROM products
-        `, []);
+        `);
         return rows;
     } catch (error) {
         throw error;
@@ -40,7 +40,7 @@ async function getProductByName(name) {
     try {
         const {rows: [product]} = await client.query(`
             SELECT * FROM products 
-            WHERE id=$1
+            WHERE name=$1
         `, [name]);
         return product;
     } catch (error) {
