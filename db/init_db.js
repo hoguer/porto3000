@@ -1,59 +1,64 @@
 // code to build and initialize DB goes here
 const client = require('./client');
+const {
+
+  createProduct,
+} = require("./products")
 
 async function buildTables() {
   try {
+    console.log("HALP")
     client.connect();
       await client.query(`
         DROP TABLE IF EXISTS users, products, orders, order_products;
       `);
   
       await client.query(`
-      CREATE TABLE users(
-        id SERIAL PRIMARY KEY, 
-        firstname VARCHAR(255) NOT NULL, 
-        lastname VARCHAR(255) NOT NULL, 
-        email VARCHAR(255) UNIQUE NOT NULL, 
-        "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
-        username VARCHAR(255) NOT NULL, 
-        password VARCHAR(255) NOT NULL, 
-        "isAdmin" BOOLEAN DEFAULT false,
-        address VARCHAR(255) NOT NULL
-      );
-    `);
+        CREATE TABLE users(
+          id SERIAL PRIMARY KEY, 
+          firstname VARCHAR(255) NOT NULL, 
+          lastname VARCHAR(255) NOT NULL, 
+          email VARCHAR(255) UNIQUE NOT NULL, 
+          "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
+          username VARCHAR(255) NOT NULL, 
+          password VARCHAR(255) NOT NULL, 
+          "isAdmin" BOOLEAN DEFAULT false,
+          address VARCHAR(255) NOT NULL
+        );
+      `);
 
-    await client.query(`
-    CREATE TABLE products(
-      id SERIAL PRIMARY KEY, 
-      name VARCHAR(255) UNIQUE NOT NULL, 
-      description VARCHAR(255), 
-      price INTEGER NOT NULL, 
-      "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
-      "inStock" BOOLEAN DEFAULT true,
-      category VARCHAR(255)
-    );
-  `);
+      await client.query(`
+        CREATE TABLE products(
+          id SERIAL PRIMARY KEY, 
+          name VARCHAR(255) UNIQUE NOT NULL, 
+          description VARCHAR(255), 
+          price INTEGER NOT NULL, 
+          "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
+          "inStock" BOOLEAN DEFAULT true,
+          category VARCHAR(255)
+        );
+      `);
 
-  await client.query(`
-  CREATE TABLE orders(
-    id SERIAL PRIMARY KEY, 
-    status VARCHAR(255) DEFAULT 'created', 
-    "userID" INTEGER REFERENCES users(id), 
-    "datePlaced" timestamp DEFAULT now()
-  );
-`);
+      await client.query(`
+        CREATE TABLE orders(
+          id SERIAL PRIMARY KEY, 
+          status VARCHAR(255) DEFAULT 'created', 
+          "userID" INTEGER REFERENCES users(id), 
+          "datePlaced" timestamp DEFAULT now()
+        );
+      `);
 
-await client.query(`
-  CREATE TABLE order_products(
-    id SERIAL PRIMARY KEY, 
-    "productId" INTEGER REFERENCES products(id),
-    "orderId" INTEGER REFERENCES orders(id), 
-    price INTEGER NOT NULL,
-    quantity INTEGER NOT NULL DEFAULT 0,
-    "userID" INTEGER REFERENCES users(id)
-  );
-`);
-    
+      await client.query(`
+        CREATE TABLE order_products(
+          id SERIAL PRIMARY KEY, 
+          "productId" INTEGER REFERENCES products(id),
+          "orderId" INTEGER REFERENCES orders(id), 
+          price INTEGER NOT NULL,
+          quantity INTEGER NOT NULL DEFAULT 0,
+          "userID" INTEGER REFERENCES users(id)
+        );
+      `);
+    console.log("finished building THE tables")
   } catch (error) {
     throw error;
   }
@@ -61,10 +66,13 @@ await client.query(`
 /* 
 Seed data 
 */
+console.log("Hellooooo!")
 async function populateInitialData() {
+  console.log("Hellooooo!")
   try {
     // create useful starting data
-    console.log("populating our wine and cheese tables")
+    console.log("populating our wine and cheese tables");
+    // const [name, description, imgURL, inStock, price, category] = await getAllProducts();
     const wineAndCheeseData = [
       {
         name: "Port Wine",
@@ -419,6 +427,11 @@ async function populateInitialData() {
         category: "Wine & Cheese"
       },
     ]
+
+    const products = await Promise.all(wineAndCheeseData.map(createProduct));
+    console.log("Wine and Cheese", wineAndCheeseData)
+    console.log("All products created", products)
+
   } catch (error) {
     throw error;
   }
