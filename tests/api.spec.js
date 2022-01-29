@@ -1,3 +1,4 @@
+//Test API
 const axios = require('axios');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
@@ -18,10 +19,10 @@ const client = require('../db/client')
 
 describe('API', () => {
   let token, registeredUser;
-  let wineProductToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
+  let productToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
   beforeAll(async() => {
     await rebuildDB();
-  })
+ })
   afterAll(async() => {
     await client.end();
   })
@@ -30,7 +31,6 @@ describe('API', () => {
 
     expect(typeof res.data.message).toEqual('string');
   });
-
   describe('Users', () => {
     let newUser = { username: 'Ricky', password: 'BrownBrown' };
     let newUserShortPassword = { username: 'rickyShort', password: 'Brown' };
@@ -76,8 +76,6 @@ describe('API', () => {
         expect(tooShortResponse.data).toBeTruthy();
       });
     });
-
-//**************************************************************** */
     describe('POST /users/login', () => {
       it('Logs in the user. Requires username and password, and verifies that hashed login password matches the saved hashed password.', async () => {
         const {data} = await axios.post(`${API_URL}/api/users/login`, newUser);
@@ -90,8 +88,6 @@ describe('API', () => {
         expect(parsedToken.username).toEqual(registeredUser.username);
       });
     })
-
-//**************************************************************** */
     describe('GET /users/me', () => {
       it('sends back users data if valid token is supplied in header', async () => {
         const {data} = await axios.get(`${API_URL}/api/users/me`, {
@@ -111,32 +107,30 @@ describe('API', () => {
         expect(noTokenErrResp.data).toBeTruthy();
       });
     });
-
-
-//**************************************************************** */
   describe('products', () => {
-    let cheeseAndWineToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
-    describe('GET /products', () => {
+    const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "$Test", imgURL: "imageUrl", inStock: true, category: "Test category"};
+    describe('GET /', () => {
       it('Just returns a list of all products in the database', async () => {
-        const wine = { name: 'Grenache', inStock: true };
-        const createdProduct = await createProduct(wine);
-        const {data: products} = await axios.get(`${API_URL}/api/products`);
+        const product = { name: 'Grenache', inStock: true };
+        const createdProduct = await createProduct(productToCreate);
+        const {data: products} = await axios.get(`${API_URL}/api/`);
         expect(Array.isArray(products)).toBe(true);
         expect(products.length).toBeGreaterThan(0);
         expect(products[0].name).toBeTruthy();
         expect(products[0].description).toBeTruthy();
         const [filteredProduct] = products.filter(product => product.name === createdProduct.name);
-        expect(filteredProduct.name).toEqual(wine.name);
-        expect(filteredProduct.inStock).toEqual(wine.inStock);
+        expect(filteredProduct.name).toEqual(product.name);
+        expect(filteredProduct.inStock).toEqual(product.inStock);
       });
     });
-
-//**************************************************************** */
-    describe('POST /products (*)', () => {
-      it('Creates a new prduct', async () => {
-        const {data: respondedProduct} = await axios.post(`${API_URL}/api/products`, wineProductToUpdate, { headers: {'Authorization': `Bearer ${token}`} });
-        expect(respondedProduct.name).toEqual(wineToUpdate.name);
-        expect(respondedProduct.inStock).toEqual(wineProductToUpdate.inStock);
-        wineProductToUpdate = respondedProduct;
+    describe('POST "/:productId" (id)', () => {
+        it('Creates a new prduct', async () => {
+          const {data: respondedProduct} = await axios.post(`${API_URL}/api/`, productToUpdate, { headers: {'Authorization': `Bearer ${token}`} });
+          expect(respondedProduct.name).toEqual(productToUpdate.name);
+          expect(respondedProduct.inStock).toEqual(productToUpdate.inStock);
+          productToUpdate = respondedProduct;
+        });
       });
-    });
+   })
+  })
+ })

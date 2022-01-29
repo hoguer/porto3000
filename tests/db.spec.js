@@ -116,3 +116,4 @@ describe('Database', () => {
           expect(product).toBeTruthy();
         });
       });
+    })
