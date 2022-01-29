@@ -1,19 +1,22 @@
 // code to build and initialize DB goes here
+const {
+  client
+  // createUser, createProducts, etc. 
+} = require('./client');
 const {client } = require('./client');
-
 async function buildTables() {
   try {
     client.connect();
       await client.query(`
         DROP TABLE IF EXISTS users, products, orders, order_products;
       `);
-  
       await client.query(`
       CREATE TABLE users(
         id SERIAL PRIMARY KEY, 
         firstname VARCHAR(255) NOT NULL, 
         lastname VARCHAR(255) NOT NULL, 
         email VARCHAR(255) UNIQUE NOT NULL, 
+        "imgURL" DEFAULT https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg, 
         "imgURL" DEFAULT "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg", 
         username VARCHAR(255) NOT NULL, 
         password VARCHAR(255) NOT NULL, 
@@ -21,19 +24,18 @@ async function buildTables() {
         address STRING NOT NULL
       );
     `);
-
     await client.query(`
     CREATE TABLE products(
       id SERIAL PRIMARY KEY, 
       name VARCHAR(255) UNIQUE NOT NULL, 
       description STRING, 
       price INTEGER NOT NULL, 
+      "imgURL" DEFAULT https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg,  
       "imgURL" DEFAULT "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",  
       "inStock" BOOLEAN DEFAULT true,
       category STRING
     );
   `);
-
   await client.query(`
   CREATE TABLE orders(
     id SERIAL PRIMARY KEY, 
@@ -42,7 +44,6 @@ async function buildTables() {
     "datePlaced" DEFAULT current time
   );
 `);
-
 await client.query(`
   CREATE TABLE order_products(
     id SERIAL PRIMARY KEY, 
