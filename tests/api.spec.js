@@ -6,7 +6,14 @@ const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 const { JWT_SECRET = 'neverchane' } = process.env;
 const { rebuildDB } = require('../db/seedData');
-const { createUser, getUser, getUserById, getUserByUsername } = require('../db');
+const { createUser, 
+    getUser, 
+    getUserById, 
+    getUserByUsername, 
+    getProductById, 
+    getAllProducts,
+    createProduct,
+    getProductByName } = require('../db');
 const client = require('../db/client')
 
 describe('API', () => {
@@ -129,7 +136,7 @@ describe('API', () => {
       it('Creates a new prduct', async () => {
         const {data: respondedProduct} = await axios.post(`${API_URL}/api/products`, wineProductToUpdate, { headers: {'Authorization': `Bearer ${token}`} });
         expect(respondedProduct.name).toEqual(wineToUpdate.name);
-        expect(respondedProduct.inStock.toEqual(wineProductToUpdate.inStock);
+        expect(respondedProduct.inStock).toEqual(wineProductToUpdate.inStock);
         wineProductToUpdate = respondedProduct;
       });
     });
