@@ -23,7 +23,7 @@ server.use((req, res, next) => {
 
 // bring in the DB connection
 const { client } = require('./db/client');
-
+const client = require('./db/client');
 
 // connect to the server
 const PORT = process.env.PORT || 4000;
@@ -34,6 +34,6 @@ server.listen(PORT, async () => {
     await client.connect();
     console.log('Database is open for business!');
   } catch (error) {
-    console.error("Database is closed for repairs!\n", error);
+    console.error("Database is closed for repairs!", error);
   }
 });
