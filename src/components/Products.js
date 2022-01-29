@@ -1,44 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import getSomething from "../api" 
 
-//axios is throwing me off, not sure how to fetch from backend- haaalp :/
+const Products = () => {
+    const [products, setProducts] = useState([]);
 
-const Products= ({currentUser, token}) =>{
-const [product, setProduct]= useState({});
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get('/api/products');
+            const result = await response.json();
+            console.log(result)
+            setProducts(result);
+        } catch (error) {
+            console.log("Trouble gathering products!", error)
+        }
+    }
 
- useEffect(() => {
-     try{
-         axios.get(`/products`)
-         .then (res =>{
-             const {data: product} = res;
-             console.log(product);
-             setProduct(product)
-         })
-     } catch (error){
-         throw error;
-     }
- }, []);
+    useEffect(fetchProducts, []); 
 
- //OR const fetchAllProducts = async (token) => {
-//     const products = await getSomething({
-//         url: '/products',
-//         method: 'GET',
-//         token,
-//     });
-//     return products;
-// };
-
-return (
-<>
-<h1> Our Products</h1>
-
-</>
-
-)
-
-
-
+    return <>
+    <h1>Products</h1>
+    </>
 }
 
-export default Products;
+export default Products; 

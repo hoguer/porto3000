@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from "react-dom";
 import { Routes, Route, NavLink, BrowserRouter as Router } from "react-router-dom";
 
+// import {
+//   // getSomething
+// } from '../api';
+
 import {
-  getSomething
-} from '../api';
+  About,
+  Cart,
+  Home,
+  Login,
+  Products
+} from "../components"
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -30,7 +38,7 @@ const App = () => {
           <NavLink to="/"> Home </NavLink> 
           <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
-          <NavLink to="/checkout"> Checkout </NavLink> 
+          <NavLink to="/cart"> Cart </NavLink> 
           {
             isLoggedIn?
               <>
@@ -49,7 +57,11 @@ const App = () => {
           }
         </div>
       </nav>
-      <Routes> 
+      <Routes>
+        <Route path="/about" element={<About />}/>
+        <Route path="/cart" element={<Cart />}/>
+        <Route path="/" exact element={<Home />}/>
+        <Route path="/login" element={<Login />}/>
         <Route path="/products" element={<Products currentUser= {currentUser} token={token} />} />
         <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} />
       </Routes>
