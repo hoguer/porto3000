@@ -1,10 +1,12 @@
 // code to build and initialize DB goes here
+
 const client = require('./client');
 const {
   getProductById, 
   getAllProducts,
   createProduct,
 } = require("./products")
+
 
 async function buildTables() {
   try {
@@ -13,7 +15,6 @@ async function buildTables() {
       await client.query(`
         DROP TABLE IF EXISTS users, products, orders, order_products;
       `);
-  
       await client.query(`
         CREATE TABLE users(
           id SERIAL PRIMARY KEY, 
