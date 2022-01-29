@@ -1,5 +1,5 @@
 // code to build and initialize DB goes here
-const {client } = require('./client');
+const client = require('./client');
 
 async function buildTables() {
   try {
@@ -14,11 +14,11 @@ async function buildTables() {
         firstname VARCHAR(255) NOT NULL, 
         lastname VARCHAR(255) NOT NULL, 
         email VARCHAR(255) UNIQUE NOT NULL, 
-        "imgURL" DEFAULT "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg", 
+        "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
         username VARCHAR(255) NOT NULL, 
         password VARCHAR(255) NOT NULL, 
         "isAdmin" BOOLEAN DEFAULT false,
-        address STRING NOT NULL
+        address VARCHAR(255) NOT NULL
       );
     `);
 
@@ -26,20 +26,20 @@ async function buildTables() {
     CREATE TABLE products(
       id SERIAL PRIMARY KEY, 
       name VARCHAR(255) UNIQUE NOT NULL, 
-      description STRING, 
+      description VARCHAR(255), 
       price INTEGER NOT NULL, 
-      "imgURL" DEFAULT "https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg",  
+      "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
       "inStock" BOOLEAN DEFAULT true,
-      category STRING
+      category VARCHAR(255)
     );
   `);
 
   await client.query(`
   CREATE TABLE orders(
     id SERIAL PRIMARY KEY, 
-    status DEFAULT "created", 
+    status VARCHAR(255) DEFAULT 'created', 
     "userID" INTEGER REFERENCES users(id), 
-    "datePlaced" DEFAULT current time
+    "datePlaced" timestamp DEFAULT now()
   );
 `);
 
@@ -49,7 +49,7 @@ await client.query(`
     "productId" INTEGER REFERENCES products(id),
     "orderId" INTEGER REFERENCES orders(id), 
     price INTEGER NOT NULL,
-    quantity INTEGER NOT NULL DEFAULT VALUE 0,
+    quantity INTEGER NOT NULL DEFAULT 0,
     "userID" INTEGER REFERENCES users(id)
   );
 `);
@@ -236,7 +236,7 @@ async function populateInitialData() {
       },
       {
         name: "Brie",
-        description: "A soft pale colored cheese made from cow’s milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
+        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$9",
@@ -244,7 +244,7 @@ async function populateInitialData() {
       },
       {
         name: "Gruyere",
-        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, it’s flavor is 'complicated.'",
+        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, it's flavor is 'complicated.'",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$12",
@@ -252,7 +252,7 @@ async function populateInitialData() {
       },
       {
         name: "Gorgonzola",
-        description: "A veined blue cheese created from unskimmed cow’s milk. A full flavored cheese that is salty and earthy. Eating this cheese will bring memories of a quiet barn settled in a beautiful field of flowers.",
+        description: "A veined blue cheese created from unskimmed cow's milk. A full flavored cheese that is salty and earthy. Eating this cheese will bring memories of a quiet barn settled in a beautiful field of flowers.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$8",
@@ -260,7 +260,7 @@ async function populateInitialData() {
       },
       {
         name: "Goat Cheese",
-        description: "A soft, fresh cheese made from goat’s milk with a tart but earthy profile. Wonderfully pairs with your choice of red wine or crumbled over a fresh salad.",
+        description: "A soft, fresh cheese made from goat's milk with a tart but earthy profile. Wonderfully pairs with your choice of red wine or crumbled over a fresh salad.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$5",
@@ -268,7 +268,7 @@ async function populateInitialData() {
       },
       {
         name: "Aged Cheddar",
-        description: "A dense, solid cow’s milk cheese with a flaky texture. This cheese has a slightly tangier finish with hard salt-like crystals that will add a crunch to your bite and a smile on your face.",
+        description: "A dense, solid cow's milk cheese with a flaky texture. This cheese has a slightly tangier finish with hard salt-like crystals that will add a crunch to your bite and a smile on your face.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$37",
@@ -292,7 +292,7 @@ async function populateInitialData() {
       },
       {
         name: "Pecorino Toscano",
-        description: "A firm-textured ewe’s milk cheese sourced from Tuscany. This versatile cheese has a dense and nutty flavor with a wonderfully rustic finish.",
+        description: "A firm-textured ewe's milk cheese sourced from Tuscany. This versatile cheese has a dense and nutty flavor with a wonderfully rustic finish.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$22",
@@ -308,7 +308,7 @@ async function populateInitialData() {
       },
       {
         name: "Gouda",
-        description: "The people’s favorite! A sweet and creamy cheese made from yellow cow’s milk. Pairs well with a Cabernet Franc of your choice.",
+        description: "The people's favorite! A sweet and creamy cheese made from yellow cow's milk. Pairs well with a Cabernet Franc of your choice.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$6",
@@ -324,7 +324,7 @@ async function populateInitialData() {
       },
       {
         name: "Brie",
-        description: "A soft pale colored cheese made from cow’s milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
+        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$9",
@@ -332,7 +332,7 @@ async function populateInitialData() {
       },
       {
         name: "Brie",
-        description: "A soft pale colored cheese made from cow’s milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
+        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$9",
@@ -340,7 +340,7 @@ async function populateInitialData() {
       },
       {
         name: "Brie",
-        description: "A soft pale colored cheese made from cow’s milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
+        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$9",
@@ -348,7 +348,7 @@ async function populateInitialData() {
       },
       {
         name: "Brie",
-        description: "A soft pale colored cheese made from cow’s milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
+        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "$9",
@@ -364,7 +364,7 @@ async function populateInitialData() {
       },
       {
         name: "Red Leicester",
-        description: "A traditional hard English cheese made from unpasteurised cow’s milk.",
+        description: "A traditional hard English cheese made from unpasteurised cow's milk.",
         imgURL: "https://artofeating.com/wp-content/uploads/2019/03/Red-Leicester-2-1024x655.jpg",
         inStock: true,
         price: "$15",
@@ -372,7 +372,7 @@ async function populateInitialData() {
       },
       {
         name: "Olavidia Goat Cheese",
-        description: "World’s Best Cheese in 2021 from the Spanish producer Quesos y Beso; the soft goat's cheese topped the list of 4,079 entries from 45 countries.",
+        description: "World's Best Cheese in 2021 from the Spanish producer Quesos y Beso; the soft goat's cheese topped the list of 4,079 entries from 45 countries.",
         imgURL: "https://img.republicworld.com/republic-prod/stories/promolarge/xhdpi/fnzdwfwwqpkgtorg_1636286263.jpeg?tr=w-1200,h-900",
         inStock: true,
         price: "$300",

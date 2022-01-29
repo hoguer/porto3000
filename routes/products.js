@@ -9,6 +9,7 @@ const {
 
 //get all products   
 productsRouter.get("/", async (req, res, next) =>{
+    console.log("Got here!")
     try {
         const allProducts = await getAllProducts();
         res.send(allProducts)

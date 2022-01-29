@@ -20,15 +20,15 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  useEffect(() => {
-    getSomething()
-      .then(response => {
-        setMessage(response.message);
-      })
-      .catch(error => {
-        setMessage(error.message);
-      });
-  });
+  // useEffect(() => {
+  //   getSomething()
+  //     .then(response => {
+  //       setMessage(response.message);
+  //     })
+  //     .catch(error => {
+  //       setMessage(error.message);
+  //     });
+  // });
 
   return <> 
     <div className="App">
@@ -58,12 +58,12 @@ const App = () => {
         </div>
       </nav>
       <Routes>
-        <Route path="/about" element={<About />}/>
-        <Route path="/cart" element={<Cart />}/>
+        <Route path="/about" exact element={<About />}/>
+        <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/products" element={<Products currentUser= {currentUser} token={token} />} />
-        <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} />
+        <Route path="/login" exact element={<Login />}/>
+        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} />} />
+        {/* <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} /> */}
       </Routes>
     </div>
   </>;
