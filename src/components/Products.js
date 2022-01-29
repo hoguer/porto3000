@@ -6,7 +6,8 @@ const Products = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('/api/products');
+            const response = await axios.get('/products');
+            console.log(response)
             const result = await response.json();
             console.log(result)
             setProducts(result);
@@ -15,7 +16,8 @@ const Products = () => {
         }
     }
 
-    useEffect(fetchProducts, []); 
+    // useEffect(fetchProducts, []); 
+    fetchProducts()
 
     return <>
     <h1>Products</h1>
