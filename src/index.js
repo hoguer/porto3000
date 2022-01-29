@@ -6,6 +6,7 @@ import {
 } from './components';
 
 ReactDOM.render(
+  
   <App />,
   document.getElementById('root')
 );
