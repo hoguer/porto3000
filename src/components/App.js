@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Routes, Route, NavLink, BrowserRouter as Router } from "react-router-dom";
 
 import {
-  // getSomething
+  getSomething
 } from '../api';
 
 const App = () => {
@@ -12,19 +12,19 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  // useEffect(() => {
-  //   getSomething()
-  //     .then(response => {
-  //       setMessage(response.message);
-  //     })
-  //     .catch(error => {
-  //       setMessage(error.message);
-  //     });
-  // });
+  useEffect(() => {
+    getSomething()
+      .then(response => {
+        setMessage(response.message);
+      })
+      .catch(error => {
+        setMessage(error.message);
+      });
+  });
 
   return <> 
     <div className="App">
-      <h1>porto3000</h1>
+      <h1>Porto 3000</h1>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
@@ -49,9 +49,10 @@ const App = () => {
           }
         </div>
       </nav>
-      {/* <Routes> 
-        <Route path="/products" element={<Products/>}/>
-      </Routes> */}
+      <Routes> 
+        <Route path="/products" element={<Products currentUser= {currentUser} token={token} />} />
+        <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} />
+      </Routes>
     </div>
   </>;
 }
