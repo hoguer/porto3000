@@ -1,5 +1,4 @@
 # Porto 3000
-# this is rachel making a bunch of unnecessary changes
 
 So, you want to build a full-stack JavaScript application with:
 
