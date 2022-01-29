@@ -20,19 +20,19 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  // useEffect(() => {
-  //   getSomething()
-  //     .then(response => {
-  //       setMessage(response.message);
-  //     })
-  //     .catch(error => {
-  //       setMessage(error.message);
-  //     });
-  // });
+  useEffect(() => {
+    getSomething()
+      .then(response => {
+        setMessage(response.message);
+      })
+      .catch(error => {
+        setMessage(error.message);
+      });
+  });
 
   return <> 
     <div className="App">
-      <h1>porto3000</h1>
+      <h1>Porto 3000</h1>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
@@ -62,7 +62,8 @@ const App = () => {
         <Route path="/cart" element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/products" element={<Products />}/>
+        <Route path="/products" element={<Products currentUser= {currentUser} token={token} />} />
+        <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} />
       </Routes>
     </div>
   </>;
