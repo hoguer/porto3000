@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from "react-dom";
-import { Routes, Route, NavLink, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
+import {
+  // getSomething
+} from '../api';
 
-// import {
-// getSomething
-// } from '../api';
+import {
+  About,
+  Cart,
+  Home,
+  Login,
+  Products
+} from "."
+
 
 const App = () => {
   const [message, setMessage] = useState('');
+  const [token, setToken] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   // useEffect(() => {
   //   getSomething()
@@ -19,7 +29,7 @@ const App = () => {
   //     });
   // });
 
-  return (
+  return <> 
     <div className="App">
       <h1>porto3000</h1>
       <nav className="navigation">
@@ -28,7 +38,8 @@ const App = () => {
           <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
           <NavLink to="/checkout"> Checkout </NavLink> 
-          {/* {
+          <NavLink to="/cart"> Cart </NavLink> 
+          {
             isLoggedIn?
               <>
                 <NavLink to="/account"> Account </NavLink> 
@@ -43,14 +54,19 @@ const App = () => {
                 <NavLink to="/login"> Login </NavLink> 
                 <NavLink to="/register"> Register </NavLink> 
               </>
-          } */}
+          }
         </div>
       </nav>
-      {/* <Routes> 
-        <Route path="/products" element={<Products/>}/>
-      </Routes> */}
+      <Routes>
+        <Route path="/about" exact element={<About />}/>
+        <Route path="/cart" exact element={<Cart />}/>
+        <Route path="/" exact element={<Home />}/>
+        <Route path="/login" exact element={<Login />}/>
+        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} />} />
+        {/* <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} /> */}
+      </Routes>
     </div>
-  );
+  </>;
 }
 
 export default App;
