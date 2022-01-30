@@ -1,7 +1,4 @@
 const apiRouter = require('express').Router();
-const productsRouter = require("./products");
-apiRouter.use("/product", productsRouter)
-
 
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter)
