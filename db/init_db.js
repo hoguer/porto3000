@@ -10,7 +10,6 @@ const {
 
 async function buildTables() {
   try {
-    console.log("HALP")
     client.connect();
       await client.query(`
         DROP TABLE IF EXISTS users, products, orders, order_products;
@@ -68,13 +67,10 @@ async function buildTables() {
 /* 
 Seed data 
 */
-console.log("Hellooooo!")
 async function populateInitialData() {
-  console.log("Hellooooo!")
   try {
     // create useful starting data
     console.log("populating our wine and cheese tables");
-    // const [name, description, imgURL, inStock, price, category] = await getAllProducts();
     const wineAndCheeseData = [
       {
         name: "Port Wine",

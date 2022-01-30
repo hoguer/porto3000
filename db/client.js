@@ -6,6 +6,5 @@ const client = new Client(DB_URL);
 
 // database methods
 
-// export
 module.exports = client
   // db methods
