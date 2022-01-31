@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
+import './App.css';
+
 import {
   // getSomething
 } from '../api';
@@ -31,7 +33,9 @@ const App = () => {
 
   return <> 
     <div className="App">
-      <h1>porto3000</h1>
+      <div className='header'>
+        <h1>porto3000</h1>
+      </div>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
@@ -39,6 +43,7 @@ const App = () => {
           <NavLink to="/about"> About Us</NavLink> 
           <NavLink to="/checkout"> Checkout </NavLink> 
           <NavLink to="/cart"> Cart </NavLink> 
+          {/* NEW PR for NAVBAR: Swap cart text to cart icon and move to furthest right corner, after register) */}
           {
             isLoggedIn?
               <>
