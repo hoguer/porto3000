@@ -1,4 +1,5 @@
 // code to build and initialize DB goes here
+
 const client = require('./client');
 const {
   getProductById, 
@@ -67,7 +68,6 @@ Seed data
 */
 async function populateInitialData() {
   try {
-    // create useful starting data
     const wineAndCheeseData = [
       {
         name: "Port Wine",
