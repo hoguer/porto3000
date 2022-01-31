@@ -7,15 +7,16 @@ async function createUser ({ firstname, lastname, email, imgURL, username, passw
     try {
         const { rows: [user] } = await client.query(`
         INSERT INTO users(firstname, lastname, email, "imgURL", username, password, "isAdmin", address) 
-        VALUES ($1, $2)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         ON CONFLICT (username) DO NOTHING
-        RETURNING id, username
-        `, [username, hashedPassword]);
+        RETURNING *
+        `, [firstname, lastname, email, imgURL, username, password, isAdmin, address]);
       return user;
     } catch (error){
         throw error;
     }
 } 
+
 async function getUser({ username, password }) {
     try {
       const user = await getUserByUsername(username);
@@ -35,6 +36,18 @@ async function getUser({ username, password }) {
       throw error;
     }
   }
+
+  async function getAllUsers() {
+    try {
+      const {rows} = await client.query(`
+        SELECT * FROM users
+      `);
+      return rows;
+    } catch (error) {
+      throw error;
+    };
+  };
+
 async function getUserById(id){
     try{
         const {rows:[user] } = await client.query(`
@@ -49,6 +62,7 @@ async function getUserById(id){
     throw error;
   }
 }
+
 async function getUserByUsername(userName){
     try{
         const {rows: [user] }= await client.query(`
@@ -62,9 +76,11 @@ async function getUserByUsername(userName){
     throw error;
   }
 }
+
 module.exports = {
     createUser, 
     getUser,
+    getAllUsers,
     getUserById, 
     getUserByUsername,
 };

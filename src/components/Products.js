@@ -17,8 +17,7 @@ const Products = () => {
         }
     }
 
-    // useEffect(fetchProducts, []); 
-    fetchProducts()
+    useEffect(fetchProducts, []); 
 
     return <>
     <h1 className="productHeader">Our Wines and Cheeses</h1>
