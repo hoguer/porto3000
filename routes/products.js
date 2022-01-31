@@ -1,12 +1,5 @@
 const productsRouter = require("express").Router();
-
-const { 
-    getProductById, 
-    getAllProducts, 
-    createProduct, 
-    getProductByName } = require("../db")
-
-
+const { getProductById, getAllProducts, createProduct, getProductByName } = require("../db")
 //get all products   
 productsRouter.get("/", async (req, res, next) =>{
     console.log("Got here!")
@@ -27,8 +20,6 @@ productsRouter.get("/:id", async (req, res, next) => {
         throw error
     }
 });
-
-
 //create new product
 productsRouter.post("/", async (req, res, next) => {
     const { name, description, price, imgURL, inStock, category} = req.body;
@@ -49,9 +40,8 @@ productsRouter.post("/", async (req, res, next) => {
         throw error
     }
 })
-
 productsRouter.use((error, req, res, next) => {
     res.send(error);
 });
-
+  
 module.exports = productsRouter;

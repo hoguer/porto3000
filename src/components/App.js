@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from "react-dom";
-import { Routes, Route, NavLink, BrowserRouter as Router } from "react-router-dom";
-
-// import {
-//   // getSomething
-// } from '../api';
+import { Routes, Route, NavLink } from "react-router-dom";
+import {
+  // getSomething
+} from '../api';
 
 import {
   About,
@@ -12,7 +10,8 @@ import {
   Home,
   Login,
   Products
-} from "../components"
+} from "."
+
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -32,12 +31,13 @@ const App = () => {
 
   return <> 
     <div className="App">
-      <h1>Porto 3000</h1>
+      <h1>porto3000</h1>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
           <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
+          <NavLink to="/checkout"> Checkout </NavLink> 
           <NavLink to="/cart"> Cart </NavLink> 
           {
             isLoggedIn?
