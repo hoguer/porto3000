@@ -1,7 +1,7 @@
 const usersRouter = require("express").Router();
 const {  getAllUsers, createUser, getUserByUsername } = require("../db");
 const { isLoggedIn } = require("./util")
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 // NOT BE TO PUSHED INTO THE FINAL PRODUCT. 
 // Uncomment to see users in the localhost:4000/api/users

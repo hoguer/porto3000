@@ -2,7 +2,7 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
-const { rebuildDB } = require('../db/seedData');
+// const { rebuildDB } = require('../db/seedData');
 const { createUser, 
     getUser, 
     getUserById, 
@@ -21,7 +21,7 @@ describe('Database', () => {
       await client.end();
     })
     describe('Users', () => {
-      // const userToCreateAndUpdate, queriedUser;
+      const userToCreateAndUpdate, queriedUser;
       const userCredentials = {
          firstname: "Ricky",
           lastname: "Bobby",
@@ -53,7 +53,7 @@ describe('Database', () => {
         })
       })
       describe('getUser({ username, password })', () => {
-        // const verifiedUser;
+        const verifiedUser;
         beforeAll(async () => {
           verifiedUser = await getUser(userCredentials);
         })

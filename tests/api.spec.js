@@ -2,11 +2,11 @@
 const axios = require('axios');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
-// const { JWT_SECRET = 'neverchane' } = process.env;
-const { rebuildDB } = require('../db/seedData');
+const { JWT_SECRET = 'neverchane' } = process.env;
+// const { rebuildDB } = require('../db/seedData');
 const { createUser, 
     getUser, 
     getUserById, 
