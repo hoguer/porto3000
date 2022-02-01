@@ -21,12 +21,20 @@ describe('Database', () => {
       await client.end();
     })
     describe('Users', () => {
-      const userToCreateAndUpdate, queriedUser;
-      const userCredentials = {id: 0, firstname: "Ricky", lastname: "Bobby", email: "SecondIsLast@yahoo.com", imgURL: "nopelol.com", username: "rickybobby", password: "rickybobby", isAdmin: true, address: "yee"};
+      // const userToCreateAndUpdate, queriedUser;
+      const userCredentials = {
+         firstname: "Ricky",
+          lastname: "Bobby",
+          email: "SecondIsLast@yahoo.com",
+          imgURL: "nopelol.com",
+          username: "rickybobby",
+          password: "rickybobby", 
+          isAdmin: true, 
+          address: "yee"};
       describe('createUser({ username, password })', () => {
         beforeAll(async () => {
           userToCreateAndUpdate = await createUser(userCredentials);
-          const {rows} = await client.query(`SELECT * FROM users WHERE username = $1`, [userCredentials.id]);
+          const {rows} = await client.query(`SELECT * FROM users WHERE username = $5`, [userCredentials.username]);
           queriedUser = rows[0];
         })
         it('Creates the user', async () => {
@@ -45,7 +53,7 @@ describe('Database', () => {
         })
       })
       describe('getUser({ username, password })', () => {
-        const verifiedUser;
+        // const verifiedUser;
         beforeAll(async () => {
           verifiedUser = await getUser(userCredentials);
         })
@@ -77,7 +85,7 @@ describe('Database', () => {
     })
       describe('createProduct({ name, description })', () => {
         it('Creates and returns the new activity', async () => {
-          const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "$Test", imgURL: "imageUrl", inStock: true, category: "Test category"};
+          const productToCreate = { name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "$Test", imgURL: "imageUrl", inStock: true, category: "Test category"};
           const createdProduct = await createProduct(productToCreate);
           expect(createdProduct.name).toBe(productToCreate.name);
           expect(createdProduct.description).toBe(productToCreate.description);
@@ -112,7 +120,7 @@ describe('Database', () => {
     describe('getProductByName', () => {
       let productToCreate;
       describe('getProductById', () => {
-        it('gets a product by its id', async () => {
+        it('gets a product by its name', async () => {
           const product = await getProductByName();
           expect(product).toBeTruthy();
         });

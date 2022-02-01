@@ -2,10 +2,10 @@
 const axios = require('axios');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
-const { JWT_SECRET = 'neverchane' } = process.env;
+// const { JWT_SECRET = 'neverchane' } = process.env;
 const { rebuildDB } = require('../db/seedData');
 const { createUser, 
     getUser, 
@@ -19,7 +19,7 @@ const client = require('../db/client')
 
 describe('API', () => {
   let token, registeredUser;
-  const productToUpdate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
+  const productToUpdate = { name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
   beforeAll(async() => {
     await rebuildDB();
  })
@@ -33,7 +33,7 @@ describe('API', () => {
   });
   describe('Users', () => {
     const newUser = { 
-      id: 0, 
+      id:  1, 
       firstname: "Richard", 
       lastname: "Brown", 
       email: "number1ricky@yahoo.com", 
@@ -61,7 +61,7 @@ describe('API', () => {
       it('Requires username and password. Requires all passwords to be at least 8 characters long.', () => {
         expect(newUser.password.length).toBeGreaterThan(7);
       });
-      it('EXTRA CREDIT: Hashes password before saving user to DB.', async () => {
+      it('Hashes password before saving user to DB.', async () => {
         const {rows: [queriedUser]} = await client.query(`
           SELECT *
           FROM users
