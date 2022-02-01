@@ -1,5 +1,4 @@
 // code to build and initialize DB goes here
-
 const client = require('./client');
 const {
   getProductById, 
@@ -7,6 +6,7 @@ const {
   createProduct,
 } = require("./products")
 
+const { createUser } = require("./users")
 
 async function buildTables() {
   try {
@@ -21,7 +21,7 @@ async function buildTables() {
           lastname VARCHAR(255) NOT NULL, 
           email VARCHAR(255) UNIQUE NOT NULL, 
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
-          username VARCHAR(255) NOT NULL, 
+          username VARCHAR(255) UNIQUE NOT NULL, 
           password VARCHAR(255) NOT NULL, 
           "isAdmin" BOOLEAN DEFAULT false,
           address VARCHAR(255) NOT NULL
@@ -434,7 +434,27 @@ async function populateInitialData() {
     throw error;
   }
 }
+
+async function createInitialUsers() {
+  console.log("Starting to create users");
+  try {
+    const userData = [
+      {firstname: "Dan", lastname: "Colomba", email: "TheBigStache@aol.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "DanColomba", password: "TheStache", isAdmin: true, address: "Port 5432"},
+      {firstname: "Cookie", lastname: "Monster", email: "ChocochipCookie@SesameStreet.com", imgURL: "https://static.wikia.nocookie.net/muppet/images/0/08/CookieMonsterWaving.jpg/revision/latest/scale-to-width-down/280?cb=20120128192952", username: "CookieM0nster", password: "I love cookies1q!", isAdmin: true, address: "123 Sesame Street"},
+      {firstname: "Robert ", lastname: "RectanglePants", email: "DoodleBob@BikiniBottom.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnailLover101", password: "KrustyKrab2006", isAdmin: false, address: "200 Pineapple Way"},
+      {firstname: "Hernando", lastname: "Madrigal", email: "FearlessOne@Encanto.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "RatsOnB4ck", password: "future37", isAdmin: false, address: "1000 Casita Lane"},
+      {firstname: "Chiba", lastname: "Lily", email: "Doggos@gmail.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnifferWiffer302", password: "tr3atsplz", isAdmin: false, address: "501 Borkley Street"},
+    ]
+
+    const users = await Promise.all(userData.map(createUser));
+
+  } catch (error) {
+    throw error;
+  };
+};
+
 buildTables()
   .then(populateInitialData)
+  .then(createInitialUsers)
   .catch(console.error)
   .finally(() => client.end());
