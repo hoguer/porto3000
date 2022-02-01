@@ -3,7 +3,6 @@ const apiRouter = require('express').Router();
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter)
 
-
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter)
 
