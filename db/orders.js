@@ -4,8 +4,11 @@ const client = require("./client");
 async function getOrderById (id) {
     try{
         const {rows: [order]} = await client.query(`
-        SELECT * FROM orders
-        WHERE id=$1
+            SELECT o.*,  p.name
+            FROM orders AS o
+            INNER JOIN order_products AS op ON op."orderId" = o.id
+            INNER JOIN products AS p ON op."productId" = p.id;
+            WHERE id=$1
         `, [id]);
         return order;
     } catch (error) {
@@ -17,7 +20,10 @@ async function getOrderById (id) {
 async function getAllOrders() {
     try {
         const {rows} = await client.query(`
-            SELECT * FROM orders
+            SELECT o.*,  p.name
+            FROM orders AS o
+            INNER JOIN order_products AS op ON op."orderId" = o.id
+            INNER JOIN products AS p ON op."productId" = p.id;
         `);
         return rows;
     } catch (error) {
@@ -29,9 +35,12 @@ async function getAllOrders() {
 async function getOrdersByUser({id}) {
     try {
         const {rows: [order]} = await client.query(`
-            SELECT * FROM orders
+            SELECT o.*,  p.name
+            FROM orders AS o
+            INNER JOIN order_products AS op ON op."orderId" = o.id
+            INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "userID" = $1;
-        `)
+        `, [id])
     } catch (error) {
         throw error;
     };
@@ -41,9 +50,11 @@ async function getOrdersByUser({id}) {
 async function getOrdersByProduct({id}) {
     try {
         const {rows: [order]} = await client.query(`
-            SELECT * FROM orders
-            WHERE "userID" = $1
-            AND status = "created";
+            SELECT o.*,  p.name
+            FROM orders AS o
+            INNER JOIN order_products AS op ON op."orderId" = o.id
+            INNER JOIN products AS p ON op."productId" = p.id;
+            WHERE "productId" = $1;
         `, [id]);
         return order;
     } catch (error) {
@@ -55,7 +66,10 @@ async function getOrdersByProduct({id}) {
 async function getCartByUser({id}) {
     try {
         const{rows: [cart]} = await client.query(`
-            SELECT * FROM orders
+            SELECT o.*,  p.name
+            FROM orders AS o
+            INNER JOIN order_products AS op ON op."orderId" = o.id
+            INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "userID" = $1
             AND status = "created";
         `, [id])
