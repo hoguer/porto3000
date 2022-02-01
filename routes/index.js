@@ -1,5 +1,8 @@
 const apiRouter = require('express').Router();
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter)
 

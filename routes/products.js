@@ -1,5 +1,9 @@
 const productsRouter = require("express").Router();
 const { getProductById, getAllProducts, createProduct, getProductByName } = require("../db")
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 //get all products   
 productsRouter.get("/", async (req, res, next) =>{
     console.log("Got here!")
@@ -44,4 +48,4 @@ productsRouter.use((error, req, res, next) => {
     res.send(error);
 });
   
-module.exports = productsRouter;
+module.exports = productsRouter

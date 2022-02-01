@@ -1,3 +1,4 @@
+//Test DB
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
@@ -20,31 +21,31 @@ describe('Database', () => {
       await client.end();
     })
     describe('Users', () => {
-      let userToCreateAndUpdate, queriedUser;
-      let userCredentials = {username: 'billybob', password: 'bobbybadboy'};
+      const userToCreateAndUpdate, queriedUser;
+      const userCredentials = {id: 0, firstname: "Ricky", lastname: "Bobby", email: "SecondIsLast@yahoo.com", imgURL: "nopelol.com", username: "rickybobby", password: "rickybobby", isAdmin: true, address: "yee"};
       describe('createUser({ username, password })', () => {
         beforeAll(async () => {
           userToCreateAndUpdate = await createUser(userCredentials);
-          const {rows} = await client.query(`SELECT * FROM users WHERE username = $1`, [userCredentials.username]);
+          const {rows} = await client.query(`SELECT * FROM users WHERE username = $1`, [userCredentials.id]);
           queriedUser = rows[0];
         })
         it('Creates the user', async () => {
           expect(userToCreateAndUpdate.username).toBe(userCredentials.username);
           expect(queriedUser.username).toBe(userCredentials.username);
         });
-        it('EXTRA CREDIT: Does not store plaintext password in the database', async () => {
+        it('Does not store plaintext password in the database', async () => {
           expect(queriedUser.password).not.toBe(userCredentials.password);
         });
-        it('EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database', async () => {
+        it('Hashes the password (salted 10 times) before storing it to the database', async () => {
           const hashedVersion = bcrypt.compareSync(userCredentials.password, queriedUser.password);
           expect(hashedVersion).toBe(true);
         });
-        it('Does NOT return the password', async () => {
+        it('Does NOT return the password for good security practices', async () => {
           expect(userToCreateAndUpdate.password).toBeFalsy();
         })
       })
       describe('getUser({ username, password })', () => {
-        let verifiedUser;
+        const verifiedUser;
         beforeAll(async () => {
           verifiedUser = await getUser(userCredentials);
         })
@@ -87,9 +88,9 @@ describe('Database', () => {
         })
       })
       describe('getAllProducts', () => {
-        let product;
+        const product;
         beforeAll(async() => {
-          [routine] = await getAllProducts();
+          [product] = await getAllProducts();
         })
         it('selects and returns an array of all products', async () => {
           expect(routine).toEqual(expect.objectContaining({

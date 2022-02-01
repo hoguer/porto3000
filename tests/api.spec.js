@@ -19,7 +19,7 @@ const client = require('../db/client')
 
 describe('API', () => {
   let token, registeredUser;
-  let productToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
+  const productToUpdate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
   beforeAll(async() => {
     await rebuildDB();
  })
@@ -32,7 +32,16 @@ describe('API', () => {
     expect(typeof res.data.message).toEqual('string');
   });
   describe('Users', () => {
-    let newUser = { username: 'Ricky', password: 'BrownBrown' };
+    const newUser = { 
+      id: 0, 
+      firstname: "Richard", 
+      lastname: "Brown", 
+      email: "number1ricky@yahoo.com", 
+      imgURL: 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg', 
+      username: "number1ricky", 
+      password: "SomethingLameAndOnATrackedList", 
+      isAdmin: false, 
+      address: "867530, Nine court."};
     let newUserShortPassword = { username: 'rickyShort', password: 'Brown' };
     describe('POST /users/register', () => {
       let tooShortSuccess, tooShortResponse;
@@ -108,10 +117,10 @@ describe('API', () => {
       });
     });
   describe('products', () => {
-    const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "$Test", imgURL: "imageUrl", inStock: true, category: "Test category"};
+    const productToCreate = {id: 0, name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
     describe('GET /', () => {
-      it('Just returns a list of all products in the database', async () => {
-        const product = { name: 'Grenache', inStock: true };
+      it('Returns a list of all products in the database', async () => {
+        const product = { id: 1, name: 'Grenache', inStock: true };
         const createdProduct = await createProduct(productToCreate);
         const {data: products} = await axios.get(`${API_URL}/api/`);
         expect(Array.isArray(products)).toBe(true);
@@ -126,8 +135,12 @@ describe('API', () => {
     describe('POST "/:productId" (id)', () => {
         it('Creates a new prduct', async () => {
           const {data: respondedProduct} = await axios.post(`${API_URL}/api/`, productToUpdate, { headers: {'Authorization': `Bearer ${token}`} });
+          expect(respondedProduct.id).toEqual(productToUpdate.id);
           expect(respondedProduct.name).toEqual(productToUpdate.name);
+          expect(respondedProduct.description).toEqual(productToUpdate.description);
           expect(respondedProduct.inStock).toEqual(productToUpdate.inStock);
+          expect(respondedProduct.price).toEqual(productToUpdate.price);
+          expect(respondedProduct.category).toEqual(productToUpdate.category);
           productToUpdate = respondedProduct;
         });
       });

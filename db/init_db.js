@@ -67,7 +67,13 @@ async function buildTables() {
 /* 
 Seed data 
 */
+<<<<<<< Updated upstream
 async function populateInitialData() {
+=======
+// console.log("Hellooooo!")
+async function populateInitialData() {
+  // console.log("Hellooooo!")
+>>>>>>> Stashed changes
   try {
     // create useful starting data
     console.log("populating our wine and cheese tables");
