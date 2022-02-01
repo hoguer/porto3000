@@ -4,11 +4,13 @@ const client = require("./client");
 async function getOrderById (id) {
     try{
         const {rows: [order]} = await client.query(`
+
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE id=$1
+
         `, [id]);
         return order;
     } catch (error) {
@@ -24,6 +26,7 @@ async function getAllOrders() {
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
             INNER JOIN products AS p ON op."productId" = p.id;
+
         `);
         return rows;
     } catch (error) {
@@ -41,6 +44,7 @@ async function getOrdersByUser({id}) {
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "userID" = $1;
         `, [id])
+
     } catch (error) {
         throw error;
     };
@@ -55,6 +59,7 @@ async function getOrdersByProduct({id}) {
             INNER JOIN order_products AS op ON op."orderId" = o.id
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "productId" = $1;
+
         `, [id]);
         return order;
     } catch (error) {
