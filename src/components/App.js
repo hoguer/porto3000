@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
 import './App.css';
-
+import carticon from '../images/carticon.png';
+import logo2 from '../images/logo2.png';
 import {
   // getSomething
 } from '../api';
@@ -41,9 +42,6 @@ const App = () => {
           <NavLink to="/"> Home </NavLink> 
           <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
-          <NavLink to="/checkout"> Checkout </NavLink> 
-          <NavLink to="/cart"> Cart </NavLink> 
-          {/* NEW PR for NAVBAR: Swap cart text to cart icon and move to furthest right corner, after register) */}
           {
             isLoggedIn?
               <>
@@ -58,6 +56,8 @@ const App = () => {
               <>
                 <NavLink to="/login"> Login </NavLink> 
                 <NavLink to="/register"> Register </NavLink> 
+                <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
+                {/* build the checkout component into the cart */}
               </>
           }
         </div>
