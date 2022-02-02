@@ -1,19 +1,19 @@
 const usersRouter = require("express").Router();
 const {  getAllUsers, createUser, getUserByUsername } = require("../db");
 const { isLoggedIn } = require("./util")
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 // NOT BE TO PUSHED INTO THE FINAL PRODUCT. 
 // Uncomment to see users in the localhost:4000/api/users
-// usersRouter.get("/", async (req, res, next) =>{
-//     console.log("Got here!")
-//     try {
-//         const allUsers = await getAllUsers();
-//         res.send(allUsers)
-//     } catch (error) {
-//         throw error
-//     }
-// } );
+usersRouter.get("/", async (req, res, next) =>{
+    console.log("Got here!")
+    try {
+        const allUsers = await getAllUsers();
+        res.send(allUsers)
+    } catch (error) {
+        throw error
+    }
+} );
 
 usersRouter.post('/register', async (req, res, next) => {
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
