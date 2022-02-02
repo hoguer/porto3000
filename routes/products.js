@@ -9,7 +9,7 @@ productsRouter.get("/", async (req, res, next) =>{
     } catch (error) {
         throw error
     }
-} );
+});
 
 //get product by id 
 productsRouter.get("/:id", async (req, res, next) => {
