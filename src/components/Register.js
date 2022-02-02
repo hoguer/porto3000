@@ -64,34 +64,20 @@ return (
     <>
     <h2 className="createUserHeader">Create Your User Profile</h2>
     <form className="createUserForm">
-       <Form.Field required>
            <label>First Name:</label>
-           <Input type="text" Placeholder="Name" onChange={event => setFirstname(event.target.value)} value={firstname} />
-       </Form.Field>
-       <Form.Field required>
+           <required input type="text" Placeholder="Name"onChange={event => setFirstname(event.target.value)} value={firstname} />
            <label>Last Name:</label>
-           <Input type="text" Placeholder="Last Name" onChange={event => setLastname(event.target.value)} value={lastname} />
-       </Form.Field>
-       <Form.Field required>
+           <required input type="text" Placeholder="Last Name" onChange={event => setLastname(event.target.value)} value={lastname} />
            <label>Email Address:</label>
-           <Input type="text" Placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} />
-       </Form.Field>
-       <Form.Field required>
+           <required input type="text" Placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} />
            <label>Username:</label>
-           <Input type="text" Placeholder="Username" onChange={event => setUsername(event.target.value)} value={username} />
-       </Form.Field>
-       <Form.Field required>
+           <required input type="text" Placeholder="Username" onChange={event => setUsername(event.target.value)} value={username} />
            <label>Password:</label>
-           <Input type="password" Placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
-       </Form.Field>
-       <Form.Field required>
+           <required input type="password" Placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
            <label>Confirm Password:</label>
-           <Input type="password" Placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} />
-       </Form.Field>
-       <Form.Field required>
+           <required input type="password" Placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} />
            <label>Street Address:</label>
-           <Input type="text" Placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} />
-       </Form.Field>
+           <required input type="text" Placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} />
     </form>
     </>
 )
