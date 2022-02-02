@@ -1,4 +1,4 @@
-//Test DB
+//Test DB 2/2/22
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
