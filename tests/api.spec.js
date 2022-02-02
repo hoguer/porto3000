@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
-const { JWT_SECRET = 'neverchane' } = process.env;
-// const { rebuildDB } = require('../db/seedData');
+const { JWT_SECRET } = process.env;
+const { rebuildDB } = require('../db/seedData');
 const { createUser, 
     getUser, 
     getUserById, 
@@ -33,7 +33,6 @@ describe('API', () => {
   });
   describe('Users', () => {
     const newUser = { 
-      id:  1, 
       firstname: "Richard", 
       lastname: "Brown", 
       email: "number1ricky@yahoo.com", 
@@ -117,10 +116,10 @@ describe('API', () => {
       });
     });
   describe('products', () => {
-    const productToCreate = {id: 0, name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
+    const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
     describe('GET /', () => {
       it('Returns a list of all products in the database', async () => {
-        const product = { id: 1, name: 'Grenache', inStock: true };
+        const product = { name: 'Grenache', inStock: true };
         const createdProduct = await createProduct(productToCreate);
         const {data: products} = await axios.get(`${API_URL}/api/`);
         expect(Array.isArray(products)).toBe(true);
