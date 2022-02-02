@@ -4,8 +4,8 @@ import { Products } from "."
 const Home = () => {
     return <>
     <h1>Home</h1>
-{/* This page should consist of a login, register and 21+ up user agreement check to prevent minors from accessing the page */}
-
+<script src="https://apps.elfsight.com/p/platform.js" defer></script>
+<div class="elfsight-app-6687a1e8-835a-4bd6-ab17-1261491a80f1"></div>
     </>
 }
 
