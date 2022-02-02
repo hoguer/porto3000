@@ -1,7 +1,6 @@
 body {
     background-color:#262b2b;
 }
-
 .header { 
  display: flex;
  justify-content: center;  
@@ -27,3 +26,8 @@ body {
 /* a:any-link {
     text-decoration: underline, #eab354;
 } */
+
+.cartIcon {
+    width:15px;
+    height: 15px;
+}
