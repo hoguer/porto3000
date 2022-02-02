@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
+import './App.css';
+import carticon from '../images/carticon.png';
+import logo2 from '../images/logo2.png';
 import {
   // getSomething
 } from '../api';
@@ -9,7 +12,8 @@ import {
   Cart,
   Home,
   Login,
-  Products
+  Products,
+  SingleProduct
 } from "."
 
 
@@ -18,6 +22,7 @@ const App = () => {
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [products, setProducts] = useState([]);
 
   // useEffect(() => {
   //   getSomething()
@@ -31,14 +36,14 @@ const App = () => {
 
   return <> 
     <div className="App">
-      <h1>porto3000</h1>
+      <div className='header'>
+        <h1>porto3000</h1>
+      </div>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
           <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
-          <NavLink to="/checkout"> Checkout </NavLink> 
-          <NavLink to="/cart"> Cart </NavLink> 
           {
             isLoggedIn?
               <>
@@ -53,6 +58,8 @@ const App = () => {
               <>
                 <NavLink to="/login"> Login </NavLink> 
                 <NavLink to="/register"> Register </NavLink> 
+                <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
+                {/* build the checkout component into the cart */}
               </>
           }
         </div>
@@ -62,8 +69,8 @@ const App = () => {
         <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
         <Route path="/login" exact element={<Login />}/>
-        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} />} />
-        {/* <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} /> */}
+        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
+        <Route path="/products/:id" element={<SingleProduct token={token} products={products}/>} />
       </Routes>
     </div>
   </>;

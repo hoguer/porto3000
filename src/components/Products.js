@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
+import "./Products.css"
 
-const Products = () => {
-    const [products, setProducts] = useState([]);
+const Products = ({products, setProducts}) => {
+
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('/products');
-            console.log(response)
-            const result = await response.json();
+            const response = await axios.get('api/products');
+            console.log(response.data)
+            const result = response.data
             console.log(result)
             setProducts(result);
         } catch (error) {
@@ -19,7 +21,36 @@ const Products = () => {
     useEffect(fetchProducts, []); 
 
     return <>
-    <h1>Products</h1>
+    <h1 className="productHeader">Our Wines and Cheeses</h1>
+    <div className="productCardContainer">
+        <div className="productCard">
+            {
+                products.map((product)=> {
+                    return (
+                        <>
+                            <div key={product.id}>
+                                <div className="cardContentContainer">
+                                    <div className="cardContent">
+                                        {product.name}
+                                        <img src={product.imgURL} className="productImg"></img>
+                                    </div>
+                                    <div className="itemPrice">
+                                        ${product.price}
+                                    </div>
+                                    <div className="productButtonsContainer">
+                                        <NavLink to={`/products/${product.id}`} className="vProdButton">View Product</NavLink>
+                                        <button className="addToCartButton">Add to Cart</button>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                        </>
+                    )
+                })
+            }
+        </div>
+    </div>
+    
     </>
 }
 
