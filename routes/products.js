@@ -43,4 +43,4 @@ productsRouter.use((error, req, res, next) => {
     res.send(error);
 });
   
-module.exports = productsRouter;
+module.exports = productsRouter
