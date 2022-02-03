@@ -16,6 +16,7 @@ const Login = () => {
             console.log("Trouble logging in!", error)
         }
     }
+
     useEffect(fetchUser, []);
 
     return (<>

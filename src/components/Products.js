@@ -43,12 +43,6 @@ const Products = () => {
                                     </div>
                         
                                 </div>
-                                
-                                
-                                
-                                {/* name, img, price, buttons x2 */}
-                                {/* button1: add to cart (possibly with +/- or an input field for how many desired) */}
-                                {/* button2: to single card view */}
                             </div>
                         </>
                     )
