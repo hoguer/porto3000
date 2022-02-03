@@ -68,7 +68,7 @@ const App = () => {
         <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
         <Route path="/login" exact element={<Login />}/>
-        <Route path="/register" exact element={<Register />}/>
+        <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} />} />
         {/* <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} /> */}
       </Routes>
