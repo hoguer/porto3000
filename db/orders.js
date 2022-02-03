@@ -93,11 +93,66 @@ async function createOrder({status, userID}) {
     }
 };
 
+async function updateOrder({ id, ...fields }) {
+    try {
+        const toUpdate = {};
+        let setStrings = [];
+        let count = 1;
+        for(let column in fields) {
+          if(fields[column] !== undefined) {
+            toUpdate[column] = fields[column];
+            setStrings.push(`"${column}"=$${count}`)
+            count++;
+          };
+        };
+        const setStr = setStrings.join(',');
+        const {rows: [order]} = await client.query(`
+            UPDATE orders 
+            SET ${setStr}
+            WHERE id=${ id }
+            RETURNING *;
+        `, Object.values(toUpdate));
+          return order;
+      } catch (error) {
+        throw error;
+      };
+  };
+
+async function completeOrder({ id }) {
+    try {
+        const {rows: [order]} = await client.query(`
+            UPDATE orders
+            SET status = "completed"
+            WHERE id=$1
+            RETURNING *
+        `, [id]);
+        return order;
+    } catch (error){
+        throw error;
+    };
+};
+
+async function cancelOrder({ id }) {
+    try {
+        const {rows: [order]} = await client.query(`
+            Update orders
+            SET status = "canceled"
+            WHERE id=$1
+            RETURNING *
+        `, [id]);
+    } catch (error) {
+        throw error;
+    };
+};
+
 module.exports = {
     getOrderById,
     getAllOrders,
     getOrdersByUser,
     getOrdersByProduct,
     getCartByUser,
-    createOrder
+    createOrder,
+    updateOrder,
+    completeOrder,
+    cancelOrder
 }

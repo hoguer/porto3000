@@ -13,6 +13,7 @@ productsRouter.get("/", async (req, res, next) =>{
 
 //get product by id 
 productsRouter.get("/:id", async (req, res, next) => {
+    const { id } = req.params;
     try {
         const product = await getProductById(id);
         res.send(product)
