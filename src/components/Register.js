@@ -30,26 +30,26 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 console.log('New User: ', res.data);
                 console.log('Token: ', res.data.token);
 
-            //     if (res.data.status === 'PasswordShort') {
-            //         alert('Password is too short. Please create a password at least eight characters long.');
-            //     } else if (res.data.status === 'UserExists') {
-            //         alert('That username already exists. Please pick a different username.');
-            //     } else {
-            //         setUser(res.data.user);
+                if (res.data.status === 'PasswordShort') {
+                    alert('Password is too short. Please create a password at least eight characters long.');
+                } else if (res.data.status === 'UserExists') {
+                    alert('That username already exists. Please pick a different username.');
+                } else {
+                    setUser(res.data.user);
 
-            //         localStorage.setItem('token', res.data.token);
-            //         console.log(localStorage.getItem('token'));
+                    localStorage.setItem('token', res.data.token);
+                    console.log(localStorage.getItem('token'));
 
-            //         if (res.data.user) {
-            //             setIsLoggedIn(true);
-            //         }
-            //     }
-            // })
-            // .catch(error => {
-            //     console.error('Error registering user!', error);
-            // })
+                    if (res.data.user) {
+                        setIsLoggedIn(true);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error registering user!', error);
+            })
 
-})}
+}
 
     const clearForm = () => {
         setFirstname("");
@@ -78,7 +78,7 @@ return (
            <label>Password:</label>
            <input type="password" placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
            <label>Confirm Password:</label>
-           <input type="password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} />
+           <input type="new-password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} />
            <label>Street Address:</label>
            <input type="text" placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} />
     </form>
