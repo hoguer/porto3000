@@ -30,6 +30,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 console.log('New User: ', res.data);
                 console.log('Token: ', res.data.token);
 
+
                 if (res.data.status === 'PasswordShort') {
                     alert('Password is too short. Please create a password at least eight characters long.');
                 } else if (res.data.status === 'UserExists') {
@@ -50,6 +51,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
             })
 
 }
+
 
     const clearForm = () => {
         setFirstname("");
@@ -88,5 +90,6 @@ return (
     </>
 )
 }
+
 
 export default Register;
