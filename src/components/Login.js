@@ -13,7 +13,7 @@ const Login = () => {
             console.log(result)
             setUser(result);
         } catch (error) {
-            console.log("Trouble gathering users!", error)
+            console.log("Trouble logging in!", error)
         }
     }
 
@@ -21,6 +21,11 @@ const Login = () => {
 
     return (<>
     <h1>Login</h1>
+    <form>
+        <input type="text" placeholder="Username">Username</input>
+        <input type="text" placeholder="Password">Password</input>
+        <button>Log In </button>
+    </form>
     </>
     )
 }
