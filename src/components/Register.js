@@ -66,7 +66,9 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
 return (
     <>
     <h2 className="createUserHeader">Create Account</h2>
-    <form className="createUserForm">
+    <form className="createUserForm" onSubmit = {(event) => {event.preventDefault();
+                                        registerUser();
+                                        clearForm(); }}>
            <label>First Name:</label>
            <input type="text" placeholder="Name" onChange={event => setFirstname(event.target.value)} value={firstname} />
            <label>Last Name:</label>
@@ -81,10 +83,9 @@ return (
            <input type="new-password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} />
            <label>Street Address:</label>
            <input type="text" placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} />
-    </form>
-        <button onClick={(event) => {event.preventDefault();
-                                        registerUser();
-                                        clearForm(); }}> Submit </button>                                
+           <button type="submit"> Submit </button> 
+           </form>
+                                     
     </>
 )
 }

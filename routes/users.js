@@ -1,6 +1,7 @@
 const usersRouter = require("express").Router();
 const {  getAllUsers, createUser, getUserByUsername } = require("../db");
 const { isLoggedIn } = require("./util")
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
 
 // NOT BE TO PUSHED INTO THE FINAL PRODUCT. 
@@ -16,6 +17,7 @@ usersRouter.get("/", async (req, res, next) =>{
 } );
 
 usersRouter.post('/register', async (req, res, next) => {
+    console.log('in register', process.env.JWT_SECRET)
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
     const _user = await getUserByUsername(username);
     try {
@@ -36,8 +38,14 @@ usersRouter.post('/register', async (req, res, next) => {
         }
 
         const user = await createUser({
+            firstname:firstname,
+            lastname:lastname,
+            email: email,
+            imgURL: imgURL,
             username: username,
-            password: password
+            password: password,
+            isAdmin: isAdmin,
+            address: address,
         });
 
         const token = jwt.sign({ 
