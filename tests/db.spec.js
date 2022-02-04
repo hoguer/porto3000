@@ -141,18 +141,3 @@ describe('Database', () => {
         });
       });
     })
-<<<<<<< Updated upstream
-=======
-  })
-  describe('orders', () => {
-    const orderToCreateAndUpdate= {
-       firstname: "Ricky",
-        lastname: "Bobby",
-        email: "SecondIsLast@yahoo.com",
-        imgURL: "nopelol.com",
-        username: "rickybobby",
-        password: "rickybobby", 
-        isAdmin: true, 
-        address: "yee"};
-      })
->>>>>>> Stashed changes
