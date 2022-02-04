@@ -68,19 +68,19 @@ return (
     <h2 className="createUserHeader">Create Account</h2>
     <form className="createUserForm">
            <label>First Name:</label>
-           <input type="text" placeholder="Name" onChange={event => setFirstname(event.target.value)} value={firstname} />
+           <input type="text" placeholder="Name" onChange={event => setFirstname(event.target.value)} value={firstname} required/>
            <label>Last Name:</label>
-           <input type="text" placeholder="Last Name" onChange={event => setLastname(event.target.value)} value={lastname} />
+           <input type="text" placeholder="Last Name" onChange={event => setLastname(event.target.value)} value={lastname} required/>
            <label>Email Address:</label>
-           <input type="text" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} />
+           <input type="text" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} required/>
            <label>Username:</label>
-           <input type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} value={username} />
+           <input type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} value={username} requiredrequired/>
            <label>Password:</label>
            <input type="password" placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
            <label>Confirm Password:</label>
-           <input type="new-password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} />
+           <input type="new-password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} required/>
            <label>Street Address:</label>
-           <input type="text" placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} />
+           <input type="text" placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} required/>
     </form>
         <button onClick={(event) => {event.preventDefault();
                                         registerUser();
