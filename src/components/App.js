@@ -70,7 +70,7 @@ const App = () => {
         <Route path="/" exact element={<Home />}/>
         <Route path="/login" exact element={<Login />}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
-        <Route path="/products/:id" element={<SingleProduct token={token} products={products}/>} />
+        <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
       </Routes>
     </div>
   </>;

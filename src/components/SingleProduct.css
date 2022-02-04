@@ -1,0 +1,23 @@
+.productContainer {
+    display: flex;
+    justify-content: center;
+}
+.productCard {
+    background-color: lavenderblush;
+    width: 70vw;
+    height: 60vw;
+    margin-top: 20px;
+}
+.cardDetails{
+    display: flex;
+    flex-direction: column;
+}
+.cardContent{
+    display: flex;
+    border: solid red 2px;
+
+}
+.productImage{
+    height: 60vh;
+    width: 25vw;
+}
