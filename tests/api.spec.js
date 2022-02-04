@@ -14,12 +14,24 @@ const { createUser,
     getProductById, 
     getAllProducts,
     createProduct,
-    getProductByName } = require('../db');
+    getProductByName,
+    getOrderById,
+    getAllOrders,
+    getOrdersByUser,
+    getOrdersByProduct,
+    getCartByUser,
+    createOrder } = require('../db');
 const client = require('../db/client')
 
 describe('API', () => {
   let token, registeredUser;
-  const productToUpdate = { name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
+  const productToUpdate = { 
+    name: "Test_Wine_Or_Cheese", 
+    description: "Test_Description", 
+    price: "2", 
+    imgURL: "imageUrl", 
+    inStock: true, 
+    category: "Test category"};
   beforeAll(async() => {
     await rebuildDB();
  })
@@ -28,7 +40,6 @@ describe('API', () => {
   })
   it('responds to a request at /api/health with a message specifying it is healthy', async () => {
     const res = await axios.get(`${API_URL}/api/health`);
-
     expect(typeof res.data.message).toEqual('string');
   });
   describe('Users', () => {
@@ -97,14 +108,14 @@ describe('API', () => {
       });
     })
     describe('GET /users/me', () => {
-      it('sends back users data if valid token is supplied in header', async () => {
+      it('Sends back users data if valid token is supplied in header', async () => {
         const {data} = await axios.get(`${API_URL}/api/users/me`, {
           headers: {'Authorization': `Bearer ${token}`}
         });        
         expect(data.username).toBeTruthy();
         expect(data.username).toBe(registeredUser.username);
       });
-      it('rejects requests with no valid token', async () => {
+      it('Rejects requests with no valid token', async () => {
         let noTokenResp, noTokenErrResp;
         try {
           noTokenResp = await axios.get(`${API_URL}/api/users/me`);
@@ -116,7 +127,13 @@ describe('API', () => {
       });
     });
   describe('products', () => {
-    const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "2", imgURL: "imageUrl", inStock: true, category: "Test category"};
+    const productToCreate = {
+      name: "Test_Wine_Or_Cheese", 
+      description: "Test_Description", 
+      price: "2", 
+      imgURL: "imageUrl", 
+      inStock: true, 
+      category: "Test category"};
     describe('GET /', () => {
       it('Returns a list of all products in the database', async () => {
         const product = { name: 'Grenache', inStock: true };

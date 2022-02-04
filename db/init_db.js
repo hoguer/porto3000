@@ -401,7 +401,7 @@ async function populateInitialData() {
         category: "cheese"
       },
       {
-        name: "Gorgonzola dolce",
+        name: "Queijo de coalho",
         description: "Queijo de coalho is a traditional cow's milk cheese from the northeastern regions of Brazil. The cheese is characterized by its firm, yet elastic texture and a slightly yellow color. Coalho is often sold on sticks for roasting, because it can withstand high temperatures and does not melt easily.",
         imgURL: "https://c8.alamy.com/comp/GF5EJK/brazilian-traditional-cheese-queijo-coalho-on-wooden-board-selective-GF5EJK.jpg",
         inStock: true,
@@ -444,6 +444,11 @@ async function createInitialUsers() {
       {firstname: "Robert ", lastname: "RectanglePants", email: "DoodleBob@BikiniBottom.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnailLover101", password: "KrustyKrab2006", isAdmin: false, address: "200 Pineapple Way"},
       {firstname: "Hernando", lastname: "Madrigal", email: "FearlessOne@Encanto.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "RatsOnB4ck", password: "future37", isAdmin: false, address: "1000 Casita Lane"},
       {firstname: "Chiba", lastname: "Lily", email: "Doggos@gmail.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnifferWiffer302", password: "tr3atsplz", isAdmin: false, address: "501 Borkley Street"},
+      {firstname: "Patrick", lastname: "Bateman", email: "PaulAllen@gmail.com", imgURL: "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg-1200-80.jpg", username: "PatrickBateman", password: "HueyLewisAndTheNewROCK", isAdmin: false, address: "2025 Psycho Path"},
+      {firstname: "Oscar", lastname: "Wilde", email: "theimportanceof@aol.com", imgURL: "https://i.guim.co.uk/img/media/7a770bbbaaf6ca9d56022829c6d31977b1d6f646/0_128_2520_1511/master/2520.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=fd5d8fd76d6a4becd6286851c194700e", username: "OscarWilde", password: "NotAGoodPass", isAdmin: false, address: "6543 toomany st"},
+      {firstname: "Dre", lastname: "Dawg", email: "DrDr@yahoo.com", imgURL: "https://pbs.twimg.com/profile_images/715341035107278848/RotN_Kmm_400x400.jpg", username: "WaltWhitman", password: "BeatsByDre", isAdmin: false, address: "360 Bad St"},
+      {firstname: "Don", lastname: "Juan", email: "DonJuan@gmail.com", imgURL: "https://cdn.britannica.com/40/66340-004-547E0283/Byron-George-Gordon-1820.jpg", username: "LordByron", password: "WhoIsAsking", isAdmin: false, address: "70 Old Guy Road"},
+      {firstname: "Victor", lastname: "Frankenstein", email: "Frankenstein@aol.com", imgURL: "https://i0.wp.com/thenerddaily.com/wp-content/uploads/2018/05/Mary-Shelley-Movie-2018.jpg?fit=1000%2C742&ssl=1", username: "MarySchelly", password: "37The37", isAdmin: false, address: "7331 Crapi Apartmens"},
     ]
 
     const users = await Promise.all(userData.map(createUser));
