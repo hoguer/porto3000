@@ -1,3 +1,5 @@
+const { getUserById } = require("../db")
+
 function isLoggedIn(req, res, next) {
     if(!req.user) {
         res.status(401);
@@ -10,7 +12,8 @@ function isLoggedIn(req, res, next) {
 };
 
 function isAdmin(req, res, next) {
-    if(!req.user.isAdmin) {
+    const _user = getUserById(req.id)
+    if(!_user.isAdmin) {
         res.status(403);
         next({
             name: "AccessDenied",

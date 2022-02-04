@@ -1,5 +1,5 @@
 const ordersRouter = require("express").Router();
-const { getOrderById, getAllOrders, getOrdersByUser, getOrdersByProduct, getCartByUser, createOrder, updateOrder, completeOrder, cancelOrder } = require("../db")
+const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
 const { isLoggedIn, isAdmin } = require("./util")
 
 ordersRouter.get("/", isLoggedIn, isAdmin, async (req, res, next) => {
@@ -12,8 +12,9 @@ ordersRouter.get("/", isLoggedIn, isAdmin, async (req, res, next) => {
 });
 
 ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
+    const { id } = req.body
     try {
-        const userCart = await getCartByUser();
+        const userCart = await getCartByUser({id});
         res.send(userCart)
     } catch(error) {
         throw error;
@@ -35,8 +36,7 @@ ordersRouter.post("/", isLoggedIn, async (req, res, next) => {
 
 ordersRouter.patch("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {
     const { orderId } = req.params;
-    const { status } = req.body;
-    const { userId } = req.user.id
+    const { status, userId } = req.body;
     try {
         const updatedOrder = await updateOrder({ orderId, status, userId })
         res.send({
@@ -50,8 +50,9 @@ ordersRouter.patch("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {
 
 ordersRouter.delete("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {
     const { orderId } = req.params;
+    const { status, userId } = req.body;
     try {
-        const deletedOrder = await deletedOrder({orderId})
+        const deletedOrder = await deletedOrder({orderId, status, userId})
         res.send({
             name: "OrderDeleted",
             message: "The order has been canceled"
