@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import axios from "axios";
 import "./SingleProduct.css"
 
@@ -38,22 +38,26 @@ const SingleProduct = ({products, setProducts}) => {
         <div key={product.id}>
             <div className="productContainer">
                 <div className="productCard">
-                    <div className="productName">
-                        {product.name}
-                    </div>
-                    <div className="cardContent">    
+                    <div className="singleCardContent">    
                         <div className="innerCard">
                             <div className="productContainer">
                                 <img src={product.imgURL} className="productImage"/>
                             </div>
                         </div>
                         <div className="cardDetails">
+                            <div className="productName">
+                                <h2>{product.name}</h2>
+                            </div>
                             <div className="productPrice">
-                                ${product.price}
+                                <b>${product.price}</b>
                             </div>
                             <div className="productDescription">
-                                {product.description}
+                                <i>{product.description}</i>
                             </div>
+                                <div className="singleProdButtonContainer">
+                                    <button className="addToCartButton">Add to Cart</button>
+                                    <NavLink to={`/products`} className="vProdButton">Return to All Products</NavLink>
+                                </div>
                         </div>
                     </div>
                 </div>

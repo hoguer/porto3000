@@ -22,8 +22,8 @@ const Products = ({products, setProducts}) => {
 
     return <>
     <h1 className="productHeader">Our Wines and Cheeses</h1>
-    <div className="productCardContainer">
-        <div className="productCard">
+    <div className="productCardContainerAll">
+        <div className="productCardAll">
             {
                 products.map((product)=> {
                     return (
@@ -38,7 +38,7 @@ const Products = ({products, setProducts}) => {
                                         ${product.price}
                                     </div>
                                     <div className="productButtonsContainer">
-                                        <NavLink to={`/products/${product.id}`} className="vProdButton">View Product</NavLink>
+                                        <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
                                         <button className="addToCartButton">Add to Cart</button>
                                     </div>
                         

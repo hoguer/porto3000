@@ -1,23 +1,54 @@
 .productContainer {
     display: flex;
     justify-content: center;
+    margin-top: 35px;
+    background-image: url("../images/grapes.jpg");
 }
 .productCard {
-    background-color: lavenderblush;
     width: 70vw;
-    height: 60vw;
-    margin-top: 20px;
+}
+.productName{
+    font-size: 20px;
+    margin-bottom: 10px;
+
 }
 .cardDetails{
     display: flex;
+    justify-content: center;
     flex-direction: column;
+    margin-left: 8px;
+    padding:10px;
 }
-.cardContent{
+.singleCardContent{
+    background-color:white;
     display: flex;
-    border: solid red 2px;
-
+    flex-direction: row;
+    border-left: solid #eab354 8px;
+    
 }
 .productImage{
-    height: 60vh;
-    width: 25vw;
+    height: 280px;
+    width: 180px;
+    padding-bottom:20px;
+    padding-top: 2px;
+    background-color: white;
+}
+.innerCard{
+    display: flex;
+    justify-content: center;
+}
+.productPrice{
+    margin-bottom: 2px;
+}
+.singleProdButtonContainer{
+    display: flex;
+    margin-top: 20px;
+}
+a.vProdButton{
+    margin-left: 20px;
+    padding: 5px;
+    background-color: rgb(184, 182, 182);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11px;
+    color: black;
 }

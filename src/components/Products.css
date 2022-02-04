@@ -2,7 +2,7 @@
     color:white;
     text-align: center;
 }
-.productCardContainer {
+.productCardContainerAll {
     /* width: 80vw;
     height: 80vw;
     padding:20px; */
@@ -10,14 +10,11 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-.productCard {
+.productCardAll {
     color:black;
     display: flex;
     flex-wrap: wrap;
     width: 878px;
-
-
-
 }
 .productImg {
     height: 200px;
@@ -47,7 +44,7 @@
     justify-content: space-evenly;
     padding: 8px;
 }
-.vProdButton {
+.vProdButtonAll {
     padding: 5px;
     background-color: rgb(184, 182, 182);
     font-family: 'Times New Roman', Times, serif;
