@@ -1,22 +1,22 @@
 const client = require("./client");
 const bcrypt = require("bcrypt");
+const { user } = require("pg/lib/defaults");
 const SALT_COUNT = 10;
 
 async function createUser ({ firstname, lastname, email, imgURL, username, password, isAdmin, address}) {
-  
-    const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-    try {
-        const { rows: [user] } = await client.query(`
-        INSERT INTO users(firstname, lastname, email, "imgURL", username, password, "isAdmin", address) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-        ON CONFLICT (username) DO NOTHING
-        RETURNING *
-        `, [firstname, lastname, email, imgURL, username, password, isAdmin, address]);
-      delete user.password;
-      return user;
-    } catch (error){
-        throw error;
-    }
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+  try {
+    const { rows: [user] } = await client.query(`
+      INSERT INTO users(firstname, lastname, email, "imgURL", username, password, "isAdmin", address) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      ON CONFLICT (username) DO NOTHING
+      RETURNING *
+      `, [firstname, lastname, email, imgURL, username, password, isAdmin, address]);
+    delete user.password;
+    return user;
+  } catch (error){
+    throw error;
+  }
 } 
 async function getUser({ username, password }) {
     try {
@@ -51,11 +51,11 @@ async function getUser({ username, password }) {
 
 async function getUserById(id){
     try{
-        const {rows:[user] } = await client.query(`
+      const {rows:[user] } = await client.query(`
         SELECT * 
         FROM users
         WHERE id= $1;
-    `, [id]);
+      `, [id]);
     if (!user) return null;
     delete user.password;
     return user;
@@ -64,14 +64,14 @@ async function getUserById(id){
   }
 }
 async function getUserByUsername(userName){
-    try{
-        const {rows: [user] }= await client.query(`
-        SELECT * 
-        FROM users
-        WHERE username = $1; 
+  try{
+    const {rows: [user] }= await client.query(`
+      SELECT * 
+      FROM users
+      WHERE username = $1; 
     `, [userName]);
-    delete user.password;
-    return user;
+    delete user.password
+  return user;
 } catch (error){
     throw error;
   }

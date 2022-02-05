@@ -15,7 +15,6 @@ async function getOrderById (id) {
     };
 };
 
-
 async function getAllOrders() {
     try {
         const {rows} = await client.query(`
