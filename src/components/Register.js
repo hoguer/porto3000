@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
-    const [user, setUser] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
@@ -27,7 +26,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 } else if (res.data.status === 'UserExists') {
                     alert('That username already exists. Please pick a different username.');
                 } else {
-                    setUser(res.data.user);
+                    setCurrentUser(res.data.user);
 
                     localStorage.setItem('token', res.data.token);
                     console.log(localStorage.getItem('token'));
