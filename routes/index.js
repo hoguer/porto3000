@@ -8,6 +8,9 @@ apiRouter.use("/users", usersRouter)
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter)
 
+const paymentsRouter = require("./payments");
+apiRouter.use("/payments", paymentsRouter);
+
 // apiRouter.get("/", (req, res, next) => {
 //   res.send({
 //     message: "API is under construction!"
