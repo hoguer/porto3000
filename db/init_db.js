@@ -5,7 +5,6 @@ const {
   getAllProducts,
   createProduct,
 } = require("./products")
-
 const { createUser } = require("./users")
 
 async function buildTables() {
