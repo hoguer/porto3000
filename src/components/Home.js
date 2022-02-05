@@ -1,13 +1,9 @@
 import React from "react";
-import { Products } from "./Home"
 import "./Home.css"
 
 const Home = () => {
     return <>
-
-
       <h1>Home</h1>
-
     </>
 }
 
