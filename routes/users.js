@@ -2,6 +2,7 @@ const usersRouter = require("express").Router();
 const { getAllUsers, createUser, getUserByUsername, getOrdersByUser } = require("../db");
 const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 // NOT BE TO PUSHED INTO THE FINAL PRODUCT. 
 // Uncomment to see users in the localhost:4000/api/users
@@ -36,8 +37,14 @@ usersRouter.post('/register', async (req, res, next) => {
         }
 
         const user = await createUser({
+            firstname:firstname,
+            lastname:lastname,
+            email: email,
+            imgURL: imgURL,
             username: username,
-            password: password
+            password: password,
+            isAdmin: isAdmin,
+            address: address
         });
 
         const token = jwt.sign({ 

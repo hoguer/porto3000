@@ -13,7 +13,7 @@ import {
   Home,
   Login,
   Products,
-  SingleProduct
+  SingleProduct,
   Register
 } from "."
 
