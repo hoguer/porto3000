@@ -41,31 +41,26 @@ const App = () => {
       </div>
       <nav className="navigation">
         <div className="nav-links">
+          <NavLink to="/"> Home </NavLink> 
+          <NavLink to="/about"> About Us</NavLink> 
+          <NavLink to="/products"> Products </NavLink> 
           {
             isLoggedIn?
             <>
-                <NavLink to="/"> Home </NavLink> 
-                <NavLink to="/about"> About Us</NavLink> 
-                <NavLink to="/products"> Products </NavLink> 
                 <NavLink to="/account"> Account </NavLink> 
                 <NavLink to="/" onClick={() => {
                   setToken("")
                   setIsLoggedIn(false)
                   setCurrentUser(false)
                 }}> Logout  </NavLink>
-                <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
               </>
               :
-              <>
-                <NavLink to="/"> Home </NavLink> 
-                <NavLink to="/about"> About Us</NavLink> 
-                <NavLink to="/products"> Products </NavLink> 
+              <> 
                 <NavLink to="/login"> Login </NavLink> 
                 <NavLink to="/register"> Register </NavLink> 
-                <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
-                {/* build the checkout component into the cart */}
               </>
           }
+          <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
         </div>
       </nav>
       <Routes>
