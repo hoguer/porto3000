@@ -15,6 +15,7 @@ productsRouter.get("/", async (req, res, next) =>{
 productsRouter.get("/:id", async (req, res, next) => {
     const { id } = req.params;
     try {
+        const { id } = req.params;
         const product = await getProductById(id);
         res.send(product)
     } catch (error) {
@@ -45,4 +46,4 @@ productsRouter.use((error, req, res, next) => {
     res.send(error);
 });
   
-module.exports = productsRouter;
+module.exports = productsRouter

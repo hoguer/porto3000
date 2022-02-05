@@ -13,6 +13,7 @@ import {
   Home,
   Login,
   Products,
+  SingleProduct
   Register
 } from "."
 
@@ -22,6 +23,7 @@ const App = () => {
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [products, setProducts] = useState([]);
 
   // useEffect(() => {
   //   getSomething()
@@ -68,9 +70,10 @@ const App = () => {
         <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
         <Route path="/login" exact element={<Login />}/>
-        <Route path="/register" exact element={<Register />}/>
-        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} />} />
-        {/* <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} /> */}
+        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
+        <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
+        <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
+
       </Routes>
     </div>
   </>;

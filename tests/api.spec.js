@@ -1,11 +1,11 @@
-//Test API
+//Test API 2/2/22
 const axios = require('axios');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
-const { JWT_SECRET = 'neverchane' } = process.env;
+const { JWT_SECRET } = process.env;
 const { rebuildDB } = require('../db/seedData');
 const { createUser, 
     getUser, 
@@ -14,12 +14,24 @@ const { createUser,
     getProductById, 
     getAllProducts,
     createProduct,
-    getProductByName } = require('../db');
+    getProductByName,
+    getOrderById,
+    getAllOrders,
+    getOrdersByUser,
+    getOrdersByProduct,
+    getCartByUser,
+    createOrder } = require('../db');
 const client = require('../db/client')
 
 describe('API', () => {
   let token, registeredUser;
-  let productToUpdate = {productId: 1, name: "Porto300", inStock: true, price: "$6"};
+  const productToUpdate = { 
+    name: "Test_Wine_Or_Cheese", 
+    description: "Test_Description", 
+    price: "2", 
+    imgURL: "imageUrl", 
+    inStock: true, 
+    category: "Test category"};
   beforeAll(async() => {
     await rebuildDB();
  })
@@ -28,11 +40,18 @@ describe('API', () => {
   })
   it('responds to a request at /api/health with a message specifying it is healthy', async () => {
     const res = await axios.get(`${API_URL}/api/health`);
-
     expect(typeof res.data.message).toEqual('string');
   });
   describe('Users', () => {
-    let newUser = { username: 'Ricky', password: 'BrownBrown' };
+    const newUser = { 
+      firstname: "Richard", 
+      lastname: "Brown", 
+      email: "number1ricky@yahoo.com", 
+      imgURL: 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg', 
+      username: "number1ricky", 
+      password: "SomethingLameAndOnATrackedList", 
+      isAdmin: false, 
+      address: "867530, Nine court."};
     let newUserShortPassword = { username: 'rickyShort', password: 'Brown' };
     describe('POST /users/register', () => {
       let tooShortSuccess, tooShortResponse;
@@ -52,7 +71,7 @@ describe('API', () => {
       it('Requires username and password. Requires all passwords to be at least 8 characters long.', () => {
         expect(newUser.password.length).toBeGreaterThan(7);
       });
-      it('EXTRA CREDIT: Hashes password before saving user to DB.', async () => {
+      it('Hashes password before saving user to DB.', async () => {
         const {rows: [queriedUser]} = await client.query(`
           SELECT *
           FROM users
@@ -89,14 +108,14 @@ describe('API', () => {
       });
     })
     describe('GET /users/me', () => {
-      it('sends back users data if valid token is supplied in header', async () => {
+      it('Sends back users data if valid token is supplied in header', async () => {
         const {data} = await axios.get(`${API_URL}/api/users/me`, {
           headers: {'Authorization': `Bearer ${token}`}
         });        
         expect(data.username).toBeTruthy();
         expect(data.username).toBe(registeredUser.username);
       });
-      it('rejects requests with no valid token', async () => {
+      it('Rejects requests with no valid token', async () => {
         let noTokenResp, noTokenErrResp;
         try {
           noTokenResp = await axios.get(`${API_URL}/api/users/me`);
@@ -108,9 +127,15 @@ describe('API', () => {
       });
     });
   describe('products', () => {
-    const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "$Test", imgURL: "imageUrl", inStock: true, category: "Test category"};
+    const productToCreate = {
+      name: "Test_Wine_Or_Cheese", 
+      description: "Test_Description", 
+      price: "2", 
+      imgURL: "imageUrl", 
+      inStock: true, 
+      category: "Test category"};
     describe('GET /', () => {
-      it('Just returns a list of all products in the database', async () => {
+      it('Returns a list of all products in the database', async () => {
         const product = { name: 'Grenache', inStock: true };
         const createdProduct = await createProduct(productToCreate);
         const {data: products} = await axios.get(`${API_URL}/api/`);
@@ -126,8 +151,12 @@ describe('API', () => {
     describe('POST "/:productId" (id)', () => {
         it('Creates a new prduct', async () => {
           const {data: respondedProduct} = await axios.post(`${API_URL}/api/`, productToUpdate, { headers: {'Authorization': `Bearer ${token}`} });
+          expect(respondedProduct.id).toEqual(productToUpdate.id);
           expect(respondedProduct.name).toEqual(productToUpdate.name);
+          expect(respondedProduct.description).toEqual(productToUpdate.description);
           expect(respondedProduct.inStock).toEqual(productToUpdate.inStock);
+          expect(respondedProduct.price).toEqual(productToUpdate.price);
+          expect(respondedProduct.category).toEqual(productToUpdate.category);
           productToUpdate = respondedProduct;
         });
       });

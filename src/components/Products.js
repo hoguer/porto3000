@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import "./Products.css"
 
-const Products = () => {
-    const [products, setProducts] = useState([]);
+const Products = ({products, setProducts}) => {
+
 
     const fetchProducts = async () => {
         try {
@@ -22,8 +23,8 @@ const Products = () => {
 
     return <>
     <h1 className="productHeader">Our Wines and Cheeses</h1>
-    <div className="productCardContainer">
-        <div className="productCard">
+    <div className="productCardContainerAll">
+        <div className="productCardAll">
             {
                 products.map((product)=> {
                     return (
@@ -38,7 +39,7 @@ const Products = () => {
                                         ${product.price}
                                     </div>
                                     <div className="productButtonsContainer">
-                                        <button className="vProdButton" >View Product</button>
+                                        <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
                                         <button className="addToCartButton">Add to Cart</button>
                                     </div>
                         

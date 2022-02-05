@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
     const [user, setUser] = useState("");
     const [firstname, setFirstname] = useState("");
@@ -9,7 +10,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [address, setAddress] = useState("");
-// if isLoggedIn, redirect to UserProfile/Home? //
+    
     const registerUser = () => {
         console.log('In register user!!')
         if ( !firstname || !lastname || !username || !email || !password || !confirmPassword || !address ) {
@@ -46,7 +47,10 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
         setPassword("");
         setConfirmPassword("");
         setAddress("");
-};
+    };
+
+
+
 return (
     <>
     <h2 className="createUserHeader">Create Account</h2>
