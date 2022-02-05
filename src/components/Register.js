@@ -22,19 +22,19 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
         console.log('Register User is being called!');
         axios.post('/api/users/register', { firstname, lastname, username, email, password, address })
             .then(res => {
-                console.log('New User: ', res.data);
+                console.log('New User: ', res.config.data);
                 console.log('Token: ', res.data.token);
                 if (res.data.status === 'PasswordShort') {
                     alert('Password is too short. Please create a password at least eight characters long.');
                 } else if (res.data.status === 'UserExists') {
                     alert('That username already exists. Please pick a different username.');
                 } else {
-                    setCurrentUser(res.data.user);
+                    setCurrentUser(res.config.data);
 
                     localStorage.setItem('token', res.data.token);
                     console.log(localStorage.getItem('token'));
 
-                    if (res.data.user) {
+                    if (res.config.data) {
                         setIsLoggedIn(true);
                         navigate('/account');
                     }
