@@ -1,5 +1,4 @@
 const apiRouter = require('express').Router();
-
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter)
 
@@ -14,5 +13,9 @@ apiRouter.use("/orders", ordersRouter)
 //     message: "API is under construction!"
 //   });
 // });
+
+apiRouter.use((error, req, res, next) => {
+    res.send(error);
+});
 
 module.exports = apiRouter;

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
-import logo2 from '../images/logo2.png';
-import {
-  // getSomething
-} from '../api';
 
 import {
   About,
@@ -13,25 +9,17 @@ import {
   Home,
   Login,
   Products,
-  Register
+  SingleProduct,
+  Register,
+  Account
 } from "."
-
 
 const App = () => {
   const [message, setMessage] = useState('');
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-
-  // useEffect(() => {
-  //   getSomething()
-  //     .then(response => {
-  //       setMessage(response.message);
-  //     })
-  //     .catch(error => {
-  //       setMessage(error.message);
-  //     });
-  // });
+  const [products, setProducts] = useState([]);
 
   return <> 
     <div className="App">
@@ -67,10 +55,12 @@ const App = () => {
         <Route path="/about" exact element={<About />}/>
         <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
-        <Route path="/login" exact element={<Login />}/>
-        <Route path="/register" exact element={<Register />}/>
-        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} />} />
-        {/* <Route path="/products/:id" element={<SingleProduct currentUser= {currentUser} token={token} />} /> */}
+        <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
+        <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
+        <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
+        <Route path="/register" exact element={<Register currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
+        <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
+
       </Routes>
     </div>
   </>;

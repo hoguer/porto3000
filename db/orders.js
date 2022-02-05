@@ -1,6 +1,5 @@
 const client = require("./client");
 
-// Does not return order's products
 async function getOrderById (id) {
     try{
         const {rows: [order]} = await client.query(`
@@ -16,7 +15,7 @@ async function getOrderById (id) {
     };
 };
 
-// Does not return order's products
+
 async function getAllOrders() {
     try {
         const {rows} = await client.query(`
@@ -31,7 +30,6 @@ async function getAllOrders() {
     };
 };
 
-// Does not return order's products
 async function getOrdersByUser({id}) {
     try {
         const {rows: [order]} = await client.query(`
@@ -41,12 +39,12 @@ async function getOrdersByUser({id}) {
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "userID" = $1;
         `, [id])
+        return order;
     } catch (error) {
         throw error;
     };
 };
 
-// Does not return order's products
 async function getOrdersByProduct({id}) {
     try {
         const {rows: [order]} = await client.query(`
@@ -62,7 +60,6 @@ async function getOrdersByProduct({id}) {
     }
 };
 
-// Does not return order's products
 async function getCartByUser({id}) {
     try {
         const{rows: [cart]} = await client.query(`
@@ -79,14 +76,13 @@ async function getCartByUser({id}) {
     };
 };
 
-// Does not return order's products
 async function createOrder({status, userID}) {
     try {
         const {rows: [order]} = await client.query(`
             INSERT INTO orders(status, "userID")
             VALUES ($1, $2)
             RETURNING *
-            `, [status, userID]);
+        `, [status, userID]);
         return order;
     } catch (error) {
         throw error;
