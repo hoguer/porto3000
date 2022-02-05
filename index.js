@@ -36,7 +36,7 @@ server.use(async (req, res, next) => {
       console.log('userObj: ', userObj);
 
       // set the user on the request
-      req.user = await getUserById(userObj.id);;
+      req.user = await getUserById(userObj.id);
 
       next();
     }
