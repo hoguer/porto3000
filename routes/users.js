@@ -17,7 +17,6 @@ usersRouter.get("/", async (req, res, next) =>{
 } );
 
 usersRouter.post('/register', async (req, res, next) => {
-    console.log('in register', process.env.JWT_SECRET)
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
     const _user = await getUserByUsername(username);
     try {
