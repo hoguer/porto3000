@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
-import logo2 from '../images/logo2.png';
-import {
-  // getSomething
-} from '../api';
 
 import {
   About,
@@ -18,24 +14,12 @@ import {
   Account
 } from "."
 
-
-
 const App = () => {
   const [message, setMessage] = useState('');
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [products, setProducts] = useState([]);
-
-  // useEffect(() => {
-  //   getSomething()
-  //     .then(response => {
-  //       setMessage(response.message);
-  //     })
-  //     .catch(error => {
-  //       setMessage(error.message);
-  //     });
-  // });
 
   return <> 
     <div className="App">
