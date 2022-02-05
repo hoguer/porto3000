@@ -16,18 +16,17 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
     console.log('Login User is being called!');
      axios.post('/api/users/login', { username, password })
         .then(res => {
-            console.log('Loggedin User: ', res.data);
+            console.log('Loggedin User: ', res.config.data);
 
             if (res.data.status === 'UsernamePasswordIncorrect') {
                 return alert('Username or passord incorrect. Please re-enter credentials.');
             } else {
-
-                setCurrentUser(res.data.user);
+                setCurrentUser(res.config.data);
                 localStorage.setItem('token', res.data.token);
                 console.log(localStorage.getItem('token'));
-                if (res.data.user) {
+                if (res.config.data) {
                     setIsLoggedIn(true);
-                    navigate('/');
+                    navigate('/account');
                 }
 
             }
