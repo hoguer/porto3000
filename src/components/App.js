@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
+import navName from '../images/navName.png'
+
 import {
   // getSomething
 } from '../api';
@@ -37,7 +39,7 @@ const App = () => {
   return <> 
     <div className="App">
       <div className='header'>
-        <h1>porto3000</h1>
+        <img src={navName} className='mainLogo'/>
       </div>
       <nav className="navigation">
         <div className="nav-links">
