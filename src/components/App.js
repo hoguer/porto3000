@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import logo2 from '../images/logo2.png';
@@ -14,8 +14,10 @@ import {
   Login,
   Products,
   SingleProduct,
-  Register
+  Register,
+  Account
 } from "."
+
 
 
 const App = () => {
@@ -69,10 +71,11 @@ const App = () => {
         <Route path="/about" exact element={<About />}/>
         <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
-        <Route path="/login" exact element={<Login setCurrentUser={setCurrentUser}/>}/>
+        <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
-        <Route path="/register" exact element={<Register currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} />}/>
+        <Route path="/register" exact element={<Register currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
+        <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
 
       </Routes>
     </div>

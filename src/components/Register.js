@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
@@ -9,6 +10,8 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [address, setAddress] = useState("");
+    const navigate = useNavigate();
+
     
     const registerUser = () => {
         console.log('In register user!!')
@@ -33,6 +36,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
 
                     if (res.data.user) {
                         setIsLoggedIn(true);
+                        navigate('/account');
                     }
                 }
             })
@@ -66,7 +70,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 <label>Username:</label>
                 <input type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} value={username} requiredrequired/>
                 <label>Password:</label>
-                <input type="password" placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
+                <input type="current-password" placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
                 <label>Confirm Password:</label>
                 <input type="new-password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} required/>
                 <label>Street Address:</label>
