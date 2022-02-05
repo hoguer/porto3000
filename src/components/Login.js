@@ -21,7 +21,6 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
             if (res.data.status === 'UsernamePasswordIncorrect') {
                 return alert('Username or passord incorrect. Please re-enter credentials.');
             } else {
-
                 setCurrentUser(res.config.data);
                 localStorage.setItem('token', res.data.token);
                 console.log(localStorage.getItem('token'));

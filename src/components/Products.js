@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import "./Products.css"
 
 const Products = ({products, setProducts}) => {
-
 
     const fetchProducts = async () => {
         try {
@@ -19,7 +18,6 @@ const Products = ({products, setProducts}) => {
     }
 
     useEffect(fetchProducts, []); 
-    
 
     return <>
     <h1 className="productHeader">Our Wines and Cheeses</h1>
@@ -55,4 +53,4 @@ const Products = ({products, setProducts}) => {
     </>
 }
 
-export default Products; 
+export default Products;
