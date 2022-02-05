@@ -4,11 +4,9 @@ import "./Home.css"
 
 const Home = () => {
     return <>
-    <div className="componentContainer">
-        <h1>Home</h1>    
-    </div>
-    
-{/* This page should consist of a login, register and 21+ up user agreement check to prevent minors from accessing the page */}
+
+
+      <h1>Home</h1>
 
     </>
 }
