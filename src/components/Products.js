@@ -25,8 +25,9 @@ const Products = ({products, setProducts}) => {
     <div className="outerContainerAll">
         <div className="productsNav">
             <NavLink to="/products">All Products</NavLink> |
-            <NavLink to="/wines">Wines</NavLink> |
-            <NavLink to="/cheeses">Cheese</NavLink>
+            <NavLink to="/products/wines">Wines</NavLink> |
+            <NavLink to="/products/cheeses">Cheeses</NavLink> |
+            <NavLink to="/products/productpairs">Pairings</NavLink>
         </div>
         <div className="productCardContainerAll">
             <div className="productCardAll">

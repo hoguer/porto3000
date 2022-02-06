@@ -39,8 +39,9 @@ const SingleProduct = ({products, setProducts}) => {
         <div key={product.id}>
             <div className="productsNav">
                 <NavLink to="/products">All Products</NavLink> |
-                <NavLink to="/wines">Wines</NavLink> |
-                <NavLink to="/cheeses">Cheese</NavLink>
+                <NavLink to="/products/wines">Wines</NavLink> |
+                <NavLink to="/products/cheeses">Cheeses</NavLink> |
+                <NavLink to="/products/productpairs">Pairings</NavLink>
             </div>
             <div className="productContainer">
                 <div className="productCard">
@@ -62,7 +63,7 @@ const SingleProduct = ({products, setProducts}) => {
                             </div>
                                 <div className="singleProdButtonContainer">
                                     <button className="addToCartButton">Add to Cart</button>
-                                    <NavLink to={`/products`} className="vProdButton">Return to All Products</NavLink>
+                                    <NavLink to="/products" className="vProdButton">Return to All Products</NavLink>
                                 </div>
                         </div>
                     </div>

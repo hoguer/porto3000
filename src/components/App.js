@@ -15,6 +15,9 @@ import {
   Login,
   Products,
   SingleProduct,
+  Wines,
+  Cheeses,
+  ProductPairs,
   Register
 } from "."
 
@@ -73,7 +76,9 @@ const App = () => {
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
-
+        <Route path="/products/wines" element={<Wines token={token} products={products} setProducts={setProducts}/>}/>
+        <Route path="/products/cheeses" element={<Cheeses token={token} products={products} setProducts={setProducts}/>}/>
+        <Route path="/products/productpairs" element={<ProductPairs token={token} products={products} setProducts={setProducts}/>}/>
       </Routes>
     </div>
   </>;
