@@ -52,8 +52,8 @@ const App = () => {
         </div>
       </nav>
       <Routes>
-        <Route path="/about" exact element={<About />}/>
-        <Route path="/cart" exact element={<Cart />}/>
+        <Route path="/about" element={<About />}/>
+        <Route path="/cart" element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
         <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />

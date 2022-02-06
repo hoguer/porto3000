@@ -6,7 +6,7 @@
     grid-row-gap: 3vh;
     justify-items: center;
     text-align: center;
-    margin: auto;
+    margin: 2rem auto;
 }
 
 .developerPhoto {
@@ -15,7 +15,7 @@
 }
 
 h2 {
-    margin-bottom: 3vh;
+    margin: 3vh 0;
 }
 
 .about { 
