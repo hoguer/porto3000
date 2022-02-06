@@ -22,33 +22,39 @@ const Products = ({products, setProducts}) => {
     
 
     return <>
-    <h1 className="productHeader">Our Wines and Cheeses</h1>
-    <div className="productCardContainerAll">
-        <div className="productCardAll">
-            {
-                products.map((product)=> {
-                    return (
-                        <>
-                            <div key={product.id}>
-                                <div className="cardContentContainer">
-                                    <div className="cardContent">
-                                        {product.name}
-                                        <img src={product.imgURL} className="productImg"></img>
+    <div className="outerContainerAll">
+        <div className="productsNav">
+            <NavLink to="/products">All Products</NavLink> |
+            <NavLink to="/wines">Wines</NavLink> |
+            <NavLink to="/cheeses">Cheese</NavLink>
+        </div>
+        <div className="productCardContainerAll">
+            <div className="productCardAll">
+                {
+                    products.map((product)=> {
+                        return (
+                            <>
+                                <div key={product.id}>
+                                    <div className="cardContentContainer">
+                                        <div className="cardContent">
+                                            {product.name}
+                                            <img src={product.imgURL} className="productImg"></img>
+                                        </div>
+                                        <div className="itemPrice">
+                                            ${product.price}
+                                        </div>
+                                        <div className="productButtonsContainer">
+                                            <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
+                                            <button className="addToCartButton">Add to Cart</button>
+                                        </div>
+                            
                                     </div>
-                                    <div className="itemPrice">
-                                        ${product.price}
-                                    </div>
-                                    <div className="productButtonsContainer">
-                                        <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
-                                        <button className="addToCartButton">Add to Cart</button>
-                                    </div>
-                        
                                 </div>
-                            </div>
-                        </>
-                    )
-                })
-            }
+                            </>
+                        )
+                    })
+                }
+            </div>
         </div>
     </div>
     

@@ -1,9 +1,6 @@
 .componentContainer {
-    /* background-image: url("../images/logo2.png"); */
-    background-size:70vw;
-    background-position: left;
-    background-repeat: no-repeat;
-    background-color:#262b2b;
+
+    background-color:#faedc9;
     width: 98vw;
     height: 90vh;
 }
