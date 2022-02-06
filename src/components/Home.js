@@ -1,14 +1,14 @@
 import React from "react";
-import { Products } from "./Home"
 import "./Home.css"
+import mainLogo from "../images/mainLogo.png"
 
 const Home = () => {
     return <>
+      <div className="componentContainerHome">
+        <div>Hello</div>
 
-
-      <h1>Home</h1>
-
+      </div>
     </>
 }
 
-export default Home; 
+export default Home;

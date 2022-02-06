@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
@@ -11,6 +11,7 @@ import {
 import {
   About,
   Cart,
+  HomeAgeVerification,
   Home,
   Login,
   Products,
@@ -18,9 +19,9 @@ import {
   Wines,
   Cheeses,
   ProductPairs,
-  Register
+  Register,
+  Account
 } from "."
-
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -29,16 +30,6 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [products, setProducts] = useState([]);
 
-  // useEffect(() => {
-  //   getSomething()
-  //     .then(response => {
-  //       setMessage(response.message);
-  //     })
-  //     .catch(error => {
-  //       setMessage(error.message);
-  //     });
-  // });
-
   return <> 
     <div className="App">
       <div className='header'>
@@ -46,14 +37,14 @@ const App = () => {
       </div>
       <nav className="navigation">
         <div className="nav-links">
-          <NavLink to="/"> Home </NavLink> 
+          <NavLink to="/Home"> Home </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
           <NavLink to="/products"> Products </NavLink> 
           {
             isLoggedIn?
             <>
                 <NavLink to="/account"> Account </NavLink> 
-                <NavLink to="/" onClick={() => {
+                <NavLink to="/Home" onClick={() => {
                   setToken("")
                   setIsLoggedIn(false)
                   setCurrentUser(false)
@@ -69,10 +60,11 @@ const App = () => {
         </div>
       </nav>
       <Routes>
-        <Route path="/about" exact element={<About />}/>
-        <Route path="/cart" exact element={<Cart />}/>
-        <Route path="/" exact element={<Home />}/>
-        <Route path="/login" exact element={<Login />}/>
+        <Route path="/" exact element={<HomeAgeVerification />}/>
+        <Route path="/Home" exact element={<Home />}/>
+        <Route path="/about" element={<About />}/>
+        <Route path="/cart" element={<Cart />}/>
+        <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
