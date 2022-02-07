@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 const { JWT_SECRET } = process.env;
-const { rebuildDB } = require('../db/seedData');
+// const { rebuildDB } = require('../db/seedData');
 const { createUser, 
     getUser, 
     getUserById, 
@@ -33,8 +33,8 @@ describe('API', () => {
     inStock: true, 
     category: "Test category"};
   beforeAll(async() => {
-    await rebuildDB();
- })
+    await client.connect();
+  })
   afterAll(async() => {
     await client.end();
   })
