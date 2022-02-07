@@ -12,7 +12,6 @@ async function getProductById(id) {
     }
 }
 
-
 async function getAllProducts() {
     try {
         const {rows} = await client.query(`
