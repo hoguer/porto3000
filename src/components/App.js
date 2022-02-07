@@ -11,7 +11,6 @@ import {
 import {
   About,
   Cart,
-  HomeAgeVerification,
   Home,
   Login,
   Products,
@@ -37,14 +36,14 @@ const App = () => {
       </div>
       <nav className="navigation">
         <div className="nav-links">
-          <NavLink to="/Home"> Home </NavLink> 
+          <NavLink to="/"> Home </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
           <NavLink to="/products"> Products </NavLink> 
           {
             isLoggedIn?
             <>
                 <NavLink to="/account"> Account </NavLink> 
-                <NavLink to="/Home" onClick={() => {
+                <NavLink to="/" onClick={() => {
                   setToken("")
                   setIsLoggedIn(false)
                   setCurrentUser(false)
@@ -60,8 +59,7 @@ const App = () => {
         </div>
       </nav>
       <Routes>
-        <Route path="/" exact element={<HomeAgeVerification />}/>
-        <Route path="/Home" exact element={<Home />}/>
+        <Route path="/" exact element={<Home />}/>
         <Route path="/about" element={<About />}/>
         <Route path="/cart" element={<Cart />}/>
         <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
