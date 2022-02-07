@@ -1,14 +1,8 @@
 body {
-    /* background-color:#fcf1d3; */
-    background-color: black;
-}
-.mainLogo {
-    width: 230px;
-    height: 90px;
-}
-.mainLogo {
-    width: 230px;
-    height: 90px;
+    background-color:#262b2b;
+    margin: 0;
+    padding: 0;
+
 }
 .header { 
     display: flex;

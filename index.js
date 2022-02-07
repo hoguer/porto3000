@@ -30,10 +30,8 @@ server.use(async (req, res, next) => {
       // get token from auth header
       let [, token] = auth.split(' ');
       token = token.trim();
-      console.log('token: ', token); //
 
       const userObj = jwt.verify(token, JWT_SECRET);
-      console.log('userObj: ', userObj);
 
       // set the user on the request
       req.user = await getUserById(userObj.id);
