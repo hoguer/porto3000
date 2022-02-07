@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import axios from "axios";
+import mainLogo from "../images/mainLogo.png"
 import "./SingleProduct.css"
 
 const SingleProduct = ({products, setProducts}) => { 
@@ -36,6 +37,12 @@ const SingleProduct = ({products, setProducts}) => {
         <>   
         { product ? 
         <div key={product.id}>
+            <div className="productsNav">
+                <NavLink to="/products">All Products</NavLink> |
+                <NavLink to="/products/wines">Wines</NavLink> |
+                <NavLink to="/products/cheeses">Cheeses</NavLink> |
+                <NavLink to="/products/productpairs">Pairings</NavLink>
+            </div>
             <div className="productContainer">
                 <div className="productCard">
                     <div className="singleCardContent">    
@@ -56,7 +63,7 @@ const SingleProduct = ({products, setProducts}) => {
                             </div>
                                 <div className="singleProdButtonContainer">
                                     <button className="addToCartButton">Add to Cart</button>
-                                    <NavLink to={`/products`} className="vProdButton">Return to All Products</NavLink>
+                                    <NavLink to="/products" className="vProdButton">Return to All Products</NavLink>
                                 </div>
                         </div>
                     </div>
@@ -65,6 +72,13 @@ const SingleProduct = ({products, setProducts}) => {
         </div> : null
     
         }    
+        <div className="sealContainer">
+            <img src={mainLogo} className="portoSeal"/>
+            <div className="sealDescription">
+                <p>Each product is backed by the Porto 3000 seal of quality assurance. From the care of our crops and livestock to the finest details on our packaging, the entire process is monitored to ensure the finest product is produced.</p>
+                <p>We go the extra mile because we love you 3000. </p>
+            </div>
+        </div>
         </>
     )
 }

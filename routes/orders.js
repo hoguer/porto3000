@@ -48,22 +48,18 @@ ordersRouter.patch("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {
     };
 });
 
-ordersRouter.delete("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {
-    const { orderId } = req.params;
-    const { status, userId } = req.body;
-    try {
-        const deletedOrder = await deletedOrder({orderId, status, userId})
-        res.send({
-            name: "OrderDeleted",
-            message: "The order has been canceled"
-        }, [deletedOrder]);
-    } catch (error) {
-        throw error;
-    };
-});
-
-ordersRouter.use((error, req, res, next) => {
-    res.send(error);
-});
+// ordersRouter.delete("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {
+//     const { orderId } = req.params;
+//     const { status, userId } = req.body;
+//     try {
+//         const deletedOrder = await deletedOrder({orderId, status, userId})
+//         res.send({
+//             name: "OrderDeleted",
+//             message: "The order has been canceled"
+//         }, [deletedOrder]);
+//     } catch (error) {
+//         throw error;
+//     };
+// });
 
 module.exports = ordersRouter;
