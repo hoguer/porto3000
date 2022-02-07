@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
+import navName from '../images/navName.png'
+
+// import {
+//   // getSomething
+// } from '../api';
 
 import {
   About,
@@ -24,16 +29,16 @@ const App = () => {
   return <> 
     <div className="App">
       <div className='header'>
-        <h1>porto3000</h1>
+        <img src={navName} className='mainLogo'/>
       </div>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
-          <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
+          <NavLink to="/products"> Products </NavLink> 
           {
             isLoggedIn?
-              <>
+            <>
                 <NavLink to="/account"> Account </NavLink> 
                 <NavLink to="/" onClick={() => {
                   setToken("")
@@ -42,13 +47,12 @@ const App = () => {
                 }}> Logout  </NavLink>
               </>
               :
-              <>
+              <> 
                 <NavLink to="/login"> Login </NavLink> 
                 <NavLink to="/register"> Register </NavLink> 
-                <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
-                {/* build the checkout component into the cart */}
               </>
           }
+          <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
         </div>
       </nav>
       <Routes>

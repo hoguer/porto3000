@@ -1,6 +1,10 @@
 body {
     background-color:#262b2b;
 }
+.mainLogo {
+    width: 230px;
+    height: 90px;
+}
 .header { 
     display: flex;
     justify-content: center;  
