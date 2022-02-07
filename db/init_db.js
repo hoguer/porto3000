@@ -425,7 +425,7 @@ async function populateInitialData() {
         imgURL: "https://en.gorgonzola.com/wp-content/uploads/sites/2/2020/01/abbinamenti-head.jpg",
         inStock: true,
         price: "50",
-        category: "Wine & Cheese"
+        category: "wine and cheese"
       },
     ]
 
