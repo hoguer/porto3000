@@ -1,5 +1,10 @@
 body {
-    background-color:#262b2b;
+    /* background-color:#fcf1d3; */
+    background-color: black;
+}
+.mainLogo {
+    width: 230px;
+    height: 90px;
 }
 .mainLogo {
     width: 230px;

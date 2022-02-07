@@ -1,16 +1,29 @@
 .productHeader {
-    color:white;
     text-align: center;
+}
+.productsNav{
+    background-color: rgb(119, 20, 3);
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: center;
+    align-items: center;
 }
 .productCardContainerAll {
     background-image: url("../images/vineyard.jpg");
     background-repeat: no-repeat;
+    background-position: fixed;
     background-size: 100vw;
-    opacity: 0.8;
-    
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
+    overflow: auto;
+    width: 99vw;
+    height: 100vh;
+    color:black;
+    
 }
 .productCardAll {
     color:black;
