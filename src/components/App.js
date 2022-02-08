@@ -5,10 +5,6 @@ import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
 
 import {
-  // getSomething
-} from '../api';
-
-import {
   About,
   Cart,
   Home,

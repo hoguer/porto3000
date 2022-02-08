@@ -1,10 +1,10 @@
 body {
-    /* background-color:#fcf1d3; */
     background-color: black;
 }
 .mainLogo {
     width: 230px;
     height: 90px;
+
 }
 .header { 
     display: flex;
