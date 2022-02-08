@@ -2,6 +2,7 @@
 const client = require('./client');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
+const { defaultCheese } = require("../src/images/defaultCheese.png")
 
 async function buildTables() {
   try {
@@ -245,7 +246,7 @@ async function populateInitialData() {
       },
       {
         name: "Gruyere",
-        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, it's flavor is 'complicated.'",
+        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, its flavor is 'complicated.'",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "12",

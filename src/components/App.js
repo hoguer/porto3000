@@ -14,7 +14,8 @@ import {
   Wines,
   Cheeses,
   ProductPairs,
-  Register
+  Register,
+  Account
 } from "."
 
 const App = () => {
@@ -54,13 +55,14 @@ const App = () => {
         </div>
       </nav>
       <Routes>
+        <Route path="/" exact element={<Home />}/>
         <Route path="/about" element={<About />}/>
         <Route path="/cart" element={<Cart />}/>
-        <Route path="/" exact element={<Home />}/>
         <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/products/:id" element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
+        <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/products/wines" element={<Wines token={token} products={products} setProducts={setProducts}/>}/>
         <Route path="/products/cheeses" element={<Cheeses token={token} products={products} setProducts={setProducts}/>}/>
         <Route path="/products/productpairs" element={<ProductPairs token={token} products={products} setProducts={setProducts}/>}/>
