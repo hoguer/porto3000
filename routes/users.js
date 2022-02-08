@@ -1,4 +1,5 @@
 const usersRouter = require("express").Router();
+const bcrypt = require("bcrypt");
 const { getAllUsers, createUser, getUserByUsername, getOrdersByUser } = require("../db");
 const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
@@ -75,7 +76,9 @@ usersRouter.post("/login", async (req, res, next) => {
 
     try {
         const user = await getUserByUsername(username);
-        if (password === user.password) {
+        const hashedPassword = user.password;
+        const matchedPass = await bcrypt.compare(password, hashedPassword);
+        if (matchedPass) {
 
             const token = jwt.sign({ 
                 id: user.id, 
