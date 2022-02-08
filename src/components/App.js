@@ -3,11 +3,6 @@ import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
-
-import {
-  // getSomething
-} from '../api';
-
 import {
   About,
   Cart,
@@ -67,7 +62,7 @@ const App = () => {
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/products/:id" exact element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
-      
+
       </Routes>
     </div>
   </>;
