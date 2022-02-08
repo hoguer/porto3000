@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
-
 import {
   About,
   Cart,
@@ -11,11 +10,8 @@ import {
   Login,
   Products,
   SingleProduct,
-  Wines,
-  Cheeses,
-  ProductPairs,
   Register,
-  Account
+  Account,
 } from "."
 
 const App = () => {
