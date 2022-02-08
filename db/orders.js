@@ -1,17 +1,5 @@
 const client = require("./client");
 
-async function handleSelectAllFromOrders() {
-    try {
-        const {rows: orders} = await client.query(`
-            SELECT * 
-            FROM orders
-        `)
-        return orders
-    } catch (error) {
-        throw error;
-    };
-};
-
 async function getOrderById (id) {
     try{
         const {rows: [order]} = await client.query(`

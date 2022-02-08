@@ -18,6 +18,24 @@ async function createUser ({ firstname, lastname, email, imgURL, username, passw
     throw error;
   }
 } 
+async function getUser({ username, password }) {
+    try {
+      const user = await getUserByUsername(username);
+      const hashedPassword = user.password;
+      const matchedPass = await bcrypt.compare(password, hashedPassword);
+  
+      if (matchedPass) {
+        console.log('matched')
+        delete user.password;
+        return user;
+      } else {
+        console.log('didnt match')
+        return null;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 
 async function getAllUsers() {
   try {
