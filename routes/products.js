@@ -22,8 +22,7 @@ productsRouter.get("/:id", async (req, res, next) => {
     }
 });
 
-//Admin
-productsRouter.post("/", async (req, res, next) => {
+productsRouter.post("/", isAdmin, async (req, res, next) => {
     const { name, description, price, imgURL, inStock, category} = req.body;
     if(!name || !description || !price || !category) {
         next({ 
