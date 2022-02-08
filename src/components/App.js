@@ -15,12 +15,8 @@ import {
   Login,
   Products,
   SingleProduct,
-  Wines,
-  Cheeses,
-  ProductPairs,
   Register,
   Account,
-  ProductsByType
 } from "."
 
 const App = () => {
