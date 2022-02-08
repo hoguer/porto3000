@@ -1,16 +1,13 @@
 const client = require("./client");
 
-// Does not return order's products
 async function getOrderById (id) {
     try{
         const {rows: [order]} = await client.query(`
-
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE id=$1
-
         `, [id]);
         return order;
     } catch (error) {
@@ -18,7 +15,6 @@ async function getOrderById (id) {
     };
 };
 
-// Does not return order's products
 async function getAllOrders() {
     try {
         const {rows} = await client.query(`
@@ -26,7 +22,6 @@ async function getAllOrders() {
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
             INNER JOIN products AS p ON op."productId" = p.id;
-
         `);
         return rows;
     } catch (error) {
@@ -34,7 +29,6 @@ async function getAllOrders() {
     };
 };
 
-// Does not return order's products
 async function getOrdersByUser({id}) {
     try {
         const {rows: [order]} = await client.query(`
@@ -44,13 +38,12 @@ async function getOrdersByUser({id}) {
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "userID" = $1;
         `, [id])
-
+        return order;
     } catch (error) {
         throw error;
     };
 };
 
-// Does not return order's products
 async function getOrdersByProduct({id}) {
     try {
         const {rows: [order]} = await client.query(`
@@ -59,7 +52,6 @@ async function getOrdersByProduct({id}) {
             INNER JOIN order_products AS op ON op."orderId" = o.id
             INNER JOIN products AS p ON op."productId" = p.id;
             WHERE "productId" = $1;
-
         `, [id]);
         return order;
     } catch (error) {
@@ -67,7 +59,6 @@ async function getOrdersByProduct({id}) {
     }
 };
 
-// Does not return order's products
 async function getCartByUser({id}) {
     try {
         const{rows: [cart]} = await client.query(`
@@ -84,18 +75,69 @@ async function getCartByUser({id}) {
     };
 };
 
-// Does not return order's products
 async function createOrder({status, userID}) {
     try {
         const {rows: [order]} = await client.query(`
             INSERT INTO orders(status, "userID")
             VALUES ($1, $2)
             RETURNING *
-            `, [status, userID]);
+        `, [status, userID]);
         return order;
     } catch (error) {
         throw error;
     }
+};
+
+async function updateOrder({ id, ...fields }) {
+    try {
+        const toUpdate = {};
+        let setStrings = [];
+        let count = 1;
+        for(let column in fields) {
+          if(fields[column] !== undefined) {
+            toUpdate[column] = fields[column];
+            setStrings.push(`"${column}"=$${count}`)
+            count++;
+          };
+        };
+        const setStr = setStrings.join(',');
+        const {rows: [order]} = await client.query(`
+            UPDATE orders 
+            SET ${setStr}
+            WHERE id=${ id }
+            RETURNING *;
+        `, Object.values(toUpdate));
+          return order;
+      } catch (error) {
+        throw error;
+      };
+  };
+
+async function completeOrder({ id }) {
+    try {
+        const {rows: [order]} = await client.query(`
+            UPDATE orders
+            SET status = "completed"
+            WHERE id=$1
+            RETURNING *
+        `, [id]);
+        return order;
+    } catch (error){
+        throw error;
+    };
+};
+
+async function cancelOrder({ id }) {
+    try {
+        const {rows: [order]} = await client.query(`
+            Update orders
+            SET status = "canceled"
+            WHERE id=$1
+            RETURNING *
+        `, [id]);
+    } catch (error) {
+        throw error;
+    };
 };
 
 module.exports = {
@@ -104,5 +146,8 @@ module.exports = {
     getOrdersByUser,
     getOrdersByProduct,
     getCartByUser,
-    createOrder
+    createOrder,
+    updateOrder,
+    completeOrder,
+    cancelOrder
 }

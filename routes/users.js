@@ -1,19 +1,17 @@
 const usersRouter = require("express").Router();
-const {  getAllUsers, createUser, getUserByUsername } = require("../db");
-const { isLoggedIn } = require("./util")
+const { getAllUsers, createUser, getUserByUsername, getOrdersByUser } = require("../db");
+const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
-// NOT BE TO PUSHED INTO THE FINAL PRODUCT. 
-// Uncomment to see users in the localhost:4000/api/users
-usersRouter.get("/", async (req, res, next) =>{
-    console.log("Got here!")
-    try {
-        const allUsers = await getAllUsers();
-        res.send(allUsers)
-    } catch (error) {
-        throw error
-    }
-} );
+// usersRouter.get("/", async (req, res, next) =>{
+//     try {
+//         const allUsers = await getAllUsers();
+//         res.send(allUsers)
+//     } catch (error) {
+//         throw error
+//     }
+// } );
 
 usersRouter.post('/register', async (req, res, next) => {
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
@@ -36,8 +34,14 @@ usersRouter.post('/register', async (req, res, next) => {
         }
 
         const user = await createUser({
+            firstname:firstname,
+            lastname:lastname,
+            email: email,
+            imgURL: imgURL,
             username: username,
-            password: password
+            password: password,
+            isAdmin: isAdmin,
+            address: address
         });
 
         const token = jwt.sign({ 
@@ -71,7 +75,7 @@ usersRouter.post("/login", async (req, res, next) => {
 
     try {
         const user = await getUserByUsername(username);
-        if (username && password) {
+        if (password === user.password) {
 
             const token = jwt.sign({ 
                 id: user.id, 
@@ -101,8 +105,14 @@ usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
     }
 })
 
-usersRouter.use((error, req, res, next) => {
-    res.send(error);
+usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) => {
+    const {userId} = req.body
+    try {
+        const allOrdersByUser = await getOrdersByUser({userId})
+        res.send(allOrdersByUser)
+    } catch (error) {
+        throw error;
+    };
 });
 
 module.exports = usersRouter;
