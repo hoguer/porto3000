@@ -3,6 +3,7 @@ const { createProduct } = require("./products")
 const { createUser } = require("./users")
 const { createReview } = require("./reviews")
 
+
 async function buildTables() {
   try {
     client.connect();
