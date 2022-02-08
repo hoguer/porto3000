@@ -1,10 +1,10 @@
 body {
     background-color: black;
+    height: 100vh;
 }
 .mainLogo {
     width: 230px;
     height: 90px;
-
 }
 .header { 
     display: flex;
@@ -12,7 +12,6 @@ body {
     padding: 20px;
     background-color: black;
     color: #e7e4e3;
-    /* font-family: may have to take a png from the website to put on the logo */
 }
 .navigation {
     display: flex;
@@ -20,14 +19,11 @@ body {
     background-color: black;
     padding-bottom: 12px;
 }
-
 :any-link {
     text-decoration: none;
     color: white; 
     padding: 6px;   
-    
 }
-
 .cartIcon {
     width:15px;
     height: 15px;
