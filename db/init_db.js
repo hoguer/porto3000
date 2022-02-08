@@ -2,7 +2,6 @@
 const client = require('./client');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
-const { defaultCheese } = require("../src/images/defaultCheese.png")
 
 async function buildTables() {
   try {

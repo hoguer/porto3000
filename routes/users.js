@@ -1,9 +1,11 @@
 const usersRouter = require("express").Router();
-const { getAllUsers, createUser, getUserByUsername, getOrdersByUser } = require("../db");
+const bcrypt = require("bcrypt");
+const { getAllUsers, createUser, getUserByUsername, getOrdersByUser, patchUser, deleteUser } = require("../db");
 const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
+//REQUIRE ADMIN?
 // usersRouter.get("/", async (req, res, next) =>{
 //     try {
 //         const allUsers = await getAllUsers();
@@ -75,7 +77,11 @@ usersRouter.post("/login", async (req, res, next) => {
 
     try {
         const user = await getUserByUsername(username);
-        if (password === user.password) {
+        const hashedPassword = user.password;
+        const matchedPass = await bcrypt.compare(password, hashedPassword);
+        console.log("matched password", matchedPass)
+  
+        if (matchedPass) {
 
             const token = jwt.sign({ 
                 id: user.id, 
@@ -93,6 +99,7 @@ usersRouter.post("/login", async (req, res, next) => {
             res.send(409)
         }
     } catch (error) {
+        console.log("in the catch block")
         next(error)
     }
 })
@@ -112,7 +119,35 @@ usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) =
         res.send(allOrdersByUser)
     } catch (error) {
         throw error;
-    };
+    }
+})
+
+//NEW ADMIN PATCH AND DELETE
+usersRouter.patch('/:id', async (req, res, next)=>{
+    try{
+        const {id} = req.params;
+        const {isAdmin}= req.body;
+        const fields = {
+            isAdmin,
+        };
+        const updatedUser= await patchUser(id, fields);
+        res.send(updatedUser);
+        }catch (error){
+            next (error);
+        }
 });
+
+usersRouter.delete("/:id", isAdmin, async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const deletedUser = await deleteUser(id);
+      res.send(deletedUser);
+    } catch (error) {
+      next({
+        name: "DeleteError",
+        message: "Could not delete user",
+      });
+    }
+  });
 
 module.exports = usersRouter;
