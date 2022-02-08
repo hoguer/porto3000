@@ -77,9 +77,52 @@ async function getUserByUsername(userName){
   }
 }
 
+//NEW Patch and Delete Users (Admin)
+async function patchUser(id, fields = {}) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+  try {
+    if (setString > 0) {
+      await client.query(
+        `
+      UPDATE users
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *
+      `,
+        Object.values(fields)
+      );
+    }
+    return await getUserById(id);
+  } catch (error) {
+    console.error("Error with patchUser in db/users.");
+    throw error;
+  }
+}
+async function deleteUser(id) {
+    try {
+      const {
+        rows: [user],
+      } = await client.query(`
+      DELETE FROM users
+      WHERE id=$1
+  `, [id]);
+    } catch (error) {
+      console.error("Error with deleteUser in db/users.");
+      throw error;
+    }
+}
+
+
+
+
+
 module.exports = {
     createUser, 
     getAllUsers,
     getUserById, 
     getUserByUsername,
+    patchUser,
+    deleteUser,
 };
