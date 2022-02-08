@@ -14,9 +14,7 @@
     background-repeat: no-repeat;
     background-position: fixed;
     background-size: 100vw;
-    /* opacity: 0.8; */
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
