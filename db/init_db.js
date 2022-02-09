@@ -428,6 +428,30 @@ async function populateInitialData() {
         price: "50",
         category: "wine and cheese"
       },
+      {
+        name: "Pinot Noir & Gruyere",
+        description: "A classic pairing. Neither the wine nor the cheese will overpower each other, but instead meld in harmony between the nutty flavors of the cheese and the red berry taste of the Pinot Noir",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
+      {
+        name: "Sauvignon Blanc & Goat Cheese",
+        description: "This earthy pairing does not disappoint. The citrus and mineral notes of this wine works well to bring out the herbal and nutty flavors of goat cheese.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
+      {
+        name: "Cabernet Sauvignon & Aged Cheddar",
+        description: "Bold cheeses need bold partners. The Cabernet Sauvignon tastes wonderful with the fattiness of the aged cheddar. Neither will drown out the taste of the other, but instead have you pining for just one. more. bite.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
     ]
 
     const products = await Promise.all(wineAndCheeseData.map(createProduct));
