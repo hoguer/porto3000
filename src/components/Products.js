@@ -5,6 +5,7 @@ import "./Products.css"
 
 const Products = ({products, setProducts}) => {
     const [searchParams, setSearchParams] = useSearchParams()
+    const searchTerm = searchParams.get("searchTerm");
     const productType = searchParams.get("type") || ''
     console.log(productType)
 
@@ -22,6 +23,18 @@ const Products = ({products, setProducts}) => {
 
     useEffect(fetchProducts, []); 
 
+    const searchProducts = (product, text) => {
+        text = text.toLowerCase();
+        const {name, description} = product;
+        for (const field of [name, description]) {
+            if(field.toLowerCase().includes(text)) {
+                return true;
+            }
+        }
+    }
+
+    const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
+
     return <>
     <div className="outerContainerAll">
         <div className="productsNav">
@@ -29,11 +42,14 @@ const Products = ({products, setProducts}) => {
             <NavLink to="/products?type=wine">Wines</NavLink> |
             <NavLink to="/products?type=cheese">Cheeses</NavLink> |
             <NavLink to="/products?type=wine%20and%20cheese">Pairings</NavLink>
+            <input className="searchbar" type="text" name="search" placeholder="Search Products" value={searchTerm || ""} onChange={(event) => {
+                    setSearchParams({searchTerm:event.target.value})
+                }}/>
         </div>
         <div className="productCardContainerAll">
             <div className="productCardAll">
-                {
-                    products.map((product)=> {
+                { filteredProducts && filteredProducts.length ? 
+                    filteredProducts.map((product) => { 
                         if(!productType || product.category === productType){
                             return (
                                 <>
@@ -57,6 +73,7 @@ const Products = ({products, setProducts}) => {
                             )
                         }
                     })
+                    : null
                 }
             </div>
         </div>

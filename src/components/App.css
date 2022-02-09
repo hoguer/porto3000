@@ -4,6 +4,10 @@ body {
     padding: 0;
 }
 
+.mainLogo {
+    width: 50%
+}
+
 .header { 
     display: flex;
     justify-content: center;  
