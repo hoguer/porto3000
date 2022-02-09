@@ -47,8 +47,8 @@ const Products = ({products, setProducts}) => {
                                                 ${product.price}
                                             </div>
                                             <div className="productButtonsContainer">
-                                                <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
-                                                <button className="addToCartButton">Add to Cart</button>
+                                                <NavLink to={`/products/${product.id}`} className="button-81">View Product</NavLink>
+                                                <button className="button-81">Add to Cart</button>
                                             </div>
                                 
                                         </div>
