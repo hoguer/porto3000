@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import "./Account.css";
 
 
 const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
@@ -30,26 +31,30 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
   }, []);
     return ( 
     <>
-  <h1>Account</h1>
-      <div>
-          <label> First Name:</label>
-          <p>{firstname}</p>
+  {/* <h1 className="header">Account</h1> */}
+  
+  <div className="account-container">
+  <h3>Personal Information</h3>
+      <div className="accountdiv">
+          <label className="account-label"> First Name:</label> 
+          <p className="account-info">{firstname}</p>
       </div>
-      <div>
-          <label> Last Name:</label>
-          <p>{lastname}</p>
+      <div className="accountdiv">
+      <label className="account-label">Last Name:</label>
+      <p className="account-info">{lastname}</p>
       </div>
-      <div>
-          <label> Email:</label>
-          <p>{email}</p>
+      <div className="accountdiv">
+      <label className="account-label"> Email:</label>
+      <p className="account-info">{email}</p>
       </div>
-      <div>
-          <label> Username:</label>
-          <p>{username}</p>
+      <div className="accountdiv">
+      <label className="account-label"> Username:</label>
+      <p className="account-info">{username}</p>
       </div>
-      <div>
-          <label> Address:</label>
-          <p>{address}</p>
+      <div className="accountdiv">
+      <label className="account-label"> Address:</label>
+      <p className="account-info">{address}</p>
+      </div>
       </div>
                            
 

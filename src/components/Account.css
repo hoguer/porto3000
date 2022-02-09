@@ -1,0 +1,28 @@
+body{
+    align-items: center;
+}
+.header{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: black;
+    color: white;
+
+}
+.account-container{
+        /* display: grid;
+        grid-template-rows: 1fr; */
+        justify-items: center;
+        margin: 2rem auto;
+        border: 2px solid black;
+        width: 50vw;
+       background-color:blanchedalmond;
+       border-radius: 20px;
+       padding-left: 30px;
+}
+
+.account-label{
+    text-decoration: bold;
+}
+
+
