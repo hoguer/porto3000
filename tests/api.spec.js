@@ -8,19 +8,18 @@ const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 const { JWT_SECRET } = process.env;
 // const { rebuildDB } = require('../db/seedData');
 const { createUser, 
-    getUser, 
-    getUserById, 
-    getUserByUsername, 
+    getAllOrders, 
+    getCartByUser, 
+    createOrder, 
+    updateOrder,
     getProductById, 
-    getAllProducts,
-    createProduct,
+    getAllProducts, 
+    createProduct, 
     getProductByName,
-    getOrderById,
-    getAllOrders,
-    getOrdersByUser,
-    getOrdersByProduct,
-    getCartByUser,
-    createOrder } = require('../db');
+    getAllUsers, 
+    createUser, 
+    getUserByUsername, 
+    getOrdersByUser   } = require('../db');
 const client = require('../db/client')
 
 describe('API', () => {

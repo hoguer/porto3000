@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
 // const { rebuildDB } = require('../db/seedData');
 const { createUser, 
-    getUser, 
+    getUser,
+    getAllUsers,
     getUserById, 
-    getUserByUsername, 
-    getProductById, 
+    getUserByUsername,
+    getProductById,
     getAllProducts,
     createProduct,
     getProductByName,
@@ -16,7 +17,10 @@ const { createUser,
     getOrdersByUser,
     getOrdersByProduct,
     getCartByUser,
-    createOrder } = require('../db');
+    createOrder,
+    updateOrder,
+    completeOrder,
+    cancelOrder } = require('../db');
 const client = require('../db/client');
 
 describe('Database', () => {
@@ -26,6 +30,7 @@ describe('Database', () => {
   afterAll(async() => {
     await client.end();
   })
+
     describe('Users', () => {
       const userCredentials = {
          firstname: "Ricky",
@@ -36,6 +41,7 @@ describe('Database', () => {
           password: "PlainText", 
           isAdmin: true, 
           address: "yee"};
+
       describe('createUser({ username, password })', () => {
         let queriedUser;
         beforeAll(async () => {
@@ -64,7 +70,19 @@ describe('Database', () => {
           expect(userToCreateAndUpdate.password).toBeFalsy();
         })
       })
+
       describe('getUser({ username, password })', () => {
+        it('Uses getUserByUsername to get the user', () =>{ 
+          expect(getUserByUsername).toBeInTheDocument();
+        })
+        describe('getUserByUsername({ username })', () => {
+          it('Gets a user based on the user username', async () => {
+            let foundUser
+            let user = await getUserByUsername(foundUser);
+            expect(user.username).toBeTruthy();
+          })
+        })
+      })
         let verifiedUser;
         beforeAll(async () => {
           verifiedUser = await getUser(userCredentials);
@@ -80,6 +98,16 @@ describe('Database', () => {
           expect(verifiedUser.password).toBeFalsy();
         })
       })
+
+      describe('getAllUsers', () => {
+        it('Gets an array of objects, the users seed data', async () => {
+          let users = await getAllUsers()
+          expect(users).toBeTruthy();
+          expect(users.length > 0).toBeTruthy();
+        })
+      })
+    })
+
       describe('getUserById', () => {
         //so the id is cerealize so will this pass? ...
         it('Gets a user based on the user Id', async () => {
@@ -88,15 +116,7 @@ describe('Database', () => {
           expect(user.id).toBe(userToCreateAndUpdate.id);
         })
       })
-    })
-      describe('getUserByUsername', () => {
-          it('Gets a user based on the user username', async () => {
-            let user = await getUserByUsername(userToCreate.username);
-            expect(user).toBeTruthy();
-            expect(username).toBe(userToCreate.username);
-          })
-        })
-      })
+
       describe('products', () => {
         describe('createProduct', () => {
           let createdProduct;
@@ -117,6 +137,7 @@ describe('Database', () => {
             expect(createdProduct.category).toBe(productValues.category);
           })
         })
+
       describe('getAllProducts', () => {
         let product;
         beforeAll(async() => {
@@ -133,6 +154,7 @@ describe('Database', () => {
           }));
         })
       })
+
     describe('getProductById', () => {
       it('Gets a product by its id', async () => {
         const productValues = {
@@ -147,6 +169,7 @@ describe('Database', () => {
         expect(product.id).toBe(createdProduct.id);
       })
     })
+
     describe('getProductByName', () => {
          it('Gets a product by its name', async () => {
           const productValues = {
