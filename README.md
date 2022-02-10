@@ -34,7 +34,7 @@ Finally you can run `npm run server:dev` to start the web server.
 
 In a second terminal navigate back to the local repo and run `npm run client:dev` to start the react server. 
 
-This is set up to run on a proxy, so that you can make calls back to your `api` without needing absolute paths. You can instead `axios.get('/api/posts')` or whatever without needing to know the root URL.
+This is set up to run on a proxy, so that you can make calls back to your `api` without needing absolute paths. You can instead `axios.get('/api/products')` or whatever without needing to know the root URL.
 
 Once both dev commands are running, you can start developing... the server restarts thanks to `nodemon`, and the client restarts thanks to `react-scripts`.
 

@@ -12,7 +12,6 @@ async function getProductById(id) {
     }
 }
 
-
 async function getAllProducts() {
     try {
         const {rows} = await client.query(`
@@ -49,9 +48,31 @@ async function getProductByName(name) {
     }
 }
 
+//NEW PATCHPRODUCT
+async function patchProduct(id, fields = {}) {
+    const setString = Object.keys(fields)
+      .map((key, index) => `"${key}"=$${index + 1}`)
+      .join(", ");
+    try {
+      if (setString.length > 0) {
+        await client.query(`
+            UPDATE products
+            SET ${setString}
+            WHERE id=${id}
+            RETURNING *;
+            `, Object.values(fields));
+      }
+      return await getProductById(id);
+    } catch (error) {
+      console.error("Error with patchProduct in db/product");
+      throw error;
+    }
+  }
+
  module.exports = {
      getProductById,
      getAllProducts,
      createProduct,
-     getProductByName
+     getProductByName,
+     patchProduct
  }

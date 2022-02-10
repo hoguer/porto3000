@@ -1,5 +1,12 @@
 // This is the Web Server
 const express = require('express');
+// bring in jwt
+const jwt = require('jsonwebtoken');
+// bring in secret
+require('dotenv').config();
+const { JWT_SECRET = "notsosecret" } = process.env;
+const { getUserById } = require("./db")
+
 const server = express();
 
 // create logs for everything
@@ -12,6 +19,29 @@ server.use(express.json());
 // here's our static files
 const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));
+
+// Authorization Middleware to jwt.verify and set req.user
+server.use(async (req, res, next) => {
+  try {
+    const auth = req.header('Authorization'); // 'Bearer asdlfkjasdfgljh'
+    if(!auth) {
+      next();
+    } else {
+      // get token from auth header
+      let [, token] = auth.split(' ');
+      token = token.trim();
+
+      const userObj = jwt.verify(token, JWT_SECRET);
+
+      // set the user on the request
+      req.user = await getUserById(userObj.id);
+
+      next();
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 // here's our API
 server.use('/api', require('./routes'));
