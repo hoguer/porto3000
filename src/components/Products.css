@@ -69,7 +69,7 @@
     padding: 12px;
 }
 
-.button-81 {
+.productsButton{
   background-color: rgba(255, 255, 255, 0.536);
   border: 0 solid #e2e8f0;
   border-radius: 1rem;
@@ -92,13 +92,13 @@
   touch-action: manipulation;
 }
 
-.button-81:hover {
+.productsButton:hover{
   background-color: #4b1010;
   color: #fff;
 }
 
 @media (min-width: 768px) {
-  .button-81 {
+  .productsButton{
     font-size: 1.125rem;
     padding: 10px 10px;
   }
