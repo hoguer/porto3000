@@ -16,7 +16,7 @@ async function createUser({ firstname, lastname, email, imgURL, username, passwo
   } catch (error){
     throw error;
   }
-} 
+}
 
 async function getUser({username, password}) {
   if (!username || !password) {
