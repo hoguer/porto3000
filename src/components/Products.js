@@ -25,8 +25,8 @@ const Products = ({products, setProducts, currentUser}) => {
 
     const searchProducts = (product, text) => {
         text = text.toLowerCase();
-        const {name, description} = product;
-        for (const field of [name, description]) {
+        const {name} = product;
+        for (const field of [name]) {
             if(field.toLowerCase().includes(text)) {
                 return true;
             }
@@ -63,16 +63,18 @@ const Products = ({products, setProducts, currentUser}) => {
                             return (
                                     <div key={product.id}>
                                         <div className="cardContentContainer">
-                                            <div className="cardContent">
+                                            <div className="cardName">
                                                 {product.name}
+                                            </div>
+                                            <div className="cardImage">
                                                 <img src={product.imgURL} className="productImg"></img>
                                             </div>
                                             <div className="itemPrice">
                                                 ${product.price}
                                             </div>
                                             <div className="productButtonsContainer">
-                                                <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
-                                                <button className="addToCartButton" onClick={() => {addToCart()}}>Add to Cart</button>
+                                                <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
+                                                <button className="productsButton" onClick={() => {addToCart()}}>Add to Cart</button>
                                             </div>
                                 
                                         </div>
