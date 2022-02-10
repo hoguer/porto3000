@@ -77,7 +77,7 @@ async function getUserByUsername(userName){
   }
 }
 
-//NEW Patch and Delete Users (Admin)
+//NEW Patch and Delete Users (Admin)//
 async function patchUser(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)

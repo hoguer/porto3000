@@ -122,7 +122,7 @@ usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) =
     }
 })
 
-//NEW ADMIN PATCH AND DELETE
+//NEW ADMIN PATCH AND DELETE//
 usersRouter.patch('/:id', async (req, res, next)=>{
     try{
         const {id} = req.params;

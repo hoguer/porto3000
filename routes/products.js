@@ -43,7 +43,7 @@ productsRouter.post("/", async (req, res, next) => {
     }
 })
 
-//  NEW PATCH PRODUCTS
+//  NEW PATCH PRODUCTS//
 productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
     try{
         const {id} = req.params;
