@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const { JWT_SECRET = 'neverTell' } = process.env;
 
-//REQUIRE ADMIN?
 // usersRouter.get("/", async (req, res, next) =>{
 //     try {
 //         const allUsers = await getAllUsers();
@@ -15,6 +14,7 @@ const { JWT_SECRET = 'neverTell' } = process.env;
 //     }
 // } );
 
+// POST /api/users/register
 usersRouter.post('/register', async (req, res, next) => {
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
     const _user = await getUserByUsername(username);
@@ -97,6 +97,7 @@ usersRouter.post('/login', async (req, res, next) => {
     }
 });
 
+// GET /api/users/me
 usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
     try {
         res.send(req.user);
@@ -105,6 +106,7 @@ usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
     }
 });
 
+// GET /api/users/:userId/orders
 usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) => {
     const {userId} = req.body
     try {

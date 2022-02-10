@@ -2,7 +2,7 @@ const client = require("./client");
 const bcrypt = require("bcrypt");
 const SALT_COUNT = 10;
 
-async function createUser ({ firstname, lastname, email, imgURL, username, password, isAdmin, address}) {
+async function createUser({ firstname, lastname, email, imgURL, username, password, isAdmin, address}) {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
   try {
     const { rows: [user] } = await client.query(`
@@ -50,19 +50,20 @@ async function getAllUsers() {
 };
 
 async function getUserById(id){
-    try{
-      const {rows:[user] } = await client.query(`
-        SELECT * 
-        FROM users
-        WHERE id= $1;
-      `, [id]);
+  try{
+    const {rows:[user] } = await client.query(`
+      SELECT * 
+      FROM users
+      WHERE id= $1;
+    `, [id]);
     if (!user) return null;
     delete user.password;
     return user;
-} catch (error) {
+  } catch (error) {
     throw error;
   }
 }
+
 async function getUserByUsername(userName){
   try{
     const {rows: [user] }= await client.query(`
@@ -70,9 +71,8 @@ async function getUserByUsername(userName){
       FROM users
       WHERE username = $1; 
     `, [userName]);
-  
-  return user;
-} catch (error){
+    return user;
+  } catch (error){
     throw error;
   }
 }
@@ -114,15 +114,11 @@ async function deleteUser(id) {
     }
 }
 
-
-
-
-
 module.exports = {
-    createUser, 
+    createUser,
     getUser,
     getAllUsers,
-    getUserById, 
+    getUserById,
     getUserByUsername,
     patchUser,
     deleteUser,
