@@ -1,6 +1,5 @@
 const client = require("./client");
 const bcrypt = require("bcrypt");
-const { user } = require("pg/lib/defaults");
 const SALT_COUNT = 10;
 
 async function createUser ({ firstname, lastname, email, imgURL, username, password, isAdmin, address}) {
@@ -11,43 +10,44 @@ async function createUser ({ firstname, lastname, email, imgURL, username, passw
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       ON CONFLICT (username) DO NOTHING
       RETURNING *
-      `, [firstname, lastname, email, imgURL, username, hashedPassword, isAdmin, address]);
+    `, [firstname, lastname, email, imgURL, username, hashedPassword, isAdmin, address]);
     delete user.password;
     return user;
   } catch (error){
     throw error;
   }
-} 
-async function getUser({ username, password }) {
-    try {
-      const user = await getUserByUsername(username);
-      const hashedPassword = user.password;
-      const matchedPass = await bcrypt.compare(password, hashedPassword);
-  
-      if (matchedPass) {
-        console.log('matched')
-        delete user.password;
-        return user;
-      } else {
-        console.log('didnt match')
-        return null;
-      }
-    } catch (error) {
-      throw error;
-    }
+}
+
+async function getUser({username, password}) {
+  if (!username || !password) {
+    return;
   }
 
-  async function getAllUsers() {
-    try {
-      const {rows} = await client.query(`
-        SELECT * FROM users
-      `);
-      delete user.password;
-      return rows;
-    } catch (error) {
-      throw error;
-    };
+  try {
+    const user = await getUserByUsername(username);
+    if(!user) return;
+
+    const hashedPassword = user.password;
+    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+    if(!passwordsMatch) return;
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getAllUsers() {
+  try {
+    const {rows} = await client.query(`
+      SELECT * FROM users
+    `);
+    delete user.password;
+    return rows;
+  } catch (error) {
+    throw error;
   };
+};
 
 async function getUserById(id){
     try{
