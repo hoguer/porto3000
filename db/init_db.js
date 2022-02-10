@@ -3,7 +3,7 @@ const client = require('./client');
 const { createOrder } = require('./orders');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
-// const { getOrdersByProduct } = require("./orders")
+const { getOrdersByProduct } = require("./orders")
 
 async function buildTables() {
   try {
@@ -454,40 +454,40 @@ async function createInitialUsers() {
     throw error;
   };
 };
-// async function createInitialOrders() {
-//   console.log("Starting to create orders");
-//   try {
-//     const ordersData = [
-//       {status: "created", userId: "1", datePlaced: "now()"},
-//       {status: "created", userId: "2", datePlaced: "now()"},
-//      ]
+async function createInitialOrders() {
+  console.log("Starting to create orders");
+  try {
+    const ordersData = [
+      {status: "created", userId: "1", datePlaced: "now()"},
+      {status: "created", userId: "2", datePlaced: "now()"},
+     ]
 
-//     const orders = await Promise.all(ordersData.map(createOrder));
+    const orders = await Promise.all(ordersData.map(createOrder));
 
-//   } catch (error) {
-//     throw error;
-//   };
-// };
+  } catch (error) {
+    throw error;
+  };
+};
 
-// async function createInitialOrderProducts() {
-//   console.log("Starting to create order_products");
-//   try {
-//     const orderProductsData = [
-//       {productId: "1", orderId: "1", price: "88", quantity: "1", userId:"1" },
-//       {productId: "2", orderId: "2", price: "35", quantity: "2", userId:"2" },
-//      ]
+async function createInitialOrderProducts() {
+  console.log("Starting to create order_products");
+  try {
+    const orderProductsData = [
+      {productId: "1", orderId: "1", price: "88", quantity: "1", userId:"1" },
+      {productId: "2", orderId: "2", price: "35", quantity: "2", userId:"2" },
+     ]
 
-//     const orderProducts = await Promise.all(orderProductsData.map(getOrdersByProduct));
+    const orderProducts = await Promise.all(orderProductsData.map(getOrdersByProduct));
 
-//   } catch (error) {
-//     throw error;
-//   };
-// };
+  } catch (error) {
+    throw error;
+  };
+};
 
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
-  // .then(createInitialOrders)
-  // .then(createInitialOrderProducts)
+  .then(createInitialOrders)
+  .then(createInitialOrderProducts)
   .catch(console.error)
   .finally(() => client.end());

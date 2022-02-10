@@ -6,7 +6,7 @@ async function getOrderById (id) {
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
-            INNER JOIN products AS p ON op."productId" = p.id;
+            INNER JOIN products AS p ON op."productId" = p.id
             WHERE id=$1
         `, [id]);
         return order;
@@ -21,7 +21,7 @@ async function getAllOrders() {
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
-            INNER JOIN products AS p ON op."productId" = p.id;
+            INNER JOIN products AS p ON op."productId" = p.id
         `);
         return rows;
     } catch (error) {
@@ -35,7 +35,7 @@ async function getOrdersByUser({id}) {
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
-            INNER JOIN products AS p ON op."productId" = p.id;
+            INNER JOIN products AS p ON op."productId" = p.id
             WHERE "userID" = $1;
         `, [id])
         return order;
@@ -50,8 +50,8 @@ async function getOrdersByProduct({id}) {
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
-            INNER JOIN products AS p ON op."productId" = p.id;
-            WHERE "productId" = $1;
+            INNER JOIN products AS p ON op."productId" = p.id
+            WHERE "productId" = $1
         `, [id]);
         return order;
     } catch (error) {
@@ -65,9 +65,9 @@ async function getCartByUser({id}) {
             SELECT o.*,  p.name
             FROM orders AS o
             INNER JOIN order_products AS op ON op."orderId" = o.id
-            INNER JOIN products AS p ON op."productId" = p.id;
+            INNER JOIN products AS p ON op."productId" = p.id
             WHERE "userID" = $1
-            AND status = "created";
+            AND status = "created"
         `, [id])
         return cart;
     } catch (error) {
