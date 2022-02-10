@@ -52,7 +52,9 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
                 <div className="loginForm">
                     <input type="text" placeholder="username" onChange={event => setUsername(event.target.value)} value={username} />
                     <input type="password" placeholder="password" onChange={event => setPassword(event.target.value)} value={password} />
+                <div>
                     <button type="submit" className="submit"> Submit </button>  
+                </div>
                 </div>   
         </form>
     </>
