@@ -11,7 +11,7 @@ async function createUser({ firstname, lastname, email, imgURL, username, passwo
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       ON CONFLICT (username) DO NOTHING
       RETURNING *
-    `, [firstname, lastname, email, imgURL, username, password, isAdmin, address]);
+    `, [firstname, lastname, email, imgURL, username, hashedPassword, isAdmin, address]);
     delete user.password;
     return user;
   } catch (error){
@@ -116,10 +116,10 @@ async function deleteUser(id) {
 }
 
 module.exports = {
-    createUser, 
+    createUser,
     getUser,
     getAllUsers,
-    getUserById, 
+    getUserById,
     getUserByUsername,
     patchUser,
     deleteUser,
