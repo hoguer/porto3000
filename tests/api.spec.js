@@ -3,11 +3,12 @@ const axios = require('axios');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
+const { SERVER_ADDRESS = 'http://localhost:', PORT = 4000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 const { JWT_SECRET } = process.env;
 // const { rebuildDB } = require('../db/seedData');
-const { createUser, 
+const { getUserByUsername,
+    createUser, 
     getAllOrders, 
     getCartByUser, 
     createOrder, 
@@ -17,8 +18,6 @@ const { createUser,
     createProduct, 
     getProductByName,
     getAllUsers, 
-    createUser, 
-    getUserByUsername, 
     getOrdersByUser   } = require('../db');
 const client = require('../db/client')
 
@@ -37,10 +36,7 @@ describe('API', () => {
   afterAll(async() => {
     await client.end();
   })
-  it('responds to a request at /api/health with a message specifying it is healthy', async () => {
-    const res = await axios.get(`${API_URL}/api/health`);
-    expect(typeof res.data.message).toEqual('string');
-  });
+  //deleted it about api/health
   describe('Users', () => {
     const newUser = { 
       firstname: "Richard", 
@@ -63,6 +59,11 @@ describe('API', () => {
           tooShortResponse = err.response;
         }
       })
+      //added it for getUserByUsername(username)
+      it('Checks if a username exists already.', () => {
+        expect(getUserByUsername).toBeTruthy();
+        // expect(registeredUser.username).toEqual(newUser.username);
+      });
       it('Creates a new user.', () => {
         expect(typeof registeredUser).toEqual('object');
         expect(registeredUser.username).toEqual(newUser.username);

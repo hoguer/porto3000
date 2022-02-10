@@ -30,7 +30,6 @@ describe('Database', () => {
   afterAll(async() => {
     await client.end();
   })
-
     describe('Users', () => {
       const userCredentials = {
          firstname: "Ricky",
@@ -41,7 +40,6 @@ describe('Database', () => {
           password: "PlainText", 
           isAdmin: true, 
           address: "yee"};
-
       describe('createUser({ username, password })', () => {
         let queriedUser;
         beforeAll(async () => {
