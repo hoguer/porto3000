@@ -5,10 +5,11 @@ const About = () => {
     return <>
     <div className="aboutContainer">
         <div className="about">
-            <h2>Words about porto3000</h2>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nunc quam, elementum ut odio non, tempus varius risus. Duis sollicitudin enim et felis rhoncus, et ultricies lacus euismod. Aliquam tincidunt nec est ac lacinia. Quisque eget massa eget est facilisis pretium. Aenean enim lacus, ultricies non libero ut, aliquam accumsan.</p>
+            <h2>Hello to a new world</h2>
+            <p>From the crisp air and radiant California sun, the drinks and products of Porto 3000 are of the finest nature. Ethically sourced from our own vineyards, we strive for excellence in every sip and bite.</p>
+            <h2>Our founders</h2>  
         </div>
-            
+  
         <div className="kriselda">
             <h2>Kriselda Bonifacio</h2>
             <img className="developerPhoto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png" alt="profile silhouette" />

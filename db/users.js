@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { user } = require("pg/lib/defaults");
 const SALT_COUNT = 10;
 
-async function createUser ({ firstname, lastname, email, imgURL, username, password, isAdmin, address}) {
+async function createUser({ firstname, lastname, email, imgURL, username, password, isAdmin, address}) {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
   try {
     const { rows: [user] } = await client.query(`
@@ -11,58 +11,60 @@ async function createUser ({ firstname, lastname, email, imgURL, username, passw
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       ON CONFLICT (username) DO NOTHING
       RETURNING *
-      `, [firstname, lastname, email, imgURL, username, password, isAdmin, address]);
+    `, [firstname, lastname, email, imgURL, username, password, isAdmin, address]);
     delete user.password;
     return user;
   } catch (error){
     throw error;
   }
 } 
-async function getUser({ username, password }) {
-    try {
-      const user = await getUserByUsername(username);
-      const hashedPassword = user.password;
-      const matchedPass = await bcrypt.compare(password, hashedPassword);
-  
-      if (matchedPass) {
-        console.log('matched')
-        delete user.password;
-        return user;
-      } else {
-        console.log('didnt match')
-        return null;
-      }
-    } catch (error) {
-      throw error;
-    }
+
+async function getUser({username, password}) {
+  if (!username || !password) {
+    return;
   }
 
-  async function getAllUsers() {
-    try {
-      const {rows} = await client.query(`
-        SELECT * FROM users
-      `);
-      delete user.password;
-      return rows;
-    } catch (error) {
-      throw error;
-    };
-  };
+  try {
+    const user = await getUserByUsername(username);
+    if(!user) return;
 
-async function getUserById(id){
-    try{
-      const {rows:[user] } = await client.query(`
-        SELECT * 
-        FROM users
-        WHERE id= $1;
-      `, [id]);
-    if (!user) return null;
+    const hashedPassword = user.password;
+    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+    if(!passwordsMatch) return;
     delete user.password;
     return user;
-} catch (error) {
+  } catch (error) {
     throw error;
   }
 }
+
+async function getAllUsers() {
+  try {
+    const {rows} = await client.query(`
+      SELECT * FROM users
+    `);
+    delete user.password;
+    return rows;
+  } catch (error) {
+    throw error;
+  };
+};
+
+async function getUserById(id){
+  try{
+    const {rows:[user] } = await client.query(`
+      SELECT * 
+      FROM users
+      WHERE id= $1;
+    `, [id]);
+    if (!user) return null;
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getUserByUsername(userName){
   try{
     const {rows: [user] }= await client.query(`
@@ -70,16 +72,55 @@ async function getUserByUsername(userName){
       FROM users
       WHERE username = $1; 
     `, [userName]);
-    delete user.password
-  return user;
-} catch (error){
+    return user;
+  } catch (error){
     throw error;
   }
 }
+
+//NEW Patch and Delete Users (Admin)
+async function patchUser(id, fields = {}) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+  try {
+    if (setString > 0) {
+      await client.query(
+        `
+      UPDATE users
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *
+      `,
+        Object.values(fields)
+      );
+    }
+    return await getUserById(id);
+  } catch (error) {
+    console.error("Error with patchUser in db/users.");
+    throw error;
+  }
+}
+async function deleteUser(id) {
+    try {
+      const {
+        rows: [user],
+      } = await client.query(`
+      DELETE FROM users
+      WHERE id=$1
+  `, [id]);
+    } catch (error) {
+      console.error("Error with deleteUser in db/users.");
+      throw error;
+    }
+}
+
 module.exports = {
     createUser, 
     getUser,
     getAllUsers,
     getUserById, 
     getUserByUsername,
+    patchUser,
+    deleteUser,
 };
