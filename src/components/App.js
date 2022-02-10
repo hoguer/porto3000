@@ -58,7 +58,7 @@ const App = () => {
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/products/:id" exact element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register currentUser= {currentUser} token={token} />}/>
-
+        <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
       </Routes>
     </div>
   </>;
