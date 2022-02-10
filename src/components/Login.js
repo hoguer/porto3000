@@ -11,7 +11,7 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
 
     const loginUser = () => {
 
-        if (!username && !password) {
+        if (!username || !password) {
         return;
     }
     console.log('Login User is being called!');

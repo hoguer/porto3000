@@ -71,6 +71,7 @@ async function getUserByUsername(userName){
       FROM users
       WHERE username = $1; 
     `, [userName]);
+  
   return user;
 } catch (error){
     throw error;
@@ -120,6 +121,7 @@ async function deleteUser(id) {
 
 module.exports = {
     createUser, 
+    getUser,
     getAllUsers,
     getUserById, 
     getUserByUsername,

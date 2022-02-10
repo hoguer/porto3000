@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { NavLink, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import "./Products.css"
+import "./Products.css";
 
-const Products = ({products, setProducts}) => {
+const Products = ({products, setProducts, currentUser}) => {
     const [searchParams, setSearchParams] = useSearchParams()
     const searchTerm = searchParams.get("searchTerm");
     const productType = searchParams.get("type") || ''
@@ -35,6 +35,15 @@ const Products = ({products, setProducts}) => {
 
     const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
 
+    const addToCart = (status, userId) => {
+        console.log(currentUser)
+        console.log("Add to Cart was pushed");
+        axios.post("/api/orders", {status, userId})
+            .then(res => { 
+                console.log("Adding item to order", res)
+            })
+    }
+
     return <>
     <div className="outerContainerAll">
         <div className="productsNav">
@@ -52,7 +61,6 @@ const Products = ({products, setProducts}) => {
                     filteredProducts.map((product) => { 
                         if(!productType || product.category === productType){
                             return (
-                                <>
                                     <div key={product.id}>
                                         <div className="cardContentContainer">
                                             <div className="cardContent">
@@ -64,12 +72,11 @@ const Products = ({products, setProducts}) => {
                                             </div>
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
-                                                <button className="addToCartButton">Add to Cart</button>
+                                                <button className="addToCartButton" onClick={() => {addToCart()}}>Add to Cart</button>
                                             </div>
                                 
                                         </div>
                                     </div>
-                                </>
                             )
                         }
                     })
