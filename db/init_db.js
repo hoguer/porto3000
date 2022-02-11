@@ -332,38 +332,6 @@ async function populateInitialData() {
         category: "cheese"
       },
       {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
         name: "Extra Mature Real Yorkshire Wensleydalee",
         description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
         imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
