@@ -479,6 +479,24 @@ async function createInitialReviews() {
   }
 }
 
+async function addOrderProdcts() {
+  console.log("Starting to create Reviews");
+  try {
+    const reviewData = [
+      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
+      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
+      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
+      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
+    ]
+
+    const reviews = await Promise.all(reviewData.map(createReview));
+    console.log("All initial reviews created")
+  } catch (error) {
+    throw error;
+  }
+}
+
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
