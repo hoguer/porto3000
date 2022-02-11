@@ -21,7 +21,7 @@ ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
     };
 });
 
-ordersRouter.post("/", isLoggedIn, async (req, res, next) => {
+ordersRouter.post("/", async (req, res, next) => {
     const { status, userId } = req.body;
     try {
         const newOrder = await createOrder({status, userId})

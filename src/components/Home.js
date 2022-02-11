@@ -8,6 +8,7 @@ import featImg3 from "../images/Oscypki.jpg"
 
 const Home = () => {
     return <>
+    <h1 className="slogan">Let us be your new Local Host</h1>
       <div className="componentContainerHome">
         <div className="featuredContainer">
             <img src={img1} className="img1"/>
@@ -39,7 +40,6 @@ const Home = () => {
             </div>
         </div>
       </div>
-
     </>
 }
 

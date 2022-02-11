@@ -1,15 +1,15 @@
-// code to build and initialize DB goes here
 const client = require('./client');
 const { createOrder } = require('./orders');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
-const { getOrdersByProduct } = require("./orders")
+const { createReview } = require("./reviews")
+
 
 async function buildTables() {
   try {
     client.connect();
       await client.query(`
-        DROP TABLE IF EXISTS users, products, orders, order_products;
+        DROP TABLE IF EXISTS users, products, orders, order_products, reviews;
       `);
       await client.query(`
         CREATE TABLE users(
@@ -41,7 +41,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY, 
           status VARCHAR(255) DEFAULT 'created', 
-          "userID" INTEGER REFERENCES users(id), 
+          "userId" INTEGER REFERENCES users(id), 
           "datePlaced" timestamp DEFAULT now()
         );
       `);
@@ -52,8 +52,18 @@ async function buildTables() {
           "productId" INTEGER REFERENCES products(id),
           "orderId" INTEGER REFERENCES orders(id), 
           price INTEGER NOT NULL,
-          quantity INTEGER NOT NULL DEFAULT 0,
-          "userID" INTEGER REFERENCES users(id)
+          quantity INTEGER NOT NULL DEFAULT 0
+        );
+      `);
+
+      await client.query(`
+        CREATE TABLE reviews(
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          content VARCHAR(1000) CONSTRAINT CK_reviews_content CHECK (10 <= length(content)),
+          stars INTEGER NOT NULL CHECK (0 <= stars AND stars <= 5),
+          "userId" INTEGER REFERENCES users(id),
+          "productId" INTEGER REFERENCES products(id)
         );
       `);
     console.log("finished building THE tables")
@@ -61,12 +71,9 @@ async function buildTables() {
     throw error;
   }
 }
-/* 
-Seed data 
-*/
+
 async function populateInitialData() {
   try {
-    // create useful starting data
     console.log("populating our wine and cheese tables");
     const wineAndCheeseData = [
       {
@@ -326,38 +333,6 @@ async function populateInitialData() {
         category: "cheese"
       },
       {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
         name: "Extra Mature Real Yorkshire Wensleydalee",
         description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
         imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
@@ -424,8 +399,7 @@ async function populateInitialData() {
     ]
 
     const products = await Promise.all(wineAndCheeseData.map(createProduct));
-    console.log("Wine and Cheese", wineAndCheeseData)
-    console.log("All products created", products)
+    console.log("All initial products created")
 
   } catch (error) {
     throw error;
@@ -449,7 +423,7 @@ async function createInitialUsers() {
     ]
 
     const users = await Promise.all(userData.map(createUser));
-
+    console.log("All initial users created")
   } catch (error) {
     throw error;
   };
@@ -484,10 +458,27 @@ async function createInitialOrderProducts() {
   };
 };
 
+async function createInitialReviews() {
+  console.log("Starting to create Reviews");
+  try {
+    const reviewData = [
+      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
+      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
+      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
+      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
+    ]
+
+    const reviews = await Promise.all(reviewData.map(createReview));
+    console.log("All initial reviews created")
+  } catch (error) {
+    throw error;
+  }
+}
+
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
-  .then(createInitialOrders)
-  .then(createInitialOrderProducts)
+  .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());

@@ -22,8 +22,7 @@ productsRouter.get("/:id", async (req, res, next) => {
     }
 });
 
-//Admin
-productsRouter.post("/", async (req, res, next) => {
+productsRouter.post("/", isAdmin, async (req, res, next) => {
     const { name, description, price, imgURL, inStock, category} = req.body;
     if(!name || !description || !price || !category) {
         next({ 
@@ -43,7 +42,7 @@ productsRouter.post("/", async (req, res, next) => {
     }
 })
 
-//  NEW PATCH PRODUCTS//
+//  NEW PATCH PRODUCTS
 productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
     try{
         const {id} = req.params;
@@ -60,6 +59,5 @@ productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
         });
     }
 });
-
   
 module.exports = productsRouter;
