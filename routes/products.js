@@ -59,6 +59,5 @@ productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
         });
     }
 });
-
   
 module.exports = productsRouter;

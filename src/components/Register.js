@@ -60,14 +60,32 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 event.preventDefault();
                 registerUser();
                 clearForm(); }}>
-                <input type="text" placeholder="Name" onChange={event => setFirstname(event.target.value)} value={firstname} required/>
-                <input type="text" placeholder="Last Name" onChange={event => setLastname(event.target.value)} value={lastname} required/>
-                <input type="email" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} required/>
-                <input type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} value={username} requiredrequired/>
-                <input type="current-password" placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
-                <input type="new-password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} required/>
-                <input type="text" placeholder="Street Address" onChange={event => setAddress(event.target.value)} value={address} />
-                <button type="submit" className="submit"> Submit </button> 
+                <div className="leftRegister">
+                    <div>
+                        First Name: <input type="text" placeholder="John" onChange={event => setFirstname(event.target.value)} value={firstname} required/>
+                    </div>
+                    <div>
+                        Last Name: <input type="text" placeholder="Doe" onChange={event => setLastname(event.target.value)} value={lastname} required/>
+                    </div>
+                    <div>
+                        Email: <input type="email" placeholder="JohnDoe@email.com" onChange={event => setEmail(event.target.value)} value={email} required/>
+                    </div>
+                    <div>
+                        Address: <input type="text" placeholder="123 John Street" onChange={event => setAddress(event.target.value)} value={address} />
+                    </div>
+                </div>
+                <div className="rightRegister">
+                    <div>
+                        Username: <input type="text" placeholder="JohnDoe1" onChange={event => setUsername(event.target.value)} value={username} requiredrequired/>
+                    </div>
+                    <div>
+                        Password: <input type="current-password" placeholder="JohnsPassword" onChange={event => setPassword(event.target.value)} value={password} />
+                    </div>
+                    <div>
+                        Confirm Password: <input type="new-password" placeholder="JohnsPassword" onChange={event => setConfirmPassword(event.target.value)} value={confirmPassword} required/>
+                    </div>
+                    <button type="submit" className="submit"> Submit </button> 
+                </div>
             </form>
                                         
         </>

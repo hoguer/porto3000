@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import "./LoginRegister.css" 
+import "./LoginRegister.css"
 
 const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
     console.log('In login user!');
@@ -49,9 +49,13 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
         <form onSubmit={(event) => {event.preventDefault();
             loginUser();
             clearForm(); }}>
-                <input type="text" placeholder="username" onChange={event => setUsername(event.target.value)} value={username} />
-                <input type="password" placeholder="password" onChange={event => setPassword(event.target.value)} value={password} />
-            <button type="submit" className="submit"> Submit </button>     
+                <div className="loginForm">
+                    <input type="text" placeholder="username" onChange={event => setUsername(event.target.value)} value={username} />
+                    <input type="password" placeholder="password" onChange={event => setPassword(event.target.value)} value={password} />
+                <div>
+                    <button type="submit" className="submit"> Submit </button>  
+                </div>
+                </div>   
         </form>
     </>
 )
