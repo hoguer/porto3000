@@ -28,11 +28,11 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 } else if (res.data.status === 'UserExists') {
                     alert('That username already exists. Please pick a different username.');
                 } else {
-                    setCurrentUser(res.config.data);
+                    setCurrentUser(res.data.user);
                     localStorage.setItem('token', res.data.token);
                     console.log(localStorage.getItem('token'));
 
-                    if (res.config.data) {
+                    if (res.data.user) {
                         setIsLoggedIn(true);
                         navigate('/account');
                     }

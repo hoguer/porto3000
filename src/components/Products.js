@@ -8,12 +8,10 @@ const Products = ({products, setProducts, currentUser}) => {
     const navigate = useNavigate();
     const searchTerm = searchParams.get("searchTerm");
     const productType = searchParams.get("type") || ''
-    console.log(productType)
 
     const fetchProducts = async () => {
         try {
             const response = await axios.get('api/products');
-            console.log(response.data)
             const result = response.data
             console.log(result)
             setProducts(result);
@@ -42,6 +40,8 @@ const Products = ({products, setProducts, currentUser}) => {
         axios.post("/api/orders", {status, userId})
             .then(res => { 
                 console.log("Adding item to order", res)
+                console.log("userId", userId)
+                console.log("status", status)
                 navigate("/cart")
             })
     };
@@ -76,7 +76,7 @@ const Products = ({products, setProducts, currentUser}) => {
                                             </div>
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
-                                                <button className="productsButton" onClick={() => {addToCart()}}>Add to Cart</button>
+                                                <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
                                             </div>
                                 
                                         </div>
