@@ -11,6 +11,10 @@ body {
     width: 50%
 }
 
+.mainLogo {
+    width: 50%
+}
+
 .header { 
     display: flex;
     justify-content: center;  

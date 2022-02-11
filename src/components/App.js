@@ -11,10 +11,7 @@ import {
   Products,
   SingleProduct,
   Register,
-  Account,
-  Wines,
-  Cheeses,
-  ProductPairs,
+  Account
 } from "."
 
 const App = () => {
