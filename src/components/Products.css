@@ -2,7 +2,7 @@
     text-align: center;
 }
 .productsNav{
-    background-color: rgb(119, 20, 3);
+    background-color: #5E080D;
     color: white;
     display: flex;
     justify-content: center;
@@ -13,34 +13,37 @@
     background-image: url("../images/vineyard.jpg");
     background-repeat: no-repeat;
     background-position: fixed;
-    background-size: 100vw;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
     overflow: auto;
-    width: 99vw;
-    height: 75vh;
+    width: 100vw;
+    height: 100vh;
     color:black;
-    
 }
 .productCardAll {
     color:black;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 1200px;
+    justify-content: center;
+    width: 85vw;
 }
 .productImg {
+    width: 150px;
     height: 200px;
-    width: 180px;
-    margin-top: 8px;  
+    transition: .2s ease-in-out;
+}
+.productImg:hover {
+    transform: scale(1.1);
 }
 .cardContentContainer {
     padding: 10px;
 }
-.cardContent {
-    background-color: rgb(255, 255, 255);
+.cardName, .cardImage{
+    background-color: white;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -48,12 +51,6 @@
     text-align: center;
     border: solid white 3px;
     padding: 10px;
-    width: 260px;
-    height: 280px;
-    font-size: 18px;
-}
-.productName{
-    width: 230px;
 }
 .itemPrice{
     text-align: center;
@@ -67,38 +64,14 @@
     justify-content: space-evenly;
     padding: 12px;
 }
-
-.button-81 {
-  background-color: rgba(255, 255, 255, 0.536);
-  border: 0 solid #e2e8f0;
-  border-radius: 1rem;
-  box-sizing: border-box;
-  color: #0d172a;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.0rem;
-  font-weight: 300;
-  line-height: 1;
-  padding: 10px 10px;
-  text-align: center;
-  text-decoration: none #2a260d solid;
-  text-decoration-thickness: auto;
-  transition: all .1s cubic-bezier(.4, 0, .2, 1);
-  box-shadow: 0px 1px 2px rgba(48, 50, 55, 0.25);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+.productsButton {
+    padding: 5px;
+    background-color: rgb(184, 182, 182);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11px;
+    color: black;
 }
-
-.button-81:hover {
-  background-color: #4b1010;
-  color: #fff;
-}
-
-@media (min-width: 768px) {
-  .button-81 {
-    font-size: 1.125rem;
-    padding: 10px 10px;
-  }
+.productsButton:hover{
+    background-color:#5E080D;
+    color: white;
 }

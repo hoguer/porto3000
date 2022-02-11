@@ -17,8 +17,8 @@ paymentsRouter.post('/create-checkout-session', async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: `${YOUR_DOMAIN}/?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    success_url: `${YOUR_DOMAIN}/payments/?success=true`,
+    cancel_url: `${YOUR_DOMAIN}/payments/?canceled=true`,
   });
   res.redirect(303, session.url);
 });
