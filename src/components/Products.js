@@ -76,7 +76,6 @@ const Products = ({products, setProducts, currentUser}) => {
                                                 <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
                                                 <button className="productsButton" onClick={() => {addToCart()}}>Add to Cart</button>
                                             </div>
-                                
                                         </div>
                                     </div>
                             )
