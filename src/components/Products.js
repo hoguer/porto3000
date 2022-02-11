@@ -39,12 +39,12 @@ const Products = ({products, setProducts, currentUser}) => {
     const addToCart = (status, userId) => {
         console.log(currentUser)
         console.log("Add to Cart was pushed");
-        axios.post("/api/products/orders", {status, userId})
+        axios.post("/api/orders", {status, userId})
             .then(res => { 
                 console.log("Adding item to order", res)
                 navigate("/cart")
             })
-    }
+    };
 
     return <>
     <div className="outerContainerAll">
