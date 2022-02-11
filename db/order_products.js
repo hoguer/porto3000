@@ -13,19 +13,22 @@ async function getOrderProductsById (id) {
     };
 };
 
-async function addProductToOrder (orderId, productId, price, quantity, userId) {
-        try {
-          const product = getProductById(productId)
-          const order = getOrderById(orderId)
-            if (!product || !order) return;
-            const { rows: [order_product] } = await client.query(`
-                INSERT INTO order_products (orderId, productId, price, quantity, userId) 
-                VALUES ($1, $2, $3, $4, $5)
-                RETURNING *
-                `, [orderId, productId, price, quantity, userId]);
-            }
-
-    return order_products;
+async function addProductToOrder (orderId, productId, price, quantity) {
+  try {
+    const product = getProductById(productId)
+    const order = getOrderById(orderId)
+    if (!product || !order) return;
+    //select for ids if something reutrns update quanty and price else
+    //select order_products where orderId = $1 and productId = $2
+    //if (order_product) {
+    // updateOrderProduct query .quantity and .price
+    //}
+    const { rows: [order_product] } = await client.query(`
+        INSERT INTO order_products (orderId, productId, price, quantity) 
+        VALUES ($1, $2, $3, $4)
+        RETURNING *
+        `, [orderId, productId, price, quantity]);
+    return order_product;
   } catch (error){
     throw error;
   }

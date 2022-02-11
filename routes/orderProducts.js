@@ -3,15 +3,15 @@ const { getOrderProductsById, addProductToOrder, updateOrderProduct, destroyOrde
 // const { isLoggedIn, isAdmin } = require("./util") need?
 
 
-orderProductsRouter.post("/products", async (req, res, next) => {
-    const { orderId, productId } = req.body;
+orderProductsRouter.post("/orders/:orderId/products",  async (req, res, next) => {
+    const orderId = req.params.orderId
+    const { productId, price, quantity, userId } = req.body;
     try {
-        const order_products = await getOrderProductsById({status, userId})
+        const order_product = await addProductToOrder(orderId, productId, price, quantity)
         res.send({
-            id: orderId,
-            name: "Order",
-            message: "Your order has been made"
-        }, order_products)
+            name: "Select item",
+            message: "Your item is added to cart"
+        }, order_product)
     } catch(error) {
         throw error;
     };

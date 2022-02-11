@@ -51,7 +51,8 @@ async function buildTables() {
           "productId" INTEGER REFERENCES products(id),
           "orderId" INTEGER REFERENCES orders(id), 
           price INTEGER NOT NULL,
-          quantity INTEGER NOT NULL DEFAULT 0
+          quantity INTEGER NOT NULL DEFAULT 0,
+          UNIQUE("productId", "orderId")
         );
       `);
 
