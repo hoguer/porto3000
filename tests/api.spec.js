@@ -137,12 +137,12 @@ describe('API', () => {
         const createdProduct = await createProduct(productToCreate);
         const {data: products} = await axios.get(`${API_URL}/api/`);
         expect(Array.isArray(products)).toBe(true);
-        // expect(products.length).toBeGreaterThan(0);
-        // expect(products[0].name).toBeTruthy();
-        // expect(products[0].description).toBeTruthy();
-        // const [filteredProduct] = products.filter(product => product.name === createdProduct.name);
-        // expect(filteredProduct.name).toEqual(product.name);
-        // expect(filteredProduct.inStock).toEqual(product.inStock);
+        expect(products.length).toBeGreaterThan(0);
+        expect(products[0].name).toBeTruthy();
+        expect(products[0].description).toBeTruthy();
+        const [filteredProduct] = products.filter(product => product.name === createdProduct.name);
+        expect(filteredProduct.name).toEqual(product.name);
+        expect(filteredProduct.inStock).toEqual(product.inStock);
       });
     });
     describe('POST "/:productId" (id)', () => {

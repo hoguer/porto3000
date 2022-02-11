@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SingleOrder.css"
 
-const SingleOrder =({orderId, getOrdersByUser, userID, token}) =>{
+const SingleOrder = ({orderId, getOrdersByUser, userID, token}) =>{
 const [orderProducts, setOrderProducts] = useState({});
 
     retrun (

@@ -1,28 +1,30 @@
 const client = require("./client");
+const { getProductById, getOrderById} = require("./")
 
 async function getOrderProductsById (id) {
     try{
-        const {rows} = await client.query(`
-            SELECT * FROM order_products AS op
+        const {rows: [order_product]} = await client.query(`
+            SELECT * FROM order_products
             WHERE id=$1
         `, [id]);
-        return rows
+        return order_product
     } catch (error) {
         throw error;
     };
 };
 
-async function addProductToOrder (orderId, productId, price, quantity, userID) {
+async function addProductToOrder (orderId, productId, price, quantity, userId) {
         try {
-            if (!productId) {
+          const product = getProductById(productId)
+          const order = getOrderById(orderId)
+            if (!product || !order) return;
             const { rows: [order_product] } = await client.query(`
-                INSERT INTO op (orderId, productId, price, quantity, userID) 
+                INSERT INTO order_products (orderId, productId, price, quantity, userId) 
                 VALUES ($1, $2, $3, $4, $5)
                 RETURNING *
-                `, [orderId, productId, price, quantity, userID]);
+                `, [orderId, productId, price, quantity, userId]);
             }
-      //update , update
-      //update the price
+
     return order_products;
   } catch (error){
     throw error;
