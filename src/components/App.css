@@ -4,12 +4,16 @@ body {
     padding: 0;
 }
 
+.mainLogo {
+    width: 50%
+}
+
 .header { 
     display: flex;
     justify-content: center;  
     padding: 20px;
-    background-color: black;
-    color: #e7e4e3;
+    background-color: blanchedalmond;
+    color: white
 }
 .navigation {
     display: flex;

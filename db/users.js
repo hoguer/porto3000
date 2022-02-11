@@ -22,7 +22,6 @@ async function getUser({username, password}) {
   if (!username || !password) {
     return;
   }
-
   try {
     const user = await getUserByUsername(username);
     if(!user) return;

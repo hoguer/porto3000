@@ -38,16 +38,18 @@ const Cheeses = ({products, setProducts}) => {
                                 <>
                                     <div key={product.id}>
                                         <div className="cardContentContainer">
-                                            <div className="cardContent">
+                                            <div className="cardName">
                                                 {product.name}
+                                            </div>
+                                            <div className="cardImage">
                                                 <img src={product.imgURL} className="productImg"></img>
                                             </div>
                                             <div className="itemPrice">
                                                 ${product.price}
                                             </div>
                                             <div className="productButtonsContainer">
-                                                <NavLink to={`/products/${product.id}`} className="vProdButtonAll">View Product</NavLink>
-                                                <button className="addToCartButton">Add to Cart</button>
+                                                <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
+                                                <button className="productsButton">Add to Cart</button>
                                             </div>
                                 
                                         </div>
