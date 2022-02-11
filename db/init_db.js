@@ -432,17 +432,18 @@ async function createInitialOrders() {
   console.log("Starting to create orders");
   try {
     const ordersData = [
-      {status: "created", userId: "1", datePlaced: "now()"},
-      {status: "created", userId: "2", datePlaced: "now()"},
+      {status: "created", userId: "1"},
+      {status: "completed", userId: "2"},
      ]
 
-    const orders = await Promise.all(ordersData.map(createOrder));
+    await Promise.all(ordersData.map(createOrder));
 
   } catch (error) {
     throw error;
   };
 };
 
+//waiting for db 
 async function createInitialOrderProducts() {
   console.log("Starting to create order_products");
   try {
@@ -451,7 +452,7 @@ async function createInitialOrderProducts() {
       {productId: "2", orderId: "2", price: "35", quantity: "2", userId:"2" },
      ]
 
-    const orderProducts = await Promise.all(orderProductsData.map(getOrdersByProduct));
+    await Promise.all(orderProductsData.map(getOrdersByProduct));
 
   } catch (error) {
     throw error;
@@ -479,6 +480,8 @@ async function createInitialReviews() {
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
+  .then(createInitialOrders)
+  // .then(createInitialOrderProducts)
   .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());
