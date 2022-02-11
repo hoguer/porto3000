@@ -12,6 +12,9 @@ import {
   SingleProduct,
   Register,
   Account,
+  Wines,
+  Cheeses,
+  ProductPairs,
 } from "."
 
 const App = () => {
