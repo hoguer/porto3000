@@ -1,13 +1,10 @@
 body {
-    background-color:#262b2b;
-    margin: 0;
-    padding: 0;
+    background-color: black;
+    height: 100vh;
 }
-
 .mainLogo {
-    width: 50%
+    width: 30%
 }
-
 .header { 
     display: flex;
     justify-content: center;  

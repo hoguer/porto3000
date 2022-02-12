@@ -43,14 +43,10 @@
 .singleProdButtonContainer{
     display: flex;
     margin-top: 20px;
+    width: 40%;
 }
-a.vProdButton{
-    margin-left: 20px;
-    padding: 5px;
-    background-color: rgb(184, 182, 182);
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 11px;
-    color: black;
+.returnToAllProducts{
+    margin-left: 1vw;
 }
 .sealContainer {
     display: flex;

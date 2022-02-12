@@ -38,7 +38,7 @@ orderProductsRouter.delete("/:orderProductId", async (req, res, next) => {
         const destroyedOrderProduct = await destroyOrderProduct({orderId, productId, price, quantity})
         res.send({
             name: "ProductDeleted",
-            message: "That product is noe removed"
+            message: "That product is now removed"
         }, [destroyedOrderProduct]);
     } catch (error) {
         throw error;

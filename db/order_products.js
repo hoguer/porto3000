@@ -1,6 +1,7 @@
 const client = require("./client");
 const { getProductById, getOrderById, updateOrder} = require("./")
 
+
 async function getOrderProductsById (id) {
     try{
         const {rows: [order_product]} = await client.query(`
@@ -28,7 +29,6 @@ async function addProductToOrder (orderId, productId, price, quantity) {
         VALUES ($1, $2, $3, $4)
         RETURNING *
         `, [orderId, productId, price, quantity]);
-
     return order_product;
   } catch (error){
     throw error;
