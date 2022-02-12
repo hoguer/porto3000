@@ -8,9 +8,19 @@ apiRouter.use("/users", usersRouter)
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter)
 
+const orderProductsRouter = require("./orderProducts");
+apiRouter.use("/", orderProductsRouter)
 
 const paymentsRouter = require("./payments");
 apiRouter.use("/payments", paymentsRouter);
+
+apiRouter.use((error, req, res, next) => {
+    res.send(error);
+});
+
+apiRouter.use((error, req, res, next) => {
+    res.send(error);
+});
 
 apiRouter.use((error, req, res, next) => {
     res.send(error);

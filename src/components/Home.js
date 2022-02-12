@@ -1,13 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Home.css"
-import img1 from "../images/wineGlasses.jpeg"
+import img1 from "../images/handHeldGrapes.png"
 import featImg1 from "../images/goatCheese.jpg"
 import featImg2 from "../images/wineBottle.jpg"
 import featImg3 from "../images/Oscypki.jpg"
 
 const Home = () => {
     return <>
+    <h1 className="slogan">Let us be your new Local Host</h1>
       <div className="componentContainerHome">
         <div className="featuredContainer">
             <img src={img1} className="img1"/>

@@ -20,8 +20,8 @@ paymentsRouter.post('/create-checkout-session', isLoggedIn, async (req, res) => 
       },
     ],
     mode: 'payment',
-    success_url: '/?success=true',
-    cancel_url: '/?canceled=true',
+    success_url: `${YOUR_DOMAIN}/payments/?success=true`,
+    cancel_url: `${YOUR_DOMAIN}/payments/?canceled=true`,
   });
   res.redirect(303, session.url);
 });

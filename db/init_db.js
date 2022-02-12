@@ -1,4 +1,5 @@
 const client = require('./client');
+const { createOrder } = require('./orders');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
 const { createReview } = require("./reviews")
@@ -40,7 +41,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY, 
           status VARCHAR(255) DEFAULT 'created', 
-          "userID" INTEGER REFERENCES users(id), 
+          "userId" INTEGER REFERENCES users(id), 
           "datePlaced" timestamp DEFAULT now()
         );
       `);
@@ -52,7 +53,7 @@ async function buildTables() {
           "orderId" INTEGER REFERENCES orders(id), 
           price INTEGER NOT NULL,
           quantity INTEGER NOT NULL DEFAULT 0,
-          "userID" INTEGER REFERENCES users(id)
+          UNIQUE("productId", "orderId")
         );
       `);
 
@@ -333,38 +334,6 @@ async function populateInitialData() {
         category: "cheese"
       },
       {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
         name: "Extra Mature Real Yorkshire Wensleydalee",
         description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
         imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
@@ -484,8 +453,56 @@ async function createInitialUsers() {
     throw error;
   };
 };
+async function createInitialOrders() {
+  console.log("Starting to create orders");
+  try {
+    const ordersData = [
+      {status: "created", userId: "1"},
+      {status: "completed", userId: "2"},
+     ]
+
+    await Promise.all(ordersData.map(createOrder));
+
+  } catch (error) {
+    throw error;
+  };
+};
+
+//waiting for db 
+async function createInitialOrderProducts() {
+  console.log("Starting to create order_products");
+  try {
+    const orderProductsData = [
+      {productId: "1", orderId: "1", price: "88", quantity: "1", userId:"1" },
+      {productId: "2", orderId: "2", price: "35", quantity: "2", userId:"2" },
+     ]
+
+    await Promise.all(orderProductsData.map(getOrdersByProduct));
+
+  } catch (error) {
+    throw error;
+  };
+};
 
 async function createInitialReviews() {
+  console.log("Starting to create Reviews");
+  try {
+    const reviewData = [
+      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
+      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
+      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
+      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
+    ]
+
+    const reviews = await Promise.all(reviewData.map(createReview));
+    console.log("All initial reviews created")
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function addOrderProdcts() {
   console.log("Starting to create Reviews");
   try {
     const reviewData = [
@@ -506,6 +523,8 @@ async function createInitialReviews() {
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
+  .then(createInitialOrders)
+  // .then(createInitialOrderProducts)
   .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());
