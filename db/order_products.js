@@ -28,7 +28,6 @@ async function addProductToOrder (orderId, productId, price, quantity) {
         VALUES ($1, $2, $3, $4)
         RETURNING *
         `, [orderId, productId, price, quantity]);
-
     return order_product;
   } catch (error){
     throw error;

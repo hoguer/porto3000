@@ -1,4 +1,5 @@
 const client = require('./client');
+const { createOrder } = require('./orders');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
 const { createReview } = require("./reviews")
@@ -396,6 +397,30 @@ async function populateInitialData() {
         price: "50",
         category: "wine and cheese"
       },
+      {
+        name: "Pinot Noir & Gruyere",
+        description: "A classic pairing. Neither the wine nor the cheese will overpower each other, but instead meld in harmony between the nutty flavors of the cheese and the red berry taste of the Pinot Noir",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
+      {
+        name: "Sauvignon Blanc & Goat Cheese",
+        description: "This earthy pairing does not disappoint. The citrus and mineral notes of this wine works well to bring out the herbal and nutty flavors of goat cheese.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
+      {
+        name: "Cabernet Sauvignon & Aged Cheddar",
+        description: "Bold cheeses need bold partners. The Cabernet Sauvignon tastes wonderful with the fattiness of the aged cheddar. Neither will drown out the taste of the other, but instead have you pining for just one. more. bite.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
     ]
 
     const products = await Promise.all(wineAndCheeseData.map(createProduct));
@@ -424,6 +449,36 @@ async function createInitialUsers() {
 
     const users = await Promise.all(userData.map(createUser));
     console.log("All initial users created")
+  } catch (error) {
+    throw error;
+  };
+};
+async function createInitialOrders() {
+  console.log("Starting to create orders");
+  try {
+    const ordersData = [
+      {status: "created", userId: "1"},
+      {status: "completed", userId: "2"},
+     ]
+
+    await Promise.all(ordersData.map(createOrder));
+
+  } catch (error) {
+    throw error;
+  };
+};
+
+//waiting for db 
+async function createInitialOrderProducts() {
+  console.log("Starting to create order_products");
+  try {
+    const orderProductsData = [
+      {productId: "1", orderId: "1", price: "88", quantity: "1", userId:"1" },
+      {productId: "2", orderId: "2", price: "35", quantity: "2", userId:"2" },
+     ]
+
+    await Promise.all(orderProductsData.map(getOrdersByProduct));
+
   } catch (error) {
     throw error;
   };
@@ -468,6 +523,8 @@ async function addOrderProdcts() {
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
+  .then(createInitialOrders)
+  // .then(createInitialOrderProducts)
   .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());
