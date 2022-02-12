@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import "./SingleOrder.css"
 
-
 const SingleOrder = ({orderId}) =>{
 const [orderProducts, setOrderProducts] = useState({});
     setOrderProducts(orderId)
