@@ -11,7 +11,8 @@ import {
   Products,
   SingleProduct,
   Register,
-  Account
+  Account, 
+  SingleOrder
 } from "."
 
 const App = () => {
@@ -59,7 +60,7 @@ const App = () => {
         <Route path="/products/:id" exact element={<SingleProduct token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} currentUser= {currentUser} token={token} />}/>
         <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
-        <Route path="/orders/:orderId" exact element={<SingleOrder currentUser={currentUser} orderId={orderId} getOrdersByUser={getOrdersByUser} userID={userID} token={token} />}/>
+        {/* <Route path="/orders/:orderId" exact element={<SingleOrder currentUser={currentUser} orderId={orderId} getOrdersByUser={getOrdersByUser} userID={userID} token={token} />}/> */}
 
       </Routes>
     </div>
