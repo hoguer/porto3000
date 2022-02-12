@@ -1,4 +1,5 @@
 const ordersRouter = require("express").Router();
+const { user } = require("pg/lib/defaults");
 const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
 const { isLoggedIn, isAdmin } = require("./util")
 
@@ -27,8 +28,9 @@ ordersRouter.post("/", async (req, res, next) => {
         const newOrder = await createOrder({status, userId})
         res.send({
             name: "OrderCreated",
-            message: "Your order has been made"
-        }, newOrder)
+            message: "Your order has been made",
+            newOrder,
+        })
     } catch(error) {
         throw error;
     };

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import mainLogo from "../images/mainLogo.png"
 import "./SingleProduct.css"
 
-const SingleProduct = ({products, setProducts}) => { 
+const SingleProduct = ({products, setProducts, currentUser}) => { 
     const [product, setProduct] = useState({});
+    const navigate = useNavigate();
     let { id } = useParams();
     id = parseInt(id)
     console.log(products)
@@ -32,6 +33,18 @@ const SingleProduct = ({products, setProducts}) => {
         setProduct(singleProduct)
     }
     useEffect(retrieveProduct, [])
+
+    const addToCart = (status, userId) => {
+        console.log(currentUser)
+        console.log("Add to Cart was pushed");
+        axios.post("/api/orders", {status, userId})
+            .then(res => { 
+                console.log("Adding item to order", res)
+                console.log("userId", userId)
+                console.log("status", status)
+                navigate("/cart")
+            })
+    };
 
     return ( 
         <>   
@@ -62,8 +75,8 @@ const SingleProduct = ({products, setProducts}) => {
                                 <i>{product.description}</i>
                             </div>
                                 <div className="singleProdButtonContainer">
-                                    <button className="addToCartButton">Add to Cart</button>
-                                    <NavLink to="/products" className="vProdButton">Return to All Products</NavLink>
+                                    <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                    <NavLink to="/products" className="productsButton returnToAllProducts">Return to All Products</NavLink>
                                 </div>
                         </div>
                     </div>

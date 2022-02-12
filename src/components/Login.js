@@ -4,9 +4,10 @@ import axios from 'axios';
 import "./LoginRegister.css"
 
 const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
-    console.log('In login user!');
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showCredentialsError, setShowCredentialsError] = useState(false);
+    const [loginError, setLoginError] = useState("");
     const navigate = useNavigate();
 
     const loginUser = () => {
@@ -22,10 +23,11 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
             if (res.data.status === 'UsernamePasswordIncorrect') {
                 return alert('Username or passord incorrect. Please re-enter credentials.');
             } else {
-                setCurrentUser(res.config.data);
+                setCurrentUser(res.data.user);
                 localStorage.setItem('token', res.data.token);
                 console.log(localStorage.getItem('token'));
-                if (res.config.data) {
+                if (res.data.user) {
+                    setShowCredentialsError(false);
                     setIsLoggedIn(true);
                     navigate('/account');
                 }
@@ -34,6 +36,10 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
         })
         .catch(error => {
             console.error('Error logging-in user!', error);
+            const errorMessage = "login" ? "Incorrect username and password combination." : "Username already taken."
+            console.log("here!")
+            setLoginError(errorMessage);
+            setShowCredentialsError(true);
         })
     }
 
@@ -53,6 +59,7 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
                     <input type="text" placeholder="username" onChange={event => setUsername(event.target.value)} value={username} />
                     <input type="password" placeholder="password" onChange={event => setPassword(event.target.value)} value={password} />
                 <div>
+                    { showCredentialsError ? <div className="error">{loginError}</div> : null }
                     <button type="submit" className="submit"> Submit </button>  
                 </div>
                 </div>   
