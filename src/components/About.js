@@ -3,6 +3,7 @@ import "./About.css"
 import kriselda from "../images/Kriselda.png"
 import felix from "../images/Felix.png"
 import linkedIn from "../images/LinkedIn.png"
+import michelle from "../images/Michelle.jpg"
 
 const About = () => {
     return <>
@@ -47,9 +48,9 @@ const About = () => {
 
         <div className="michelle">
             <h2>Michelle Malfabon</h2>
-            <img className="developerPhoto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png" alt="profile silhouette" />
+            <img className="developerPhoto michellePhoto" src={michelle} alt="profile silhouette" />
             <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nunc quam, elementum ut odio non, tempus varius risus. Duis sollicitudin enim et felis rhoncus, et ultricies lacus euismod. Aliquam tincidunt nec est ac lacinia. Quisque eget massa eget est facilisis pretium. Aenean enim lacus, ultricies non libero ut, aliquam accumsan.
+            Born and raised in the San Francisco Bay Area, Michelle is no stranger to the beautiful Wine Country. Her love for red wine (and pizza) grew during a trip to Tuscany, Italy. You'll most likely find Michelle enjoying a glass of our Cabernet Sauvignon, along with our smoked gouda and some of her homemade baked goods. 
             </p>
             <a href="https://www.linkedin.com/in/michellemalf/">
                 <img className="linkedIn" src={linkedIn} alt="LinkedIn Profile" />
