@@ -2,11 +2,9 @@ body {
     background-color: black;
     height: 100vh;
 }
-
 .mainLogo {
     width: 30%
 }
-
 .header { 
     display: flex;
     justify-content: center;  
