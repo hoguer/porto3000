@@ -4,11 +4,8 @@ import kriselda from "../images/Kriselda.png"
 import felix from "../images/Felix.png"
 import linkedIn from "../images/LinkedIn.png"
 import michelle from "../images/Michelle.jpg"
-<<<<<<< HEAD
-=======
 import ricky from "../images/Ricky.png"
 
->>>>>>> edb2856ca8868031bd4922925e3061223c1d1d6d
 
 const About = () => {
     return <>
@@ -55,11 +52,7 @@ const About = () => {
             <h2>Michelle Malfabon</h2>
             <img className="developerPhoto michellePhoto" src={michelle} alt="profile silhouette" />
             <p>
-<<<<<<< HEAD
-            Born and raised in the San Francisco Bay Area, Michelle is no stranger to the beautiful Wine Country. Her love for red wine (and pizza) grew during a trip to Tuscany, Italy. You'll most likely find Michelle enjoying a glass of our Cabernet Sauvignon, along with our smoked gouda, and her homemade baked goods. 
-=======
             Born and raised in the San Francisco Bay Area, Michelle is no stranger to the beautiful Wine Country. Her love for red wine (and pizza) grew during a trip to Tuscany, Italy. You'll most likely find Michelle enjoying a glass or two of our red wine along with our smoked gouda and her homemade baked goods. 
->>>>>>> edb2856ca8868031bd4922925e3061223c1d1d6d
             </p>
             <a href="https://www.linkedin.com/in/michellemalf/">
                 <img className="linkedIn" src={linkedIn} alt="LinkedIn Profile" />
