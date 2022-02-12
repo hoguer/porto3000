@@ -1,5 +1,6 @@
 const client = require("./client");
-const { getProductById, getOrderById} = require("./")
+const { getProductById } = require('./products')
+const { getOrderById, updateOrder} = require("./orders")
 
 async function getOrderProductsById (id) {
     try{

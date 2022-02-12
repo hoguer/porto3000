@@ -1,19 +1,19 @@
 const usersRouter = require("express").Router();
-const { createUser, getUser, getUserByUsername, getOrdersByUser, patchUser, deleteUser } = require("../db");
+const { getAllUsers, createUser, getUser, getUserByUsername, getOrdersByUser, patchUser, deleteUser } = require("../db");
 const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const { JWT_SECRET = 'neverTell' } = process.env;
 
 //REQUIRE ADMIN?
-// usersRouter.get("/", async (req, res, next) =>{
-//     try {
-//         const allUsers = await getAllUsers();
-//         res.send(allUsers)
-//     } catch (error) {
-//         throw error
-//     }
-// } );
+usersRouter.get("/", isAdmin, async (req, res, next) =>{
+    try {
+        const allUsers = await getAllUsers();
+        res.send(allUsers)
+    } catch (error) {
+        throw error
+    }
+} );
 
 // POST /api/users/register
 usersRouter.post('/register', async (req, res, next) => {

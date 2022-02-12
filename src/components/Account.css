@@ -32,3 +32,21 @@ h3{
 .accountdiv{
     padding-bottom: 1vh;
 }
+
+.adminButtons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.adminAbility {
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 10%;
+    background-color: white;
+    border: 3px solid black;
+}
+
+.adminAbility:hover {
+    background-color:#5E080D;
+    color: white;
+}

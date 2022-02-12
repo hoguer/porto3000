@@ -19,7 +19,7 @@ orderProductsRouter.post("/orders/:orderId/products",  async (req, res, next) =>
 
 orderProductsRouter.patch("/:orderProductId", async (req, res, next) => {
     const { orderId } = req.params;
-    const { orderId, productId, price, quantity } = req.body;
+    const { productId, price, quantity } = req.body;
     try {
         const updatedOrderProducts = await updateOrderProduct({ orderId, productId, price, quantity })
         res.send({
@@ -33,7 +33,7 @@ orderProductsRouter.patch("/:orderProductId", async (req, res, next) => {
 
 orderProductsRouter.delete("/:orderProductId", async (req, res, next) => {
     const { orderId } = req.params;
-    const { orderId, productId, price, quantity } = req.body;
+    const { productId, price, quantity } = req.body;
     try {
         const destroyedOrderProduct = await destroyOrderProduct({orderId, productId, price, quantity})
         res.send({

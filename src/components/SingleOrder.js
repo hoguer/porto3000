@@ -5,7 +5,7 @@ import "./SingleOrder.css"
 const SingleOrder = ({orderId, getOrdersByUser, userID, token}) =>{
 const [orderProducts, setOrderProducts] = useState({});
 
-    retrun (
+    return (
         <>
         <h1>Review Products Ordered:</h1>
         
