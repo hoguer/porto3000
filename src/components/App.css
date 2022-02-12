@@ -3,18 +3,8 @@ body {
     height: 100vh;
 }
 .mainLogo {
-    width: 230px;
-    height: 90px;
+    width: 30%
 }
-
-.mainLogo {
-    width: 50%
-}
-
-.mainLogo {
-    width: 50%
-}
-
 .header { 
     display: flex;
     justify-content: center;  
