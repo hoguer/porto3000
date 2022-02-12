@@ -11,7 +11,7 @@ import {
   Products,
   SingleProduct,
   Register,
-  Account,
+  Account
 } from "."
 
 const App = () => {

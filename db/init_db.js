@@ -40,7 +40,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY, 
           status VARCHAR(255) DEFAULT 'created', 
-          "userID" INTEGER REFERENCES users(id), 
+          "userId" INTEGER REFERENCES users(id), 
           "datePlaced" timestamp DEFAULT now()
         );
       `);
@@ -51,8 +51,7 @@ async function buildTables() {
           "productId" INTEGER REFERENCES products(id),
           "orderId" INTEGER REFERENCES orders(id), 
           price INTEGER NOT NULL,
-          quantity INTEGER NOT NULL DEFAULT 0,
-          "userID" INTEGER REFERENCES users(id)
+          quantity INTEGER NOT NULL DEFAULT 0
         );
       `);
 
@@ -330,38 +329,6 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "4",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
         category: "cheese"
       },
       {
