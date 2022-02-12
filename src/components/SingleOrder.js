@@ -4,8 +4,9 @@ import axios from "axios";
 import "./SingleOrder.css"
 
 const SingleOrder = ({orderId}) =>{
+
 const [orderProducts, setOrderProducts] = useState({});
-    setOrderProducts(orderId)
+setOrderProducts(orderId)
 
   return (<>
     <div className="productsNav">
@@ -14,13 +15,17 @@ const [orderProducts, setOrderProducts] = useState({});
     <NavLink to="/products/cheeses">Cheeses</NavLink> |
     <NavLink to="/products/productpairs">Pairings</NavLink>
     </div>
+
     {
                     orderProducts.map((orderProduct)=> {
                         return ( <>
                             <div classname="cart" >
-                            <div className="orderProductCardContainerAll">
-                            <div className="orderProductCardAll">
-                            {orderProduct.id}, {orderProduct.name}
+                            <div className="orderProductCardContainer">
+                            <div className="orderProductCard">
+                            <ul>
+                            <li>{orderProduct.id}</li>
+                            <li>{orderProduct.name}</li> 
+                            </ul>
                             </div>
                             </div>
                             </div>
