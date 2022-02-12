@@ -38,6 +38,14 @@ h2 {
     height: 10vw;
     translate: 20px;
 }
+<<<<<<< HEAD
+=======
+.rickyPhoto {
+    height: 10vw;
+    translate: 20px;
+}
+
+>>>>>>> edb2856ca8868031bd4922925e3061223c1d1d6d
 
 .kriselda { 
     grid-area: 1 / 1 / 2 / 3; 
