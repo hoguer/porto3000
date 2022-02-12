@@ -1,8 +1,9 @@
 const usersRouter = require("express").Router();
-const { getAllUsers, createUser, getUserByUsername, getOrdersByUser } = require("../db");
+const { createUser, getUser, getUserByUsername, getOrdersByUser, patchUser, deleteUser } = require("../db");
 const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+const { JWT_SECRET = 'neverTell' } = process.env;
 
 // usersRouter.get("/", async (req, res, next) =>{
 //     try {
@@ -13,6 +14,7 @@ require('dotenv').config();
 //     }
 // } );
 
+// POST /api/users/register
 usersRouter.post('/register', async (req, res, next) => {
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
     const _user = await getUserByUsername(username);
@@ -62,49 +64,49 @@ usersRouter.post('/register', async (req, res, next) => {
     } 
 });
 
-usersRouter.post("/login", async (req, res, next) => {
-    const {username, password} = req.body;
+// POST /api/users/login
+usersRouter.post('/login', async (req, res, next) => {
+    const { username, password } = req.body;
 
+    // request must have both
     if (!username || !password) {
+        res.status(406);
         next({
-            name: "MissingCredentialsError",
-            message: "Please supply both a name and password"
-        })
-        res.send(406)
+            name: 'MissingCredentialsError',
+            message: 'Please supply both a username and password'
+        });
     }
 
     try {
-        const user = await getUserByUsername(username);
-        if (password === user.password) {
-
-            const token = jwt.sign({ 
-                id: user.id, 
-                username
-                }, process.env.JWT_SECRET, {
-                expiresIn: '1w'
-            });
-
-            res.send({message: "You're logged in!", token})
-        } else {
+        const user = await getUser({username, password});
+        if(!user) {
+            res.status(409);
             next({
-                name: "IncorrectCredentialsError",
-                message: "Name or password is incorrect"
+                name: 'IncorrectCredentialsError',
+                message: 'Username or password is incorrect',
             })
-            res.send(409)
+        } else {
+            const token = jwt.sign({
+                id: user.id, 
+                username: user.username
+            }, JWT_SECRET, { expiresIn: '1w' });
+            res.send({ user, message: "you're logged in!", token });
         }
     } catch (error) {
-        next(error)
+        next(error);
     }
-})
+});
 
+// GET /api/users/me
 usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
     try {
         res.send(req.user);
     } catch (error) {
         next (error);
     }
-})
+});
 
+// GET /api/users/:userId/orders
 usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) => {
     const {userId} = req.body
     try {
@@ -112,7 +114,35 @@ usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) =
         res.send(allOrdersByUser)
     } catch (error) {
         throw error;
-    };
+    }
+});
+
+//NEW ADMIN PATCH AND DELETE
+usersRouter.patch('/:id', async (req, res, next)=>{
+    try{
+        const {id} = req.params;
+        const {isAdmin}= req.body;
+        const fields = {
+            isAdmin,
+        };
+        const updatedUser= await patchUser(id, fields);
+        res.send(updatedUser);
+        }catch (error){
+            next (error);
+        }
+});
+
+usersRouter.delete("/:id", isAdmin, async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const deletedUser = await deleteUser(id);
+      res.send(deletedUser);
+    } catch (error) {
+      next({
+        name: "DeleteError",
+        message: "Could not delete user",
+      });
+    }
 });
 
 module.exports = usersRouter;

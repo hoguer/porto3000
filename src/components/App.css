@@ -1,31 +1,38 @@
 body {
-    background-color:#262b2b;
-    margin: 0;
-    padding: 0;
-
+    background-color: black;
+    height: 100vh;
 }
+.mainLogo {
+    width: 230px;
+    height: 90px;
+}
+
+.mainLogo {
+    width: 50%
+}
+
+.mainLogo {
+    width: 50%
+}
+
 .header { 
     display: flex;
     justify-content: center;  
     padding: 20px;
-    background-color: #0d1011;
-    color: #e7e4e3;
-    /* font-family: may have to take a png from the website to put on the logo */
+    background-color: blanchedalmond;
+    color: white
 }
 .navigation {
     display: flex;
     justify-content: center;
-    background-color: #0d1011;
+    background-color: black;
     padding-bottom: 12px;
 }
-
 :any-link {
     text-decoration: none;
     color: white; 
     padding: 6px;   
-    
 }
-
 .cartIcon {
     width:15px;
     height: 15px;

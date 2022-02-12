@@ -2,7 +2,7 @@
     text-align: center;
 }
 .productsNav{
-    background-color: rgb(119, 20, 3);
+    background-color: #5E080D;
     color: white;
     display: flex;
     justify-content: center;
@@ -13,63 +13,65 @@
     background-image: url("../images/vineyard.jpg");
     background-repeat: no-repeat;
     background-position: fixed;
-    background-size: 100vw;
+    background-size: cover;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
     overflow: auto;
-    width: 99vw;
+    width: 100vw;
     height: 100vh;
     color:black;
-    
 }
 .productCardAll {
     color:black;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    width: 878px;
+    justify-content: center;
+    width: 85vw;
 }
 .productImg {
-    height: 200px;
     width: 150px;
-    
+    height: 200px;
+    transition: .2s ease-in-out;
+}
+.productImg:hover {
+    transform: scale(1.1);
 }
 .cardContentContainer {
     padding: 10px;
 }
-.cardContent {
+.cardName, .cardImage{
     background-color: white;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     border: solid white 3px;
-    padding: 20px;
+    padding: 10px;
 }
 .itemPrice{
     text-align: center;
     background-color: white;
     color: black;
+    font-size: 18px;
 }
 .productButtonsContainer {
     background-color: white;
     display: flex;
     justify-content: space-evenly;
-    padding: 8px;
+    padding: 12px;
 }
-.vProdButtonAll {
+.productsButton {
     padding: 5px;
     background-color: rgb(184, 182, 182);
     font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     color: black;
 }
-.addToCartButton{
-    padding: 5px;
-    background-color: rgb(184, 182, 182);
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 11px;
-    color: black;
+.productsButton:hover{
+    background-color:#5E080D;
+    color: white;
 }
