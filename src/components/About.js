@@ -6,6 +6,7 @@ import linkedIn from "../images/LinkedIn.png"
 import michelle from "../images/Michelle.jpg"
 import ricky from "../images/Ricky.png"
 
+
 const About = () => {
     return <>
     <div className="aboutHeader">
