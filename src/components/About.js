@@ -50,7 +50,7 @@ const About = () => {
             <h2>Michelle Malfabon</h2>
             <img className="developerPhoto michellePhoto" src={michelle} alt="profile silhouette" />
             <p>
-            Born and raised in the San Francisco Bay Area, Michelle is no stranger to the beautiful Wine Country. Her love for red wine (and pizza) grew during a trip to Tuscany, Italy. You'll most likely find Michelle enjoying a glass of our Cabernet Sauvignon, along with our smoked gouda and some of her homemade baked goods. 
+            Born and raised in the San Francisco Bay Area, Michelle is no stranger to the beautiful Wine Country. Her love for red wine (and pizza) grew during a trip to Tuscany, Italy. You'll most likely find Michelle enjoying a glass of our Cabernet Sauvignon, along with our smoked gouda, and her homemade baked goods. 
             </p>
             <a href="https://www.linkedin.com/in/michellemalf/">
                 <img className="linkedIn" src={linkedIn} alt="LinkedIn Profile" />
