@@ -67,7 +67,7 @@ async function getOrdersByUser({id}) {
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
-            WHERE "userId" = $1;
+            WHERE "userId" = $1
         `, [id]);
 
         orders.forEach((order) => {
