@@ -4,6 +4,8 @@ import kriselda from "../images/Kriselda.png"
 import felix from "../images/Felix.png"
 import linkedIn from "../images/LinkedIn.png"
 import michelle from "../images/Michelle.jpg"
+import ricky from "../images/Ricky.png"
+
 
 const About = () => {
     return <>
@@ -26,9 +28,9 @@ const About = () => {
 
         <div className="ricky">
             <h2>Richard Brown</h2>
-            <img className="developerPhoto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png" alt="profile silhouette" />  
+            <img className="developerPhoto rickyPhoto" src={ricky} alt="profile silhouette" />  
             <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nunc quam, elementum ut odio non, tempus varius risus. Duis sollicitudin enim et felis rhoncus, et ultricies lacus euismod. Aliquam tincidunt nec est ac lacinia. Quisque eget massa eget est facilisis pretium. Aenean enim lacus, ultricies non libero ut, aliquam accumsan.
+            Richard Brown, or Ricky, loves wine and cheese. He loves wine and cheese so much, he decided to use his newly honed skills in React, Express, Node, Javascript, HTML, CSS, and SQL. Thanks for looking at Porto3k! Please look for more projects or mine in the future and thanks to the others who helped make this project.
             </p>
             <a href="https://www.linkedin.com/in/number1ricky/">
                 <img className="linkedIn" src={linkedIn} alt="LinkedIn Profile" />

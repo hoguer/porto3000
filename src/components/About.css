@@ -38,6 +38,11 @@ h2 {
     height: 10vw;
     translate: 20px;
 }
+.rickyPhoto {
+    height: 10vw;
+    translate: 20px;
+}
+
 
 .kriselda { 
     grid-area: 1 / 1 / 2 / 3; 
