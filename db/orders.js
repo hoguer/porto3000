@@ -132,13 +132,13 @@ async function getCartByUser({id}) {
     };
 };
 
-async function createOrder({status, userID}) {
+async function createOrder({status, userId}) {
     try {
         const {rows: [order]} = await client.query(`
             INSERT INTO orders(status, "userId")
             VALUES ($1, $2)
             RETURNING *
-        `, [status, userID]);
+        `, [status, userId]);
         return order;
     } catch (error) {
         throw error;
