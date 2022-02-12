@@ -76,7 +76,7 @@ async function updateOrderProduct({ id, ...fields }) {
   `, [id]);
     return order_product
     } catch (error) {
-      console.error("Error with deleteUser in db/users.");
+      console.error("Error with destroyOrderProduct in db/users.");
       throw error;
     }
 }
