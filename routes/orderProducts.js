@@ -5,7 +5,7 @@ const { getOrderProductsById, addProductToOrder, updateOrderProduct, destroyOrde
 
 orderProductsRouter.post("/orders/:orderId/products",  async (req, res, next) => {
     const orderId = req.params.orderId
-    const { productId, price, quantity, userId } = req.body;
+    const { orderId, productId, price, quantity } = req.body;
     try {
         const order_product = await addProductToOrder(orderId, productId, price, quantity)
         res.send({
@@ -18,7 +18,7 @@ orderProductsRouter.post("/orders/:orderId/products",  async (req, res, next) =>
 });
 
 orderProductsRouter.patch("/:orderProductId", async (req, res, next) => {
-    const { orderId } = req.params;
+    const { orderId} = req.params;
     const { orderId, productId, price, quantity } = req.body;
     try {
         const updatedOrderProducts = await updateOrderProduct({ orderId, productId, price, quantity })
