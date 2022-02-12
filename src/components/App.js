@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, NavLink } from "react-router-dom";
+import { Routes, Route, useNavigate, NavLink, useParams } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
@@ -11,7 +11,15 @@ import {
   Products,
   SingleProduct,
   Register,
+<<<<<<< Updated upstream
   Account
+=======
+  Account,
+  Wines,
+  Cheeses,
+  ProductPairs,
+  SingleOrder,
+>>>>>>> Stashed changes
 } from "."
 
 const App = () => {
@@ -20,7 +28,8 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [products, setProducts] = useState([]);
-
+  let { orderId } = useParams();
+  
   return <> 
     <div className="App">
       <div className='header'>
