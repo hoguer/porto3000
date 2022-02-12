@@ -11,15 +11,7 @@ import {
   Products,
   SingleProduct,
   Register,
-<<<<<<< Updated upstream
   Account
-=======
-  Account,
-  Wines,
-  Cheeses,
-  ProductPairs,
-  SingleOrder,
->>>>>>> Stashed changes
 } from "."
 
 const App = () => {
