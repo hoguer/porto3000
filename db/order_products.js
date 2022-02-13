@@ -1,6 +1,5 @@
 const client = require("./client");
-const { getProductById } = require('./products')
-const { getOrderById, updateOrder} = require("./orders")
+const { getProductById, getOrderById, updateOrder} = require("./")
 
 async function getOrderProductsById (id) {
     try{
@@ -19,11 +18,11 @@ async function addProductToOrder (orderId, productId, price, quantity) {
     const product = getProductById(productId)
     const order = getOrderById(orderId)
     if (!product || !order) return;
-    //select for ids if something reutrns update quanty and price else
-    //select order_products where orderId = $1 and productId = $2
-    //if (order_product) {
-    // updateOrderProduct query .quantity and .price
-    //}
+    if (order){
+      const totalPrice = order.price + (price * quantity)
+      updateOrder({id: orderId, price: totalPrice})
+    }
+    
     const { rows: [order_product] } = await client.query(`
         INSERT INTO order_products (orderId, productId, price, quantity) 
         VALUES ($1, $2, $3, $4)

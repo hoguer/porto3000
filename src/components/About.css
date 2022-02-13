@@ -37,7 +37,15 @@ h2 {
 .michellePhoto {
     height: 10vw;
     translate: 20px;
+<<<<<<< HEAD
+=======
 }
+.rickyPhoto {
+    height: 10vw;
+    translate: 20px;
+>>>>>>> 4033a738e3ce5f6dc34e9736f90d159600b9d2de
+}
+
 
 .kriselda { 
     grid-area: 1 / 1 / 2 / 3; 

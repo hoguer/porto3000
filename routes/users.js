@@ -6,14 +6,14 @@ require('dotenv').config();
 const { JWT_SECRET = 'neverTell' } = process.env;
 
 //REQUIRE ADMIN?
-usersRouter.get("/", isAdmin, async (req, res, next) =>{
-    try {
-        const allUsers = await getAllUsers();
-        res.send(allUsers)
-    } catch (error) {
-        throw error
-    }
-} );
+// usersRouter.get("/", async (req, res, next) =>{
+//     try {
+//         const allUsers = await getAllUsers();
+//         res.send(allUsers)
+//     } catch (error) {
+//         throw error
+//     }
+// } );
 
 // POST /api/users/register
 usersRouter.post('/register', async (req, res, next) => {

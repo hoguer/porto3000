@@ -9,4 +9,4 @@ export { default as SingleOrder } from './SingleOrder';
 export { default as SingleProduct } from './SingleProduct';
 export { default as Register } from './Register';
 export { default as Account } from './Account';
-
+export { default as SingleOrder } from './SingleOrder';

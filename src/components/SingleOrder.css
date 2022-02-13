@@ -1,0 +1,5 @@
+#cart {
+    background-color: chocolate;
+    display: flex;
+    flex-direction: row;
+}
