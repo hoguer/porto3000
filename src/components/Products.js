@@ -46,9 +46,9 @@ const Products = ({products, setProducts, currentUser, token}) => {
             })
     };
 
-    const handleDeleteProducts = (token, productId) => {
-        console.log("in HandleDelete")
-        // await handleDeleteProducts(token, productId)
+    const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
+        // await destroyProduct(token, productId)
         // const remainingProducts = products.filter((product) => productId !== product.id)
         // setProducts(remainingProducts)
     }
@@ -87,7 +87,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
-                                                            { <button className="productsButton adminButton" onClick={() => handleDeleteProducts(token, product.id)}>Delete</button>}
+                                                            { <button className="productsButton adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
                                                             { <button className="productsButton adminButton">Update</button>}
                                                         </>
                                                     :

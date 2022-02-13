@@ -4,11 +4,8 @@ import kriselda from "../images/Kriselda.png"
 import felix from "../images/Felix.png"
 import linkedIn from "../images/LinkedIn.png"
 import michelle from "../images/Michelle.jpg"
-<<<<<<< HEAD
-=======
 import ricky from "../images/Ricky.png"
 
->>>>>>> 4033a738e3ce5f6dc34e9736f90d159600b9d2de
 
 const About = () => {
     return <>

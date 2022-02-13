@@ -53,7 +53,7 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
 
   const getAllUsersHandler = async () => {
     axios.get("/api/users", {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => { 
       const users = res.data;
@@ -62,6 +62,25 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
       setAllUsersActive(!allUsersActive)  
     })
   };
+
+  const deleteUserHandler = async (userId) => {
+    console.log("clicked delete user")
+    console.log(userId)
+    axios.delete("/api/users/:id", {
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    })
+    .then(res => {
+      console.log(res)
+      const remainingUsers = users.filter((user) => userId !== user.id)
+      setUsers(remainingUsers)
+    })
+  }
+
+  const updateUserHandler = async (userId) => {
+    console.log("clicked update user")
+  }
 
   return ( 
     <>
@@ -147,7 +166,11 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
                         <div><b>Email: </b><br/> {user.email}</div>
                         <div><b>Adminstrator? </b><br/> {user.isAdmin ? "Yes" : "No"}</div>
                       </div>
-                      <div><img className="userImages" src={user.imgURL}/></div>
+                      <div className="alterUser">
+                        <img className="userImages" src={user.imgURL}/>
+                        <button onClick={() => deleteUserHandler(user.id)}> Delete User</button>
+                        <button onClick={() => updateUserHandler(user.id)}> Update User</button>
+                      </div>
                     </div>
                   )
                 })}

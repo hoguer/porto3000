@@ -77,8 +77,13 @@ h3{
     width: 50%;
     height: auto;
     border: 3px solid black;
-    float: right;
     border-radius: 10%;
+}
+.alterUser{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1vh;
 }
 .individualOrders{
     display:flex;

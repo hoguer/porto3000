@@ -101,9 +101,7 @@ async function patchUser(id, fields = {}) {
 }
 async function deleteUser(id) {
     try {
-      const {
-        rows: [user],
-      } = await client.query(`
+      const { rows: [user] } = await client.query(`
       DELETE FROM users
       WHERE id=$1
   `, [id]);

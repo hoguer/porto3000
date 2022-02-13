@@ -35,8 +35,9 @@ productsRouter.post("/", isAdmin, async (req, res, next) => {
         const newProduct = await createProduct({ name, description, price, imgURL, inStock, category})
         res.send({
             name: "new product successful",
-            message: "Successfully created a new product"
-        }, newProduct)
+            message: "Successfully created a new product",
+            newProduct
+        })
     } catch (error) {
         throw error
     }
