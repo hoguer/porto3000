@@ -3,7 +3,7 @@ import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "./Products.css";
 
-const Products = ({products, setProducts, currentUser}) => {
+const Products = ({products, setProducts, currentUser, token}) => {
     const [searchParams, setSearchParams] = useSearchParams()
     const navigate = useNavigate();
     const searchTerm = searchParams.get("searchTerm");
@@ -46,6 +46,13 @@ const Products = ({products, setProducts, currentUser}) => {
             })
     };
 
+    const handleDeleteProducts = (token, productId) => {
+        console.log("in HandleDelete")
+        // await handleDeleteProducts(token, productId)
+        // const remainingProducts = products.filter((product) => productId !== product.id)
+        // setProducts(remainingProducts)
+    }
+
     return <>
     <div className="outerContainerAll">
         <div className="productsNav">
@@ -77,6 +84,15 @@ const Products = ({products, setProducts, currentUser}) => {
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
                                                 <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                                { 
+                                                    currentUser.isAdmin ?
+                                                        <>
+                                                            { <button className="productsButton adminButton" onClick={() => handleDeleteProducts(token, product.id)}>Delete</button>}
+                                                            { <button className="productsButton adminButton">Update</button>}
+                                                        </>
+                                                    :
+                                                        null
+                                                }
                                             </div>
                                         </div>
                                     </div>

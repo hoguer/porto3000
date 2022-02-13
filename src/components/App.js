@@ -8,6 +8,7 @@ import {
   Cart,
   Home,
   Login,
+  NewProduct,
   Products,
   SingleOrder,
   SingleProduct,
@@ -63,6 +64,7 @@ const App = () => {
         <Route path="/register" exact element={<Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} currentUser= {currentUser} token={token} />}/>
         <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         {/* <Route path="/orders/:orderId" exact element={<SingleOrder currentUser={currentUser} orderId={orderId} getOrdersByUser={getOrdersByUser} userID={userID} token={token} />}/> */}
+        <Route path="/newproduct" element={<NewProduct currentUser={currentUser} token={token}/>}/>
 
       </Routes>
     </div>
