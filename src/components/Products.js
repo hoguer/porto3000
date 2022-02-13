@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { destroyedProduct } from "../"
 import axios from "axios";
 import "./Products.css";
 
@@ -48,9 +49,16 @@ const Products = ({products, setProducts, currentUser, token}) => {
 
     const handleDestroyProduct = async (token, productId) => {
         console.log("in HandleDestoryProducts")
-        // await destroyProduct(token, productId)
-        // const remainingProducts = products.filter((product) => productId !== product.id)
-        // setProducts(remainingProducts)
+        axios.delete("/api/products/:id", {
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${localStorage.getItem('token')}` }
+        })
+        .then(res => {
+            console.log(res)
+            const remainingProducts = products.filter((product) => productId !== product.id)
+            setProducts(remainingProducts)
+        })
     }
 
     return <>
