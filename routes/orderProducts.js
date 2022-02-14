@@ -38,6 +38,7 @@ orderProductsRouter.delete("/:orderProductId", async (req, res, next) => {
         res.send({
             name: "Order Product Deleted",
             message: "That order product is now removed.",
+
             destroyedOrderProduct
         });
     } catch (error) {
