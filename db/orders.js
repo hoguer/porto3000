@@ -70,11 +70,11 @@ async function getOrdersByUser({id}) {
         `, [id]);
 
         orders.forEach((order) => {
-            const productsForOrder = orderProducts.filter((orderProduct) => orderProduct.orderId === order.id)
+            const productsForOrder = orderProducts.filter((orderProduct) => orderProduct.orderId === order.userId)
             order.products = productsForOrder.map((op) => op.name)
         });
 
-        return orders;
+        return orderProducts;
     } catch (error) {
         throw error;
     };
