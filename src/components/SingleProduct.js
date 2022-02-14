@@ -82,11 +82,13 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
                     <div className="singleCardContent">    
                         <div className="innerCard">
                             <div className="productContainer">
-                                <img src={product.imgURL} className="productImage"/>
+                                <div className="imgContainer">
+                                    <img src={product.imgURL} className="productImage"/>
+                                </div>
                             </div>
                         </div>
                         <div className="cardDetails">
-                            <div className="productName">
+                            <div className="productNameContainer">
                                 <h2>{product.name}</h2>
                             </div>
                             <div className="productPrice">
