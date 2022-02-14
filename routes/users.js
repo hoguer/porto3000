@@ -1,19 +1,19 @@
 const usersRouter = require("express").Router();
-const { createUser, getUser, getUserByUsername, getOrdersByUser, patchUser, deleteUser } = require("../db");
+const { getAllUsers, createUser, getUser, getUserByUsername, getOrdersByUser, patchUser, deleteUser } = require("../db");
 const { isLoggedIn, isAdmin } = require("./util")
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const { JWT_SECRET = 'neverTell' } = process.env;
 
 //REQUIRE ADMIN?
-// usersRouter.get("/", async (req, res, next) =>{
-//     try {
-//         const allUsers = await getAllUsers();
-//         res.send(allUsers)
-//     } catch (error) {
-//         throw error
-//     }
-// } );
+usersRouter.get("/", isAdmin, async (req, res, next) =>{
+    try {
+        const allUsers = await getAllUsers();
+        res.send(allUsers)
+    } catch (error) {
+        throw error
+    }
+} );
 
 // POST /api/users/register
 usersRouter.post('/register', async (req, res, next) => {
@@ -136,7 +136,7 @@ usersRouter.patch('/:id', async (req, res, next)=>{
 usersRouter.delete("/:id", isAdmin, async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deletedUser = await deleteUser(id);
+      const deletedUser = await deleteUser(req.id);
       res.send(deletedUser);
     } catch (error) {
       next({
@@ -145,18 +145,5 @@ usersRouter.delete("/:id", isAdmin, async (req, res, next) => {
       });
     }
 });
-
-usersRouter.delete("/:id", isAdmin, async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const deletedUser = await deleteUser(id);
-      res.send(deletedUser);
-    } catch (error) {
-      next({
-        name: "DeleteError",
-        message: "Could not delete user",
-      });
-    }
-  });
 
 module.exports = usersRouter;

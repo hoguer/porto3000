@@ -27,7 +27,7 @@ async function getOrderById (id) {
             WHERE "orderId"=$1;
         `, [id]);
 
-        order.products = orderProducts.map((op) => op.name)
+        order.products = (orderProducts || []).map((op) => op.name)
 
         return order;
     } catch (error) {
@@ -37,18 +37,16 @@ async function getOrderById (id) {
 
 async function getAllOrders() {
     try {
-        handleSelectAllFromOrders()
+        const orders = await handleSelectAllFromOrders()
         const {rows: orderProducts} = await client.query(`
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op."productId" = p.id;
         `);
-
         orders.forEach((order) => {
             const productsForOrder = orderProducts.filter((orderProduct) => orderProduct.orderId === order.id)
             order.products = productsForOrder.map((op) => op.name)
         })
-
         return orders;
     } catch (error) {
         throw error;
