@@ -3,7 +3,8 @@ body {
     height: 100vh;
 }
 .mainLogo {
-    width: 30%
+    width: 30vw;
+    height:20vh;
 }
 .header { 
     display: flex;
