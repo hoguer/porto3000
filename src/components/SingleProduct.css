@@ -27,7 +27,7 @@
     
 }
 .productImage{
-    height: 280px;
+    height: 100%;
     width: 180px;
     padding-bottom:20px;
     padding-top: 2px;
@@ -44,15 +44,18 @@
     display: flex;
     margin-top: 20px;
     width: 40%;
+    gap: 5%;
 }
 .returnToAllProducts{
-    margin-left: 1vw;
+    text-align:center;
 }
 .sealContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    background-color: black;
+    height: 50vh;
 }
 .portoSeal {
     margin-top:15px;

@@ -49,7 +49,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
 
     return (
         <>
-            <h1 className="header">Create Account</h1>
+            <h1 className="pageHeader">Create Account</h1>
             <form className="createUserForm" onSubmit = {(event) => {
                 event.preventDefault();
                 registerUser();

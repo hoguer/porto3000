@@ -3,7 +3,7 @@ const { user } = require("pg/lib/defaults");
 const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
 const { isLoggedIn, isAdmin } = require("./util")
 
-ordersRouter.get("/", isLoggedIn, isAdmin, async (req, res, next) => {
+ordersRouter.get("/", isAdmin, async (req, res, next) => {
     try {
         const allOrders = await getAllOrders();
         res.send(allOrders);
