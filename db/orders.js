@@ -65,6 +65,7 @@ async function getOrdersByUser({id}) {
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
+            INNER JOIN orders AS o ON op. "orderId" = o.id
             WHERE "userId" = $1
         `, [id]);
 
@@ -112,7 +113,7 @@ async function getCartByUser({id}) {
             SELECT * 
             FROM orders
             WHERE "userId"=$1
-            AND status = "created";
+            AND status = 'created';
         `, [id])
 
         const {rows: [orderProducts]} = await client.query(`

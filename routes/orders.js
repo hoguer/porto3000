@@ -1,5 +1,5 @@
 const ordersRouter = require("express").Router();
-const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
+const { getAllOrders, getOrdersByUser, getCartByUser, createOrder, updateOrder } = require("../db")
 const { isLoggedIn, isAdmin } = require("./util")
 
 ordersRouter.get("/", isAdmin, async (req, res, next) => {
@@ -14,7 +14,7 @@ ordersRouter.get("/", isAdmin, async (req, res, next) => {
 ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
     const { id } = req.body
     try {
-        const userCart = await getCartByUser({id});
+        const userCart = await getOrdersByUser({id});
         res.send(userCart)
     } catch(error) {
         throw error;

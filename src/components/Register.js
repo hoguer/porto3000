@@ -70,7 +70,7 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 </div>
                 <div className="rightRegister">
                     <div>
-                        Username: <input type="text" placeholder="JohnDoe1" minLength="8" onChange={event => setUsername(event.target.value)} value={username} requiredrequired/>
+                        Username: <input type="text" placeholder="JohnDoe1" minLength="8" onChange={event => setUsername(event.target.value)} value={username} required/>
                     </div>
                     <div>
                         Password: <input type="password" placeholder="JohnsPassword" minLength="8" onChange={event => setPassword(event.target.value)} value={password} />
