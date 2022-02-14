@@ -166,7 +166,7 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
                         <div><b>Adminstrator? </b><br/> {user.isAdmin ? "Yes" : "No"}</div>
                       </div>
                       <div className="alterUser">
-                        <img className="userImages" src={user.imgURL}/>
+                        <img className="userImages" src={user.imgURL} alt="user image"/>
                         <button className="alterButtons" onClick={() => deleteUserHandler(user.id)}> Delete User</button>
                         <button className="alterButtons" onClick={() => updateUserHandler(user.id)}> Update User</button>
                       </div>

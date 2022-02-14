@@ -83,7 +83,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
                         <div className="innerCard">
                             <div className="productContainer">
                                 <div className="imgContainer">
-                                    <img src={product.imgURL} className="productImage"/>
+                                    <img src={product.imgURL} className="productImage" alt="product image"/>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     
         }    
         <div className="sealContainer">
-            <img src={mainLogo} className="portoSeal"/>
+            <img src={mainLogo} className="portoSeal" alt="logo image"/>
             <div className="sealDescription">
                 <p>Each product is backed by the Porto 3000 seal of quality assurance. From the care of our crops and livestock to the finest details on our packaging, the entire process is monitored to ensure the finest product is produced.</p>
                 <p>We go the extra mile because we love you 3000. </p>

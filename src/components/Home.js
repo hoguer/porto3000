@@ -12,12 +12,12 @@ import featImg3 from "../images/Oscypki.jpg"
 const Home = () => {
     return <>
       <div className="welcomeContainer">
-        <img src={header} className="welcome"/>
+        <img src={header} className="welcome" alt ="welcome image"/>
       </div>
       <div className="componentContainerHome">
         <div className="featuredContainer">
-            <img src={img2} className="img2"/>
-            <img src={img1} className="img1"/>
+            <img src={img2} className="img2" alt="vineyard image"/>
+            <img src={img1} className="img1" alt="grapes image"/>
             <div><h2><i>Online Reservations Available Soon</i></h2>
             <p>OPEN 10:00 AM- 7:00 PM daily</p>
             <br></br>
