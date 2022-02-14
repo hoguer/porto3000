@@ -45,6 +45,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
             setProducts(remainingProducts)
         })
     }
+    
     return ( 
         <>   
         { product ? 
@@ -61,7 +62,6 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
                         <div className="innerCard">
                             <div className="productContainer">
                                 <div className="imgContainer">
-
                                     <img src={product.imgURL} className="productImage" alt="product image"/>
                                 </div>
                             </div>

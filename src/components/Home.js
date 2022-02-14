@@ -43,11 +43,9 @@ const Home = () => {
                     <div className="featProdRContainer">
                         <div className="featProdR">
                             <NavLink to="/products/25"><img src={featImg1} className="featImgR"/></NavLink>
-                        
                         </div>
                         <div className="featProdR">
                             <NavLink to="/products/36"><img src={featImg3} className="featImgR"/></NavLink> 
-
                         </div>
                     </div>
                 </div>
