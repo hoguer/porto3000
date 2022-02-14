@@ -3,7 +3,7 @@ import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "./Products.css";
 
-const Products = ({products, setProducts, currentUser}) => {
+const Products = ({products, setProducts, currentUser, token}) => {
     const [searchParams, setSearchParams] = useSearchParams()
     const navigate = useNavigate();
     const searchTerm = searchParams.get("searchTerm");
@@ -35,16 +35,30 @@ const Products = ({products, setProducts, currentUser}) => {
     const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
 
     const addToCart = (status, userId) => {
-        console.log(currentUser)
-        console.log("Add to Cart was pushed");
         axios.post("/api/orders", {status, userId})
             .then(res => { 
-                console.log("Adding item to order", res)
-                console.log("userId", userId)
-                console.log("status", status)
+                // console.log("Adding item to order", res)
                 navigate("/cart")
             })
     };
+
+    const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
+        axios.delete("/api/products/:id", {
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${localStorage.getItem('token')}` }
+        })
+        .then(res => {
+            console.log(res)
+            const remainingProducts = products.filter((product) => productId !== product.id)
+            setProducts(remainingProducts)
+        })
+    }
+
+    const handleUpdateProduct = async (token, productId) => {
+        navigate(`/products/${productId}`)
+    }
 
     return <>
     <div className="outerContainerAll">
@@ -77,6 +91,15 @@ const Products = ({products, setProducts, currentUser}) => {
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
                                                 <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                                { 
+                                                    currentUser.isAdmin ?
+                                                        <>
+                                                            { <button className="productsButton adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                                            { <button className="productsButton adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
+                                                        </>
+                                                    :
+                                                        null
+                                                }
                                             </div>
                                         </div>
                                     </div>

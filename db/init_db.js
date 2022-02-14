@@ -3,6 +3,7 @@ const { createOrder } = require('./orders');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
 const { createReview } = require("./reviews")
+const {addProductToOrder} = require ("./order_products")
 
 
 async function buildTables() {
@@ -468,16 +469,15 @@ async function createInitialOrders() {
   };
 };
 
-//waiting for db 
 async function createInitialOrderProducts() {
   console.log("Starting to create order_products");
   try {
     const orderProductsData = [
-      {productId: "1", orderId: "1", price: "88", quantity: "1", userId:"1" },
-      {productId: "2", orderId: "2", price: "35", quantity: "2", userId:"2" },
+      {productId: 1, orderId: 1, price: 88, quantity: 1, userId:1 },
+      {productId: 2, orderId: 2, price: 35, quantity: 2, userId:2 },
      ]
 
-    await Promise.all(orderProductsData.map(getOrdersByProduct));
+    await Promise.all(orderProductsData.map(addProductToOrder));
 
   } catch (error) {
     throw error;
@@ -524,7 +524,7 @@ buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
   .then(createInitialOrders)
-  // .then(createInitialOrderProducts)
+  .then(createInitialOrderProducts)
   .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());

@@ -62,7 +62,9 @@
     background-color: white;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     padding: 12px;
+    gap: 5px;
 }
 
 .productsButton {

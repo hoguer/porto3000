@@ -22,6 +22,11 @@ apiRouter.use((error, req, res, next) => {
     res.send(error);
 });
 
+server.use('*', (req, res, next) =>{
+    res.status(404);
+    res.send({ error: 'route not found'});
+  })
+
 apiRouter.use((error, req, res, next) => {
     res.send(error);
 });
