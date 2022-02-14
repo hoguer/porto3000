@@ -1,5 +1,5 @@
 const orderProductsRouter = require("express").Router();
-const { getOrderProductById, addProductToOrder, updateOrderProduct, destroyOrderProduct} = require("../db")
+const { addProductToOrder, updateOrderProduct, destroyOrderProduct} = require("../db")
 
 orderProductsRouter.post("/orders/:orderId/products",  async (req, res, next) => {
     const { orderId } = req.params;

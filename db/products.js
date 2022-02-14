@@ -48,7 +48,6 @@ async function getProductByName(name) {
     }
 }
 
-//NEW PATCHPRODUCT
 async function patchProduct(id, fields = {}) {
     const setString = Object.keys(fields)
       .map((key, index) => `"${key}"=$${index + 1}`)

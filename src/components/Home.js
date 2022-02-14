@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import "./Home.css"
 import header from "../images/WelcomeHeader.png"
 import img1 from "../images/handHeldGrapes.png"
-// import img2 from "../images/venueSpace.jpg"
 import img2 from "../images/vineyardOverview.png"
 import featImg1 from "../images/goatCheese.jpg"
 import featImg2 from "../images/wineBottle.jpg"
@@ -40,16 +39,15 @@ const Home = () => {
                 <div className="featProdCards">
                     <div className="featProdL">
                         <NavLink to="/products/1"><img src={featImg2} className="featImgL"/></NavLink>
-                        {/* <p>Port Wine</p> */}
                     </div>
                     <div className="featProdRContainer">
                         <div className="featProdR">
                             <NavLink to="/products/25"><img src={featImg1} className="featImgR"/></NavLink>
-                            {/* <p>Goat Cheese</p> */}
+                        
                         </div>
                         <div className="featProdR">
                             <NavLink to="/products/36"><img src={featImg3} className="featImgR"/></NavLink> 
-                            {/* <p>Oscypki</p> */}
+
                         </div>
                     </div>
                 </div>
