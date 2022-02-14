@@ -16,8 +16,8 @@ async function getOrderProductById (id) {
 
 async function addProductToOrder ({orderId, productId, price, quantity}) {
   try {
-    const product = getProductById(productId)
-    const order = getOrderById(orderId)
+    const product = await getProductById(productId)
+    const order = await getOrderById(orderId)
     if (!product || !order) return;
     const {rows: [order_product]} = await client.query(`
       SELECT * FROM order_products

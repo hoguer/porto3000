@@ -89,13 +89,16 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 ${product.price}
                                             </div>
                                             <div className="productButtonsContainer">
-                                                <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
-                                                <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                                <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
+                                                <button className="allProductsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
-                                                            { <button className="productsButton adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
-                                                            { <button className="productsButton adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
+                                                        <div className="adminButtonsContainer">
+                                                            { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                                            { <button className="productsButton_adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
+                                                        </div>
+
                                                         </>
                                                     :
                                                         null
