@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "./Account.css";
 
 const Account = () => {
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -148,8 +150,9 @@ const Account = () => {
                         <div><b>Adminstrator? </b><br/> {user.isAdmin ? "Yes" : "No"}</div>
                       </div>
                       <div className="alterUser">
-                        <img className="userImages" src={user.imgURL}/>
+                        <img className="userImages" src={user.imgURL} alt="user image"/>
                         <button className="alterButtons" onClick={() => deleteUserHandler(user.id)}> Delete User</button>
+
                       </div>
                     </div>
                   )
