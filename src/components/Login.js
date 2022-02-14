@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import "./LoginRegister.css"
@@ -12,17 +12,13 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
 
     const loginUser = () => {
         if (!username || !password) return;
-        console.log('Login User is being called!');
         axios.post('/api/users/login', { username, password })
             .then(res => {
-                console.log('Loggedin User: ', res);
-
                 if (res.data.status === 'UsernamePasswordIncorrect') {
                     return alert('Username or passord incorrect. Please re-enter credentials.');
                 } else {
                     setCurrentUser(res.data.user);
                     localStorage.setItem('token', res.data.token);
-                    console.log(localStorage.getItem('token'));
                     if (res.data.user) {
                         setShowCredentialsError(false);
                         setIsLoggedIn(true);
@@ -34,7 +30,6 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
         .catch(error => {
             console.error('Error logging-in user!', error);
             const errorMessage = "login" ? "Incorrect username and password combination." : "Username already taken."
-            console.log("here!")
             setLoginError(errorMessage);
             setShowCredentialsError(true);
         })

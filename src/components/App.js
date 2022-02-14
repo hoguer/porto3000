@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, NavLink, useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import { Routes, Route, NavLink, useParams } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'

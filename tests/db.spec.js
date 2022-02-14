@@ -48,8 +48,6 @@ describe('Database', () => {
         queriedUser = rows[0];
       })
       it('Creates the user with 8 credentials', async () => {
-        console.log(queriedUser.firstname)
-        console.log(userCredentials.firstname)
         expect(queriedUser.firstname).toBe(userCredentials.firstname);
         // expect(queriedUser.lastname).toBe(userCredentials.lastname);
         // expect(queriedUser.email).toBe(userCredentials.email);
