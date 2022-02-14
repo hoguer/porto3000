@@ -99,7 +99,6 @@ describe('Database', () => {
         it('Does not return the password', async () => {
           expect(verifiedUser.password).toBeFalsy();
         })
-      })
 
       describe('getAllUsers', () => {
         it('Gets an array of objects, the users seed data', async () => {
@@ -108,7 +107,7 @@ describe('Database', () => {
           expect(users.length > 0).toBeTruthy();
         })
       })
-    })
+
 
       describe('getUserById', () => {
         //so the id is cerealize so will this pass? ...

@@ -13,7 +13,7 @@ import {
   SingleOrder,
   SingleProduct,
   Register,
-  Account,
+  Account
 } from "."
 
 const App = () => {

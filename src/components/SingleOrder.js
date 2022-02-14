@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"
 import axios from "axios";
 import "./SingleOrder.css"
 
 const SingleOrder = ({orderId}) =>{
 const [orderProducts, setOrderProducts] = useState({});
-    setOrderProducts(orderId)
+// const orderProducts = setOrderProducts(orderId)
 
   return (<>
     <div className="productsNav">
@@ -20,7 +20,7 @@ const [orderProducts, setOrderProducts] = useState({});
                             <div classname="cart" >
                             <div className="orderProductCardContainerAll">
                             <div className="orderProductCardAll">
-                            {orderProduct.id}, {orderProduct.name}
+                            {orderProduct.id}
                             </div>
                             </div>
                             </div>
