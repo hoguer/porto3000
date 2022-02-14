@@ -12,6 +12,12 @@ body {
     background-color: blanchedalmond;
     color: white
 }
+.pageHeader {
+    text-align: center;
+    padding: 6px;
+    background-color: #5E080D;
+    color: white;
+}
 .navigation {
     display: flex;
     justify-content: center;

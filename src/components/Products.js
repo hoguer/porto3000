@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
-import { destroyedProduct } from "../"
 import axios from "axios";
 import "./Products.css";
 
@@ -36,13 +35,9 @@ const Products = ({products, setProducts, currentUser, token}) => {
     const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
 
     const addToCart = (status, userId) => {
-        console.log(currentUser)
-        console.log("Add to Cart was pushed");
         axios.post("/api/orders", {status, userId})
             .then(res => { 
                 console.log("Adding item to order", res)
-                console.log("userId", userId)
-                console.log("status", status)
                 navigate("/cart")
             })
     };
@@ -59,6 +54,10 @@ const Products = ({products, setProducts, currentUser, token}) => {
             const remainingProducts = products.filter((product) => productId !== product.id)
             setProducts(remainingProducts)
         })
+    }
+
+    const handleUpdateProduct = async (token, productId) => {
+        navigate(`/products/${productId}`)
     }
 
     return <>
@@ -96,7 +95,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                     currentUser.isAdmin ?
                                                         <>
                                                             { <button className="productsButton adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
-                                                            { <button className="productsButton adminButton">Update</button>}
+                                                            { <button className="productsButton adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
                                                         </>
                                                     :
                                                         null

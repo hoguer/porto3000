@@ -99,6 +99,7 @@ async function patchUser(id, fields = {}) {
     throw error;
   }
 }
+
 async function deleteUser(id) {
     try {
       const { rows: [user] } = await client.query(`

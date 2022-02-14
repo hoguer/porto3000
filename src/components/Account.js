@@ -64,15 +64,13 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
   };
 
   const deleteUserHandler = async (userId) => {
-    console.log("clicked delete user")
-    console.log(userId)
-    axios.delete("/api/users/:id", {
+    axios.delete(`/api/users/:id`, {
       headers: { 
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => {
-      console.log(res)
+      console.log(res.data)
       const remainingUsers = users.filter((user) => userId !== user.id)
       setUsers(remainingUsers)
     })
@@ -80,6 +78,7 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
 
   const updateUserHandler = async (userId) => {
     console.log("clicked update user")
+    console.log(userId)
   }
 
   return ( 
@@ -168,8 +167,8 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
                       </div>
                       <div className="alterUser">
                         <img className="userImages" src={user.imgURL}/>
-                        <button onClick={() => deleteUserHandler(user.id)}> Delete User</button>
-                        <button onClick={() => updateUserHandler(user.id)}> Update User</button>
+                        <button className="alterButtons" onClick={() => deleteUserHandler(user.id)}> Delete User</button>
+                        <button className="alterButtons" onClick={() => updateUserHandler(user.id)}> Update User</button>
                       </div>
                     </div>
                   )
