@@ -34,7 +34,7 @@ orderProductsRouter.patch("/:orderProductId", async (req, res, next) => {
 orderProductsRouter.delete("/:orderProductId", async (req, res, next) => {
     const { orderProductId } = req.params;
     try {
-        const destroyedOrderProduct = await destroyOrderProduct(orderProductId)
+        const destroyedOrderProduct = await destroyOrderProduct({orderProductId})
         res.send({
             name: "Order Product Deleted",
             message: "That order product is now removed.",
