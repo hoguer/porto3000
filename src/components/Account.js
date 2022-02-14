@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "./Account.css";
 
-const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}) => {
+const Account = () => {
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -14,7 +16,6 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
   const [orders, setOrders] = useState([])
   const [allUsersActive, setAllUsersActive] = useState(false)
   const [users, setUsers] = useState([])
-  const navigate = useNavigate();
   
   useEffect(() => {
      
@@ -22,8 +23,6 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => {
-        console.log('IN ACCOUNT', res);
-        console.log('Fetched User: ', res.data.username);
         setFirstname(res.data.firstname);
         setLastname(res.data.lastname);
         setEmail(res.data.email);
@@ -34,18 +33,12 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
       .catch(error => console.error(error));
   }, []);
 
-  // const toggleAdminPrivileges = () => {
-  //   setActive(!isActive);
-  // };
-
   const getAllOrdersHandler = async () => {
-    console.log("Gathering all the orders")
     axios.get("/api/orders", {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => {
       const orders = res.data;
-      console.log(orders)
       setOrders(orders);
       setAllOrdersActive(!allOrdersActive)   
     })
@@ -57,7 +50,6 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
     })
     .then(res => { 
       const users = res.data;
-      console.log(users)
       setUsers(users)
       setAllUsersActive(!allUsersActive)  
     })
@@ -70,20 +62,12 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
         'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => {
-      console.log(res.data)
       const remainingUsers = users.filter((user) => userId !== user.id)
       setUsers(remainingUsers)
     })
   }
-
-  const updateUserHandler = async (userId) => {
-    console.log("clicked update user")
-    console.log(userId)
-  }
-
   return ( 
     <>
-      {/* <h1 className="header">Account</h1> */}
       <div className="account-container">
         <h3>Personal Information</h3>
         <div className="accountdiv">
@@ -115,7 +99,7 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
                   View all Orders
               </button>
               <Link to="/products">
-                <button className="adminAbility"> View / Edit Products</button>
+                <button className="adminAbility"> View / Delete Products</button>
               </Link> 
 
               <Link to="/newproduct">
@@ -168,7 +152,7 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
                       <div className="alterUser">
                         <img className="userImages" src={user.imgURL} alt="user image"/>
                         <button className="alterButtons" onClick={() => deleteUserHandler(user.id)}> Delete User</button>
-                        <button className="alterButtons" onClick={() => updateUserHandler(user.id)}> Update User</button>
+
                       </div>
                     </div>
                   )

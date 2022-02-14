@@ -3,7 +3,7 @@ const { createOrder } = require('./orders');
 const { createProduct } = require("./products")
 const { createUser } = require("./users")
 const { createReview } = require("./reviews")
-const {addProductToOrder} = require ("./order_products")
+const { addProductToOrder } = require ("./order_products")
 
 
 async function buildTables() {
@@ -68,7 +68,7 @@ async function buildTables() {
           "productId" INTEGER REFERENCES products(id)
         );
       `);
-    console.log("finished building THE tables")
+    console.log("finished building the tables")
   } catch (error) {
     throw error;
   }
