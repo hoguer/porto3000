@@ -3,7 +3,6 @@ const { getProductById } = require('./products')
 const { getOrderById, updateOrder} = require("./orders")
 
 async function getOrderProductById (id) {
-
     try{
         const {rows: [order_product]} = await client.query(`
             SELECT * FROM order_products
