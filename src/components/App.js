@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, NavLink, useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import { Routes, Route, NavLink, useParams } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
@@ -23,12 +23,11 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [isAdmin, setIsAdmin] = useState(false);
   const [products, setProducts] = useState([]);
-  let { orderId } = useParams();
   
   return <> 
     <div className="App">
       <div className='header'>
-        <img src={navName} className='mainLogo'/>
+        <img src={navName} className='mainLogo' alt ="logo image"/>
       </div>
       <nav className="navigation">
         <div className="nav-links">
@@ -64,8 +63,7 @@ const App = () => {
         <Route path="/products/:id" exact element={<SingleProduct currentUser={currentUser} token={token} products={products} setProducts={setProducts}/>} />
         <Route path="/register" exact element={<Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} currentUser= {currentUser} token={token} />}/>
         <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
-        {/* <Route path="/orders/:orderId" exact element={<SingleOrder orderId={orderId} />}/> */}
-
+        <Route path="/orders/:orderId" exact element={<Cart currentUser={currentUser} />}/>
         <Route path="/newproduct" element={<NewProduct currentUser={currentUser} token={token}/>}/>
       </Routes>
     </div>

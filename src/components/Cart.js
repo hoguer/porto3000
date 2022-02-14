@@ -10,8 +10,8 @@ import CheckoutForm from "./CheckoutForm";
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_test_51KRX5lDiPmSSqdKeLFGXnGTrTTwdg9wDvM4dUELHFXcKTcEz6SABvgnK88uzmsVVpQVgbvJgEevcHQPB7JJ6O4tz00aUxs4kpL')
 
-const Cart = (CheckoutForm) => {
-
+const CartCheckout = (CheckoutForm) => {
+//^ will fix 
     const options = {
         // passing the client secret obtained from the server
         //this is from the documentation^
@@ -27,4 +27,4 @@ const Cart = (CheckoutForm) => {
     </>
 }
 
-export default Cart; 
+export default CartCheckout; 

@@ -1,5 +1,5 @@
 const productsRouter = require("express").Router();
-const {isAdmin}= require('./util')
+const { isAdmin }= require('./util')
 
 const { getProductById, getAllProducts, createProduct, getProductByName, patchProduct, deleteProduct } = require("../db")
   
@@ -43,7 +43,6 @@ productsRouter.post("/", isAdmin, async (req, res, next) => {
     }
 })
 
-//  NEW PATCH PRODUCTS
 productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
     try{
         const {id} = req.params;

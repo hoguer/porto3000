@@ -1,3 +1,11 @@
+.devWarningNav {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    border-left: solid #eab354 8px;
+}
+
+
 .productContainer {
     display: flex;
     justify-content: center;

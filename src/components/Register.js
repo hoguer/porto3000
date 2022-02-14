@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,12 +15,10 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
     const navigate = useNavigate();
 
     const registerUser = () => {
-        console.log('In register user!!')
         if ( !firstname || !lastname || !username || !email || !password || !confirmPassword || !address ) {
             return;
         }
         if (password !== confirmPassword) return;
-        console.log('Register User is being called!');
         axios.post('/api/users/register', { firstname, lastname, username, email, password, address })
             .then(res => {   
                 setCurrentUser(res.data.user);
@@ -30,7 +28,6 @@ const Register =({currentUser, setCurrentUser, setIsLoggedIn, token}) =>{
                 navigate('/account');
             })
             .catch(error => {
-                console.error('Error registering user!', error);
                 const errorMessage = "login" && "That username already exists. Please pick a different username."
                 setRegisterError(errorMessage);
                 setShowCredentialsError(true);
