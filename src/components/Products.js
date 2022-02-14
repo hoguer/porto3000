@@ -34,11 +34,21 @@ const Products = ({products, setProducts, currentUser, token}) => {
 
     const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
 
-    const addToCart = (status, userId) => {
-        axios.post("/api/orders", {status, userId})
+    const addToCart = async (status, userId, product) => {
+        await axios.post("/api/orders", {status, userId})
             .then(res => { 
-                // console.log("Adding item to order", res)
-                navigate("/cart")
+                console.log("Adding item to order", res)
+                const orderId = res.data.newOrder.id;
+                console.log(orderId)
+                const productId = product.id
+                const price = product.price
+                const quantity = 1
+                axios.post(`/api/orders/${orderId}/products`, {orderId, productId, price, quantity})
+                    .then(res => {
+                        console.log(res.data)
+                        navigate("/cart")
+            })
+                
             })
     };
 
@@ -90,7 +100,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                             </div>
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="productsButton">View Product</NavLink>
-                                                <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                                <button className="productsButton" onClick={() => {addToCart("created", currentUser.id, product)}}>Add to Cart</button>
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
