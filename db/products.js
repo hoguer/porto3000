@@ -69,10 +69,23 @@ async function patchProduct(id, fields = {}) {
     }
   }
 
+  async function destoryProduct({id}) {
+    try {
+      const { rows: [product] } = await client.query(`
+      DELETE * FROM products
+      WHERE id=$1
+  `, [id]);
+    } catch (error) {
+      console.error("Error with deleteProduct in db/users.");
+      throw error;
+    }
+}
+
  module.exports = {
      getProductById,
      getAllProducts,
      createProduct,
      getProductByName,
-     patchProduct
+     patchProduct,
+     destoryProduct
  }

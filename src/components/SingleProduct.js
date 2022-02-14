@@ -4,7 +4,7 @@ import axios from "axios";
 import mainLogo from "../images/mainLogo.png"
 import "./SingleProduct.css"
 
-const SingleProduct = ({products, setProducts, currentUser}) => { 
+const SingleProduct = ({products, setProducts, currentUser, token}) => { 
     const [product, setProduct] = useState({});
     const navigate = useNavigate();
     let { id } = useParams();
@@ -46,15 +46,36 @@ const SingleProduct = ({products, setProducts, currentUser}) => {
             })
     };
 
+    const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
+        axios.delete("/api/products/:id", {
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${localStorage.getItem('token')}` }
+        })
+        .then(res => {
+            console.log(res)
+            navigate("/products")
+            const remainingProducts = products.filter((product) => productId !== product.id)
+            setProducts(remainingProducts)
+        })
+    }
+
+    const handleUpdateProduct = async (token, productId) => {
+        console.log("Handle Update Product")
+        // axios.patch("/api/products/:id", 
+        // )
+    }
+
     return ( 
         <>   
         { product ? 
         <div key={product.id}>
             <div className="productsNav">
-                <NavLink to="/products">All Products</NavLink> |
-                <NavLink to="/products/wines">Wines</NavLink> |
-                <NavLink to="/products/cheeses">Cheeses</NavLink> |
-                <NavLink to="/products/productpairs">Pairings</NavLink>
+            <NavLink to="/products">All Products</NavLink> |
+            <NavLink to="/products?type=wine">Wines</NavLink> |
+            <NavLink to="/products?type=cheese">Cheeses</NavLink> |
+            <NavLink to="/products?type=wine%20and%20cheese">Pairings</NavLink>
             </div>
             <div className="productContainer">
                 <div className="productCard">
@@ -77,6 +98,14 @@ const SingleProduct = ({products, setProducts, currentUser}) => {
                                 <div className="singleProdButtonContainer">
                                     <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
                                     <NavLink to="/products" className="productsButton returnToAllProducts">Return to All Products</NavLink>
+                                    {
+                                        currentUser.isAdmin ?
+                                        <>
+                                        { <button className="productsButton adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                        { <button className="productsButton adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
+                                        </>
+                                        : null
+                                    }
                                 </div>
                         </div>
                     </div>

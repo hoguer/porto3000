@@ -51,13 +51,13 @@ describe('Database', () => {
         console.log(queriedUser.firstname)
         console.log(userCredentials.firstname)
         expect(queriedUser.firstname).toBe(userCredentials.firstname);
-        // expect(queriedUser.lastname).toBe(userCredentials.lastname);
-        // expect(queriedUser.email).toBe(userCredentials.email);
-        // expect(queriedUser.imgURL).toBe(userCredentials.imgURL);
-        // expect(queriedUser.username).toBe(userCredentials.username);
-        // expect(queriedUser.password).toBe(userCredentials.password);
-        // expect(queriedUser.isAdmin).toBe(userCredentials.isAdmin);
-        // expect(queriedUser.address).toBe(userCredentials.address);
+        expect(queriedUser.lastname).toBe(userCredentials.lastname);
+        expect(queriedUser.email).toBe(userCredentials.email);
+        expect(queriedUser.imgURL).toBe(userCredentials.imgURL);
+        expect(queriedUser.username).toBe(userCredentials.username);
+        expect(queriedUser.password).toBe(userCredentials.password);
+        expect(queriedUser.isAdmin).toBe(userCredentials.isAdmin);
+        expect(queriedUser.address).toBe(userCredentials.address);
       });
         })
   })
@@ -90,7 +90,6 @@ describe('Database', () => {
           verifiedUser = await getUser(userCredentials);
         })
         it('Verifies the passed-in, plain-text password against the password in the database (the hashed password, if this portion is complete)', async () => {
-          //do we want to keep this?
           const unVerifiedUser = await getUser({username: userCredentials.username, password: 'badPassword'});
           expect(verifiedUser).toBeTruthy();
           expect(verifiedUser.username).toBe(userCredentials.username);
@@ -99,7 +98,6 @@ describe('Database', () => {
         it('Does not return the password', async () => {
           expect(verifiedUser.password).toBeFalsy();
         })
-      })
 
       describe('getAllUsers', () => {
         it('Gets an array of objects, the users seed data', async () => {
@@ -108,7 +106,7 @@ describe('Database', () => {
           expect(users.length > 0).toBeTruthy();
         })
       })
-    })
+
 
       describe('getUserById', () => {
         //so the id is cerealize so will this pass? ...
