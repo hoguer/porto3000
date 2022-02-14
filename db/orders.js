@@ -27,7 +27,7 @@ async function getOrderById (id) {
             WHERE "orderId"=$1;
         `, [id]);
 
-        order.products = orderProducts.map((op) => op.name)
+        order.products = (orderProducts || []).map((op) => op.name)
 
         return order;
     } catch (error) {
