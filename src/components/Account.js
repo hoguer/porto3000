@@ -14,7 +14,6 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
   const [orders, setOrders] = useState([])
   const [allUsersActive, setAllUsersActive] = useState(false)
   const [users, setUsers] = useState([])
-  const [updateForm, setUpdateForm] = useState(false)
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -80,7 +79,6 @@ const Account = ({currentUser, setCurrentUser, setIsLoggedIn, token, isLoggedIn}
   const updateUserHandler = async (userId) => {
     console.log("clicked update user")
     console.log(userId)
-    setUpdateForm(!updateForm)
   }
 
   return ( 
