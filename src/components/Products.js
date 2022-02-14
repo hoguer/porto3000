@@ -42,10 +42,8 @@ const Products = ({products, setProducts, currentUser, token}) => {
                 const quantity = 1
                 axios.post(`/api/orders/${orderId}/products`, {orderId, productId, price, quantity})
                     .then(res => {
-
                         navigate("/cart")
-            })
-                
+                })
             })
     };
 
@@ -84,7 +82,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 {product.name}
                                             </div>
                                             <div className="cardImage">
-                                                <img src={product.imgURL} className="productImg"></img>
+                                                <img src={product.imgURL} className="productImg" alt="product image"></img>
                                             </div>
                                             <div className="itemPrice">
                                                 ${product.price}
@@ -95,9 +93,9 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
-                                                        <div className="adminButtonsContainer">
-                                                            { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
-                                                        </div>
+                                                          <div className="adminButtonsContainer">
+                                                              { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                                          </div>
                                                         </>
                                                     :
                                                         null

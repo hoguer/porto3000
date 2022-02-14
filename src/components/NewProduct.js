@@ -47,7 +47,7 @@ const NewProduct = ({currentUser}) => {
         setProduct({...product, price: event.target.valueAsNumber})
       }}></input>
       <p>Product Image</p>
-      <input type="url" name="imgURL" value={product.imgURL} placeholder="https://image.jpg" minLength="1" required onChange={(event) => {
+      <input type="url" name="imgURL" value={product.imgURL} placeholder="https://image.jpg" alt="product image" minLength="1" required onChange={(event) => {
         setProduct({...product, imgURL: event.target.value})
       }}></input>
       <p>Is the product in stock? </p>

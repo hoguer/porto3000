@@ -24,7 +24,6 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
                         setIsLoggedIn(true);
                         navigate('/account');
                     }
-
                 }
             })
         .catch(error => {

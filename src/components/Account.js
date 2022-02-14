@@ -99,7 +99,6 @@ const Account = () => {
               <Link to="/products">
                 <button className="adminAbility"> View / Delete Products</button>
               </Link> 
-
               <Link to="/newproduct">
                 <button className="adminAbility"> Create new product</button> 
               </Link>
