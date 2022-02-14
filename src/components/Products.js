@@ -98,6 +98,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                             { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
                                                             { <button className="productsButton_adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
                                                         </div>
+
                                                         </>
                                                     :
                                                         null
