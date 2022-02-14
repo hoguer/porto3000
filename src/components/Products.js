@@ -37,7 +37,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
     const addToCart = (status, userId) => {
         axios.post("/api/orders", {status, userId})
             .then(res => { 
-                console.log("Adding item to order", res)
+                // console.log("Adding item to order", res)
                 navigate("/cart")
             })
     };

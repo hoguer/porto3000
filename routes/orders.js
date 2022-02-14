@@ -1,5 +1,4 @@
 const ordersRouter = require("express").Router();
-const { user } = require("pg/lib/defaults");
 const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
 const { isLoggedIn, isAdmin } = require("./util")
 

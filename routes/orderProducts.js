@@ -1,44 +1,44 @@
 const orderProductsRouter = require("express").Router();
-const { getOrderProductsById, addProductToOrder, updateOrderProduct, destroyOrderProduct} = require("../db")
-// const { isLoggedIn, isAdmin } = require("./util") need?
-
+const { getOrderProductById, addProductToOrder, updateOrderProduct, destroyOrderProduct} = require("../db")
 
 orderProductsRouter.post("/orders/:orderId/products",  async (req, res, next) => {
     const { orderId } = req.params;
     const { productId, price, quantity } = req.body;
     try {
-        const order_product = await addProductToOrder(orderId, productId, price, quantity)
+        const order_product = await addProductToOrder({orderId, productId, price, quantity})
         res.send({
             name: "Select item",
-            message: "Your item is added to cart."
-        }, order_product)
+            message: "Your item is added to cart.",
+            order_product
+          })
     } catch(error) {
         throw error;
     };
 });
 
 orderProductsRouter.patch("/:orderProductId", async (req, res, next) => {
-    const { orderId } = req.params;
+    const { orderProductId } = req.params;
     const { productId, price, quantity } = req.body;
     try {
-        const updatedOrderProducts = await updateOrderProduct({ orderId, productId, price, quantity })
+        const updatedOrderProduct = await updateOrderProduct({ id: orderProductId, productId, price, quantity })
         res.send({
-            name: "Order Update",
-            message: "The order has been updated."
-        }, [updatedOrderProducts]);
+            name: "Order Product Update",
+            message: "The order product has been updated.",
+            updatedOrderProduct
+        });
     } catch (error) {
         throw error;
     };
 });
 
 orderProductsRouter.delete("/:orderProductId", async (req, res, next) => {
-    const { orderId } = req.params;
-    const { productId, price, quantity } = req.body;
+    const { orderProductId } = req.params;
     try {
-        const destroyedOrderProduct = await destroyOrderProduct(orderProductId)
+        const destroyedOrderProduct = await destroyOrderProduct({orderProductId})
         res.send({
-            name: "Product Deleted",
-            message: "That product is now removed.",
+            name: "Order Product Deleted",
+            message: "That order product is now removed.",
+
             destroyedOrderProduct
         });
     } catch (error) {
