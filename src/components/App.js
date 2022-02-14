@@ -28,7 +28,7 @@ const App = () => {
   return <> 
     <div className="App">
       <div className='header'>
-        <img src={navName} className='mainLogo'/>
+        <img src={navName} className='mainLogo' alt ="logo image"/>
       </div>
       <nav className="navigation">
         <div className="nav-links">
