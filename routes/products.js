@@ -68,7 +68,7 @@ productsRouter.delete('/:id', isAdmin, async (req, res, next) => {
       } catch (error) {
         next({
           name: "DeleteError",
-          message: "Could not delete user",
+          message: "Could not delete product",
         });
       }
   });
