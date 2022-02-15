@@ -1,18 +1,16 @@
-// code to build and initialize DB goes here
 const client = require('./client');
-const {
-  getProductById, 
-  getAllProducts,
-  createProduct,
-} = require("./products")
-
+const { createOrder } = require('./orders');
+const { createProduct } = require("./products")
 const { createUser } = require("./users")
+const { createReview } = require("./reviews")
+const { addProductToOrder } = require ("./order_products")
+
 
 async function buildTables() {
   try {
     client.connect();
       await client.query(`
-        DROP TABLE IF EXISTS users, products, orders, order_products;
+        DROP TABLE IF EXISTS users, products, orders, order_products, reviews;
       `);
       await client.query(`
         CREATE TABLE users(
@@ -44,7 +42,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY, 
           status VARCHAR(255) DEFAULT 'created', 
-          "userID" INTEGER REFERENCES users(id), 
+          "userId" INTEGER REFERENCES users(id), 
           "datePlaced" timestamp DEFAULT now()
         );
       `);
@@ -56,20 +54,28 @@ async function buildTables() {
           "orderId" INTEGER REFERENCES orders(id), 
           price INTEGER NOT NULL,
           quantity INTEGER NOT NULL DEFAULT 0,
-          "userID" INTEGER REFERENCES users(id)
+          UNIQUE("productId", "orderId")
         );
       `);
-    console.log("finished building THE tables")
+
+      await client.query(`
+        CREATE TABLE reviews(
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          content VARCHAR(1000) CONSTRAINT CK_reviews_content CHECK (10 <= length(content)),
+          stars INTEGER NOT NULL CHECK (0 <= stars AND stars <= 5),
+          "userId" INTEGER REFERENCES users(id),
+          "productId" INTEGER REFERENCES products(id)
+        );
+      `);
+    console.log("finished building the tables")
   } catch (error) {
     throw error;
   }
 }
-/* 
-Seed data 
-*/
+
 async function populateInitialData() {
   try {
-    // create useful starting data
     console.log("populating our wine and cheese tables");
     const wineAndCheeseData = [
       {
@@ -250,7 +256,7 @@ async function populateInitialData() {
       },
       {
         name: "Gruyere",
-        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, it's flavor is 'complicated.'",
+        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, its flavor is 'complicated.'",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "12",
@@ -329,38 +335,6 @@ async function populateInitialData() {
         category: "cheese"
       },
       {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
         name: "Extra Mature Real Yorkshire Wensleydalee",
         description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
         imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
@@ -401,7 +375,7 @@ async function populateInitialData() {
         category: "cheese"
       },
       {
-        name: "Gorgonzola dolce",
+        name: "Queijo de coalho",
         description: "Queijo de coalho is a traditional cow's milk cheese from the northeastern regions of Brazil. The cheese is characterized by its firm, yet elastic texture and a slightly yellow color. Coalho is often sold on sticks for roasting, because it can withstand high temperatures and does not melt easily.",
         imgURL: "https://c8.alamy.com/comp/GF5EJK/brazilian-traditional-cheese-queijo-coalho-on-wooden-board-selective-GF5EJK.jpg",
         inStock: true,
@@ -422,13 +396,36 @@ async function populateInitialData() {
         imgURL: "https://en.gorgonzola.com/wp-content/uploads/sites/2/2020/01/abbinamenti-head.jpg",
         inStock: true,
         price: "50",
-        category: "Wine & Cheese"
+        category: "wine and cheese"
+      },
+      {
+        name: "Pinot Noir & Gruyere",
+        description: "A classic pairing. Neither the wine nor the cheese will overpower each other, but instead meld in harmony between the nutty flavors of the cheese and the red berry taste of the Pinot Noir",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
+      {
+        name: "Sauvignon Blanc & Goat Cheese",
+        description: "This earthy pairing does not disappoint. The citrus and mineral notes of this wine works well to bring out the herbal and nutty flavors of goat cheese.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
+      },
+      {
+        name: "Cabernet Sauvignon & Aged Cheddar",
+        description: "Bold cheeses need bold partners. The Cabernet Sauvignon tastes wonderful with the fattiness of the aged cheddar. Neither will drown out the taste of the other, but instead have you pining for just one. more. bite.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese"
       },
     ]
 
     const products = await Promise.all(wineAndCheeseData.map(createProduct));
-    console.log("Wine and Cheese", wineAndCheeseData)
-    console.log("All products created", products)
+    console.log("All initial products created")
 
   } catch (error) {
     throw error;
@@ -444,17 +441,90 @@ async function createInitialUsers() {
       {firstname: "Robert ", lastname: "RectanglePants", email: "DoodleBob@BikiniBottom.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnailLover101", password: "KrustyKrab2006", isAdmin: false, address: "200 Pineapple Way"},
       {firstname: "Hernando", lastname: "Madrigal", email: "FearlessOne@Encanto.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "RatsOnB4ck", password: "future37", isAdmin: false, address: "1000 Casita Lane"},
       {firstname: "Chiba", lastname: "Lily", email: "Doggos@gmail.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnifferWiffer302", password: "tr3atsplz", isAdmin: false, address: "501 Borkley Street"},
+      {firstname: "Patrick", lastname: "Bateman", email: "PaulAllen@gmail.com", imgURL: "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg-1200-80.jpg", username: "PatrickBateman", password: "HueyLewisAndTheNewROCK", isAdmin: false, address: "2025 Psycho Path"},
+      {firstname: "Oscar", lastname: "Wilde", email: "theimportanceof@aol.com", imgURL: "https://i.guim.co.uk/img/media/7a770bbbaaf6ca9d56022829c6d31977b1d6f646/0_128_2520_1511/master/2520.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=fd5d8fd76d6a4becd6286851c194700e", username: "OscarWilde", password: "NotAGoodPass", isAdmin: false, address: "6543 toomany st"},
+      {firstname: "Dre", lastname: "Dawg", email: "DrDr@yahoo.com", imgURL: "https://pbs.twimg.com/profile_images/715341035107278848/RotN_Kmm_400x400.jpg", username: "WaltWhitman", password: "BeatsByDre", isAdmin: false, address: "360 Bad St"},
+      {firstname: "Don", lastname: "Juan", email: "DonJuan@gmail.com", imgURL: "https://cdn.britannica.com/40/66340-004-547E0283/Byron-George-Gordon-1820.jpg", username: "LordByron", password: "WhoIsAsking", isAdmin: false, address: "70 Old Guy Road"},
+      {firstname: "Victor", lastname: "Frankenstein", email: "Frankenstein@aol.com", imgURL: "https://i0.wp.com/thenerddaily.com/wp-content/uploads/2018/05/Mary-Shelley-Movie-2018.jpg?fit=1000%2C742&ssl=1", username: "MarySchelly", password: "37The37", isAdmin: false, address: "7331 Crapi Apartmens"},
     ]
 
     const users = await Promise.all(userData.map(createUser));
+    console.log("All initial users created")
+  } catch (error) {
+    throw error;
+  };
+};
+async function createInitialOrders() {
+  console.log("Starting to create orders");
+  try {
+    const ordersData = [
+      {status: "created", userId: "1"},
+      {status: "completed", userId: "2"},
+     ]
+
+    await Promise.all(ordersData.map(createOrder));
 
   } catch (error) {
     throw error;
   };
 };
 
+async function createInitialOrderProducts() {
+  console.log("Starting to create order_products");
+  try {
+    const orderProductsData = [
+      {productId: 1, orderId: 1, price: 88, quantity: 1, userId:1 },
+      {productId: 2, orderId: 2, price: 35, quantity: 2, userId:2 },
+     ]
+
+    await Promise.all(orderProductsData.map(addProductToOrder));
+
+  } catch (error) {
+    throw error;
+  };
+};
+
+async function createInitialReviews() {
+  console.log("Starting to create Reviews");
+  try {
+    const reviewData = [
+      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
+      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
+      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
+      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
+    ]
+
+    const reviews = await Promise.all(reviewData.map(createReview));
+    console.log("All initial reviews created")
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function addOrderProdcts() {
+  console.log("Starting to create Reviews");
+  try {
+    const reviewData = [
+      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
+      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
+      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
+      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
+    ]
+
+    const reviews = await Promise.all(reviewData.map(createReview));
+    console.log("All initial reviews created")
+  } catch (error) {
+    throw error;
+  }
+}
+
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
+  .then(createInitialOrders)
+  .then(createInitialOrderProducts)
+  .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());

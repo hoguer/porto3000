@@ -1,76 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { Routes, Route, NavLink, useParams } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
-import logo2 from '../images/logo2.png';
-import {
-  // getSomething
-} from '../api';
-
+import navName from '../images/navName.png'
 import {
   About,
   Cart,
   Home,
   Login,
+  NewProduct,
   Products,
-  SingleProduct
+  SingleOrder,
+  SingleProduct,
+  Register,
+  Account
 } from "."
-
 
 const App = () => {
   const [message, setMessage] = useState('');
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
   const [products, setProducts] = useState([]);
-
-  // useEffect(() => {
-  //   getSomething()
-  //     .then(response => {
-  //       setMessage(response.message);
-  //     })
-  //     .catch(error => {
-  //       setMessage(error.message);
-  //     });
-  // });
-
+  let { orderId } = useParams();
+  
   return <> 
     <div className="App">
       <div className='header'>
-        <h1>porto3000</h1>
+        <img src={navName} className='mainLogo' alt ="logo"/>
       </div>
       <nav className="navigation">
         <div className="nav-links">
           <NavLink to="/"> Home </NavLink> 
-          <NavLink to="/products"> Products </NavLink> 
           <NavLink to="/about"> About Us</NavLink> 
+          <NavLink to="/products"> Products </NavLink> 
           {
             isLoggedIn?
-              <>
+            <>
                 <NavLink to="/account"> Account </NavLink> 
                 <NavLink to="/" onClick={() => {
                   setToken("")
                   setIsLoggedIn(false)
                   setCurrentUser(false)
+                  setIsAdmin(false)
                 }}> Logout  </NavLink>
               </>
               :
-              <>
+              <> 
                 <NavLink to="/login"> Login </NavLink> 
                 <NavLink to="/register"> Register </NavLink> 
-                <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
-                {/* build the checkout component into the cart */}
               </>
           }
+          <NavLink to="/cart"><img src={carticon} alt="icon" className='cartIcon'></img> </NavLink> 
         </div>
       </nav>
       <Routes>
-        <Route path="/about" exact element={<About />}/>
-        <Route path="/cart" exact element={<Cart />}/>
         <Route path="/" exact element={<Home />}/>
-        <Route path="/login" exact element={<Login />}/>
+        <Route path="/about" element={<About />}/>
+        <Route path="/cart" element={<Cart />}/>
+        <Route path="/login" exact element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/products" exact element={<Products currentUser= {currentUser} token={token} products={products} setProducts={setProducts}/>} />
-        <Route path="/products/:id" element={<SingleProduct token={token} products={products}/>} />
+        <Route path="/products/:id" exact element={<SingleProduct currentUser={currentUser} token={token} products={products} setProducts={setProducts}/>} />
+        <Route path="/register" exact element={<Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} currentUser= {currentUser} token={token} />}/>
+        <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
+        {/* <Route path="/orders/:orderId" exact element={<SingleOrder orderId={orderId} />}/> */}
+        <Route path="/newproduct" element={<NewProduct currentUser={currentUser} token={token}/>}/>
       </Routes>
     </div>
   </>;

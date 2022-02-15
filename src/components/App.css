@@ -1,32 +1,35 @@
 body {
-    background-color:#262b2b;
+    background-color: black;
+    height: 100vh;
+}
+.mainLogo {
+    width: 30vw;
+    height:20vh;
 }
 .header { 
- display: flex;
- justify-content: center;  
- padding: 20px;
- background-color: #0d1011;
- color: #e7e4e3;
- /* font-family: may have to take a png from the website to put on the logo */
- 
+    display: flex;
+    justify-content: center;  
+    padding: 20px;
+    background-color: blanchedalmond;
+    color: white
+}
+.pageHeader {
+    text-align: center;
+    padding: 6px;
+    background-color: #5E080D;
+    color: white;
 }
 .navigation {
     display: flex;
     justify-content: center;
-    background-color: #0d1011;
+    background-color: black;
     padding-bottom: 12px;
 }
-
 :any-link {
     text-decoration: none;
     color: white; 
     padding: 6px;   
-    
 }
-/* a:any-link {
-    text-decoration: underline, #eab354;
-} */
-
 .cartIcon {
     width:15px;
     height: 15px;

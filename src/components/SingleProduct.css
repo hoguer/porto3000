@@ -1,0 +1,81 @@
+.productContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../images/grapes.jpg");
+}
+.imgContainer{
+    display: flex;
+    justify-content: center;
+    background:white;
+    height:100%;
+    padding:10px;
+}
+.productCard {
+    width: 70vw;
+}
+.productName{
+    font-size: 20px;
+    margin-bottom: 0;
+
+}
+.cardDetails{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 8px;
+    padding:10px;
+}
+.singleCardContent{
+    background-color:white;
+    display: flex;
+    flex-direction: row;
+    border-left: solid #eab354 8px;
+    
+}
+.productImage{
+    height: 100%;
+    width: 100%;
+    padding-bottom:20px;
+    padding-top: 20px;
+    background-color: white;
+}
+.innerCard{
+    display: flex;
+    justify-content: center;
+}
+.productPrice{
+    margin-bottom: 2px;
+}
+.singleProdButtonContainer{
+    display: flex;
+    margin-top: 20px;
+    width: 40%;
+    gap: 5%;
+}
+.returnToAllProducts{
+    text-align:center;
+}
+.sealContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: black;
+    height: 50vh;
+}
+.portoSeal {
+    margin-top:15px;
+    width: 180px;
+}
+.sealDescription{
+    width:40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.productsButton {
+    margin-left: 10px;
+    font-size: 16px;
+    width: 500px;
+}
