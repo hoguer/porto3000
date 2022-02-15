@@ -38,7 +38,7 @@ async function getUser({username, password}) {
 
 async function getAllUsers() {
   try {
-    const {rows: users} = await client.query(`
+    const {rows: [users]} = await client.query(`
       SELECT * FROM users
     `);
     users.forEach((user) => delete user.password)
@@ -102,7 +102,7 @@ async function patchUser(id, fields = {}) {
 async function deleteUser(id) {
     try {
       const { rows: [user] } = await client.query(`
-      DELETE FROM users
+      DELETE * FROM users
       WHERE id=$1
   `, [id]);
     } catch (error) {

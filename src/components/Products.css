@@ -102,5 +102,4 @@
 .allProductsButton:hover, .productsButton_adminButton:hover{
     background-color:#5E080D;
     color: white;
-    cursor: pointer;
 }
