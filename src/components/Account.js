@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "./Account.css";
 
-const Account = ({isAdmin}) => {
+const Account = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -112,7 +112,7 @@ const Account = ({isAdmin}) => {
           null
         }
         {
-         isAdmin && allOrdersActive ? 
+          isAdmin && allOrdersActive ? 
           <>
             {
               <div className="adminAllView">
@@ -133,7 +133,7 @@ const Account = ({isAdmin}) => {
           : null
         }
         {
-          isAdmin&& allUsersActive ? 
+          isAdmin && allUsersActive ? 
           <>
             {
               <div className="adminAllView">
