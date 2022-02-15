@@ -36,13 +36,15 @@ const Products = ({products, setProducts, currentUser, token}) => {
     const addToCart = async (status, userId, product) => {
         await axios.post("/api/orders", {status, userId})
             .then(res => { 
+                console.log("Adding item to order", res)
                 const orderId = res.data.newOrder.id;
+                console.log(orderId)
                 const productId = product.id
                 const price = product.price
                 const quantity = 1
                 axios.post(`/api/orders/${orderId}/products`, {orderId, productId, price, quantity})
                     .then(res => {
-
+                        console.log(res.data)
                         navigate("/cart")
             })
             })
@@ -55,11 +57,11 @@ const Products = ({products, setProducts, currentUser, token}) => {
                 "Authorization": `Bearer ${localStorage.getItem('token')}` }
         })
         .then(res => {
+            console.log(res)
             const remainingProducts = products.filter((product) => productId !== product.id)
             setProducts(remainingProducts)
         })
     }
-
     return <>
     <div className="outerContainerAll">
         <div className="productsNav">
@@ -83,21 +85,18 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 {product.name}
                                             </div>
                                             <div className="cardImage">
-                                                <img src={product.imgURL} className="productImg" alt="product image"></img>
+                                                <img src={product.imgURL} className="productImg"></img>
                                             </div>
                                             <div className="itemPrice">
                                                 ${product.price}
                                             </div>
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
-                                                <button className="allProductsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                                <button className="allProductsButton" onClick={() => {addToCart("created", currentUser.id, product)}}>Add to Cart</button>
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
-                                                        <div className="adminButtonsContainer">
                                                             { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
-                                                        </div>
-
                                                         </>
                                                     :
                                                         null

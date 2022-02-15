@@ -38,7 +38,7 @@ async function getUser({username, password}) {
 
 async function getAllUsers() {
   try {
-    const {rows: users} = await client.query(`
+    const {rows: [users]} = await client.query(`
       SELECT * FROM users
     `);
     users.forEach((user) => delete user.password)
