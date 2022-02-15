@@ -75,7 +75,7 @@ async function patchProduct(id, fields = {}) {
       WHERE id=$1
   `, [id]);
     } catch (error) {
-      console.error("Error with deleteProduct in db/users.");
+      console.error("Error with deleteProduct in db/products.");
       throw error;
     }
 }
