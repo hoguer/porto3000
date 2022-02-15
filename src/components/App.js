@@ -6,6 +6,7 @@ import navName from '../images/navName.png'
 import {
   About,
   Cart,
+  CartCheckout,
   Home,
   Login,
   NewProduct,
@@ -65,6 +66,7 @@ const App = () => {
         <Route path="/register" exact element={<Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} currentUser= {currentUser} token={token} />}/>
         <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         <Route path="/newproduct" element={<NewProduct currentUser={currentUser} token={token}/>}/>
+        <Route path="/cartcheckout" exact element={<CartCheckout currentUser={currentUser} token={token}/>}/>
       </Routes>
     </div>
   </>;

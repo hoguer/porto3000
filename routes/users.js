@@ -129,7 +129,7 @@ usersRouter.patch('/:id', async (req, res, next)=>{
 usersRouter.delete("/:id", isAdmin, async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deletedUser = await deleteUser(req.id);
+      const deletedUser = await deleteUser(id);
       res.send(deletedUser);
     } catch (error) {
       next({
