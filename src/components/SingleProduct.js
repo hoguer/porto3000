@@ -9,13 +9,12 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     const navigate = useNavigate();
     let { id } = useParams();
     id = parseInt(id)
-    
     const retrieveProduct = async () => {
         let singleProduct;
         if (products.length === 0){
             try {
                 const response = await axios.get(`/api/products/${id}`);
-                singleProduct = response.data;            
+                singleProduct = response.data;              
             } catch (error) {
                 
             }
@@ -45,16 +44,15 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
             setProducts(remainingProducts)
         })
     }
-    
     return ( 
         <>   
         { product ? 
         <div key={product.id}>
             <div className="productsNav">
-            <NavLink to="/products">All Products</NavLink> |
-            <NavLink to="/products?type=wine">Wines</NavLink> |
-            <NavLink to="/products?type=cheese">Cheeses</NavLink> |
-            <NavLink to="/products?type=wine%20and%20cheese">Pairings</NavLink>
+                <NavLink to="/products">All Products</NavLink> |
+                <NavLink to="/products?type=wine">Wines</NavLink> |
+                <NavLink to="/products?type=cheese">Cheeses</NavLink> |
+                <NavLink to="/products?type=wine%20and%20cheese">Pairings</NavLink>
             </div>
             <div className="productContainer">
                 <div className="productCard">
@@ -62,7 +60,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
                         <div className="innerCard">
                             <div className="productContainer">
                                 <div className="imgContainer">
-                                    <img src={product.imgURL} className="productImage" alt="product image"/>
+                                    <img src={product.imgURL} className="productImage" alt="product"/>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +93,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     
         }    
         <div className="sealContainer">
-            <img src={mainLogo} className="portoSeal" alt="logo image"/>
+            <img src={mainLogo} className="portoSeal" alt="porto quality seal"/>
             <div className="sealDescription">
                 <p>Each product is backed by the Porto 3000 seal of quality assurance. From the care of our crops and livestock to the finest details on our packaging, the entire process is monitored to ensure the finest product is produced.</p>
                 <p>We go the extra mile because we love you 3000. </p>
