@@ -366,6 +366,7 @@ async function populateInitialData() {
         inStock: true,
         price: "4",
         category: "cheese"
+        stripe_price_id: "price_1KRXLIDiPmSSqdKe4n9MbMkh"
       },
       {
         name: "Extra Mature Real Yorkshire Wensleydalee",
