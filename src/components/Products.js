@@ -13,10 +13,9 @@ const Products = ({products, setProducts, currentUser, token}) => {
         try {
             const response = await axios.get('api/products');
             const result = response.data
-            console.log(result)
             setProducts(result);
         } catch (error) {
-            console.log("Trouble gathering products!", error)
+            throw(error)
         }
     }
 
@@ -48,12 +47,10 @@ const Products = ({products, setProducts, currentUser, token}) => {
                         console.log(res.data)
                         navigate("/cart")
             })
-                
             })
     };
 
     const handleDestroyProduct = async (token, productId) => {
-        console.log("in HandleDestoryProducts")
         axios.delete("/api/products/:id", {
             headers: { 
                 'Content-Type': 'application/json',

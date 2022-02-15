@@ -1,7 +1,6 @@
 .productContainer {
     display: flex;
     justify-content: center;
-    /* margin-top: 35px; */
     background-image: url("../images/grapes.jpg");
 }
 .productCard {
@@ -10,7 +9,6 @@
 .productName{
     font-size: 20px;
     margin-bottom: 10px;
-
 }
 .cardDetails{
     display: flex;
@@ -70,7 +68,6 @@
     flex-direction: column;
     justify-content: center;
 }
-
 .productsButton {
     padding: 6px;
     background-color: rgb(184, 182, 182);
