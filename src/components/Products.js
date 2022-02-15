@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -15,9 +14,10 @@ const Products = ({products, setProducts, currentUser, token}) => {
         try {
             const response = await axios.get('api/products');
             const result = response.data
+            console.log(result)
             setProducts(result);
         } catch (error) {
-            throw(error)
+            console.log("Trouble gathering products!", error)
         }
     }
 
@@ -66,12 +66,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                 throw error
             }
         } 
-        console.log ("in here")
-        console.log("cart", cart)
         const currentOrder = await axios.post(`/api/orders/${(cart.id || newOrder.id)}/products`, {productId, price, quantity:1})
-        console.log ("cartId", cart.id)
-        console.log ("newOrderId", newOrder.id)
-        console.log("currentOrder", currentOrder)
         setCart(currentOrder)
         navigate("/cart")
     };

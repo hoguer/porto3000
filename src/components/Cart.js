@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import mainLogo from "../images/mainLogo.png"
 import "./Cart.css"
 
 const Cart = ({currentUser, isLoggedIn, token}) => {
@@ -17,14 +18,8 @@ const Cart = ({currentUser, isLoggedIn, token}) => {
         console.log(orderProduct.data)
     };
     useEffect(fetchOrderProduct, []);
-
-    // const checkoutHandler = {
-
-    // }
-
 return (<>
         <div>
-            
             { cart && cart.products && cart.products.length ?  
                 cart.products.map(product => {
                 return <>
@@ -42,7 +37,7 @@ return (<>
                 </>
             }) : null } 
         </div>
-</>)
+    </>)
 }
 
 export default Cart;
