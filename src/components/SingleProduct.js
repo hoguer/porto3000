@@ -33,6 +33,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     };
 
     const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
         axios.delete("/api/products/:id", {
             headers: { 
                 'Content-Type': 'application/json',
