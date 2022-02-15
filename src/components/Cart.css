@@ -24,6 +24,16 @@
 .itemDetails {
     font-size: 2rem;
 }
+.cardDetails{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 50vw;
+}
+.cardInput{
+  width: 40vw;
+}
 .checkout {
   appearance: none;
   background-color: transparent;
