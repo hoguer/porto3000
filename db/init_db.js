@@ -32,6 +32,7 @@ async function buildTables() {
           name VARCHAR(255) NOT NULL, 
           description VARCHAR(1000), 
           price INTEGER NOT NULL, 
+          stripe_price_id VARCHAR(255),
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
           "inStock" BOOLEAN DEFAULT true,
           category VARCHAR(255)
@@ -84,6 +85,7 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "88",
+        //add stripe_price_id to each seeded product
         category: "wine"
       },
       {

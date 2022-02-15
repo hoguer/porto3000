@@ -5,11 +5,13 @@ const paymentsRouter = require("express").Router();
 const { isLoggedIn } = require("./util")
 
 paymentsRouter.post('/create-checkout-session', isLoggedIn, async (req, res) => {
-  const { price } = req.body
+  const { userId } = req.user.id
+  // pull getCartById to return stripe_price_id, quantity to put into line items 
   const session = await stripe.checkout.sessions.create({
     line_items: [
+      //loop through order products that are in the cart and add in the stripe id and quantity
       {
-        price: price,
+        price: price_1KTE9sDiPmSSqdKeVVdhtN1x,
         quantity: 1,
       },
     ],
