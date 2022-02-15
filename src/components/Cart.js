@@ -1,41 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import mainLogo from "../images/mainLogo.png"
 import "./Cart.css"
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-import axios from "axios";
 
-const CLIENT_SECRET = process.env
-// import CheckoutForm from "./CheckoutForm";
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(CLIENT_SECRET)
+const Cart = ({currentUser, isLoggedIn, token}) => {
+    const [cart, setCart] = useState([]);
+    console.log (cart)
+    const fetchOrderProduct = async () => {
+        let userId = currentUser.id;
+        const orderProduct = await axios.get("/api/orders/cart", 
+            {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            }
+        )
+        setCart(orderProduct.data)
+        console.log(orderProduct.data)
+    };
+    useEffect(fetchOrderProduct, []);
 
-const Cart = (currentUser, CheckoutForm) => {
-    console.log(currentUser)
-    const id = currentUser.currentUser.id
-    console.log(id)
-    if(currentUser) {
-        console.log("hello")
-        axios.get("api/orders/cart", {
-            params: { id },
-            headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
-          })
-          .then(res => {
-              console.log("I'm here now!", res)
-          })
-    }
+    // const checkoutHandler = {
+        
+    // }
 
-    const options = {
-        // passing the client secret obtained from the server
-        //this is from the documentation^
-        clientSecret: CLIENT_SECRET,
-      };
-    return <>
-    <h1 className="header">Cart</h1>
-    <Elements stripe={stripePromise} options={options}>
-      {/* <CheckoutForm /> */}
-    </Elements>
-    </> 
+return (<>
+        <div>
+            
+            { cart && cart.products && cart.products.length ?  
+                cart.products.map(product => {
+                return <>
+                <div className="cartContainer">
+                    <div className="innerCartContainer">
+                        <h1 className="cartHeader">Cart.</h1>
+                        <div className="itemDetails">
+                            <div>
+                                {product.name} .......... qty: {product.quantity}   
+                            </div>
+                        </div>
+                        <button className="checkout">Checkout</button>
+                    </div>
+                </div>
+                
+                
+                
+                </>
+            }) : null } 
+        </div>
+</>)
 }
-export default Cart; 
+
+export default Cart;

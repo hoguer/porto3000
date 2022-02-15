@@ -12,7 +12,7 @@ ordersRouter.get("/", isAdmin, async (req, res, next) => {
 });
 
 ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
-    const { id } = req.body
+    const id = req.user.id
     try {
         const userCart = await getOrdersByUser({id});
         res.send(userCart)
@@ -21,8 +21,9 @@ ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
     };
 });
 
-ordersRouter.post("/", async (req, res, next) => {
-    const { status, userId } = req.body;
+ordersRouter.post("/", isLoggedIn, async (req, res, next) => {
+    const { status } = req.body;
+    const userId = req.user.id
     try {
         const newOrder = await createOrder({status, userId})
         res.send({

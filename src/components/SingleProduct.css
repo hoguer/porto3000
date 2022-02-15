@@ -1,6 +1,7 @@
 .productContainer {
     display: flex;
     justify-content: center;
+    /* margin-top: 35px; */
     background-image: url("../images/grapes.jpg");
 }
 .productCard {

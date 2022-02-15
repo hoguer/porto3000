@@ -32,10 +32,10 @@ async function buildTables() {
           name VARCHAR(255) NOT NULL, 
           description VARCHAR(1000), 
           price INTEGER NOT NULL, 
+          stripe_price_id VARCHAR(255),
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
           "inStock" BOOLEAN DEFAULT true,
-          category VARCHAR(255),
-          stripe_price_id VARCHAR(255)
+          category VARCHAR(255)
         );
       `);
 
@@ -58,7 +58,6 @@ async function buildTables() {
           UNIQUE("productId", "orderId")
         );
       `);
-
       await client.query(`
         CREATE TABLE reviews(
           id SERIAL PRIMARY KEY,
@@ -514,6 +513,21 @@ async function createInitialOrderProducts() {
 
     await Promise.all(orderProductsData.map(addProductToOrder));
 
+  } catch (error) {
+    throw error;
+  };
+};
+
+async function createInitialOrderProducts() {
+  console.log("Starting to create order_products");
+  try {
+    const orderProductsData = [
+      {productId: 1, orderId: 1, price: 88, quantity: 1, userId:1 },
+      {productId: 2, orderId: 2, price: 35, quantity: 2, userId:2 },
+     ]
+
+    await Promise.all(orderProductsData.map(addProductToOrder));
+    
   } catch (error) {
     throw error;
   };
