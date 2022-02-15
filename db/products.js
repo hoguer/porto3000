@@ -86,6 +86,6 @@ async function patchProduct(id, fields = {}) {
      createProduct,
      getProductByName,
      patchProduct,
-     destoryProduct
+     destroyProduct
  }
 

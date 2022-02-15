@@ -63,12 +63,12 @@ productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
 productsRouter.delete('/:id', isAdmin, async (req, res, next) => {
     try {
         const { id } = req.params;
-        const destroyedProduct = await destoryProduct(req.id);
+        const destroyedProduct = await destroyProduct(id);
         res.send(destroyedProduct);
       } catch (error) {
         next({
           name: "DeleteError",
-          message: "Could not delete user",
+          message: "Could not delete product",
         });
       }
   });
