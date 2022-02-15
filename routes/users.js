@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const { JWT_SECRET = 'neverTell' } = process.env;
 
-//REQUIRE ADMIN?
 usersRouter.get("/", isAdmin, async (req, res, next) =>{
     try {
         const allUsers = await getAllUsers();
@@ -15,7 +14,6 @@ usersRouter.get("/", isAdmin, async (req, res, next) =>{
     }
 } );
 
-// POST /api/users/register
 usersRouter.post('/register', async (req, res, next) => {
     const { firstname, lastname, email, imgURL, username, password, isAdmin, address } = req.body;
     const _user = await getUserByUsername(username);
@@ -65,11 +63,9 @@ usersRouter.post('/register', async (req, res, next) => {
     } 
 });
 
-// POST /api/users/login
 usersRouter.post('/login', async (req, res, next) => {
     const { username, password } = req.body;
 
-    // request must have both
     if (!username || !password) {
         res.status(406);
         next({
@@ -98,7 +94,6 @@ usersRouter.post('/login', async (req, res, next) => {
     }
 });
 
-// GET /api/users/me
 usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
     try {
         res.send(req.user);
@@ -107,7 +102,6 @@ usersRouter.get("/me", isLoggedIn, async (req, res, next) => {
     }
 });
 
-// GET /api/users/:userId/orders
 usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) => {
     const {userId} = req.body
     try {
@@ -118,7 +112,6 @@ usersRouter.get("/:userId/orders", isLoggedIn, isAdmin, async (req, res, next) =
     }
 });
 
-//NEW ADMIN PATCH AND DELETE
 usersRouter.patch('/:id', async (req, res, next)=>{
     try{
         const {id} = req.params;

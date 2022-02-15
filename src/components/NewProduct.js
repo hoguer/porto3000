@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "./NewProduct.css"
 
@@ -22,7 +22,6 @@ const NewProduct = ({currentUser}) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}` 
       }})
-      console.log(result.data)
       navigate("/products")
     } catch (error) {
       console.error("Error creating new product!", error);
@@ -48,7 +47,7 @@ const NewProduct = ({currentUser}) => {
         setProduct({...product, price: event.target.valueAsNumber})
       }}></input>
       <p>Product Image</p>
-      <input type="url" name="imgURL" value={product.imgURL} placeholder="https://image.jpg" minLength="1" required onChange={(event) => {
+      <input type="url" name="imgURL" value={product.imgURL} placeholder="https://image.jpg" alt="product image" minLength="1" required onChange={(event) => {
         setProduct({...product, imgURL: event.target.value})
       }}></input>
       <p>Is the product in stock? </p>
@@ -59,7 +58,6 @@ const NewProduct = ({currentUser}) => {
       <div>
         <select name="category" value={product.category} placeholder="Select a category" required onChange={(event) => {
           const selectedOption = event.target.value;
-          console.log(selectedOption)
           setProduct({...product, category: event.target.value})
         }}>
           <option>Please select an option</option>

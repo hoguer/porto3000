@@ -4,17 +4,11 @@ const stripe = require('stripe')(STRIPE_PRIVATE_API_KEY);
 const paymentsRouter = require("express").Router();
 const { isLoggedIn } = require("./util")
 
-// Do we really need the domain if this is going to route to /payments/?success=true   ?
-// const { YOUR_DOMAIN = 'http://localhost:3000' } = process.env;
-
-// TBD: modify to check isLoggedIn
-// Try it out: curl -X POST http://localhost:4000/api/payments/create-checkout-session
 paymentsRouter.post('/create-checkout-session', isLoggedIn, async (req, res) => {
   const { price } = req.body
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
         price: price,
         quantity: 1,
       },

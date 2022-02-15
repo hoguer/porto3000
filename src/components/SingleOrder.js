@@ -30,5 +30,4 @@ const [orderProducts, setOrderProducts] = useState({});
     </>)
 }
 
-
 export default SingleOrder
