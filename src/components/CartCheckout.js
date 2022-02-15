@@ -1,30 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import "./Cart.css"
-import {Elements} from '@stripe/react-stripe-js';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {loadStripe} from '@stripe/stripe-js';
-import axios from "axios";
-import CheckoutForm from "./CheckoutForm";
+import {
+  CardElement,
+  Elements,
+  useStripe,
+  useElements,
+} from '@stripe/react-stripe-js';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_51KRX5lDiPmSSqdKeLFGXnGTrTTwdg9wDvM4dUELHFXcKTcEz6SABvgnK88uzmsVVpQVgbvJgEevcHQPB7JJ6O4tz00aUxs4kpL')
+const CheckoutForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
 
-const CartCheckout = (CheckoutForm) => {
-//^ will fix 
-    const options = {
-        // passing the client secret obtained from the server
-        //this is from the documentation^
-        clientSecret: '{{CLIENT_SECRET}}',
-      };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    return <>
+    if (elements == null) {
+      return;
+    }
 
-    <h1 className="header">Cart</h1>
-    <Elements stripe={stripePromise} options={options}>
-      <CheckoutForm />
-    </Elements>
-    </>
-}
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+    });
+  };
 
-export default CartCheckout; 
+  return (
+    <form onSubmit={handleSubmit}>
+      <CardElement />
+      <button type="submit" disabled={!stripe || !elements}>
+        Pay
+      </button>
+    </form>
+  );
+};
+
+const stripePromise = loadStripe('');
+
+const App = () => (
+  <Elements stripe={stripePromise}>
+    <CheckoutForm />
+  </Elements>
+);
+
+ReactDOM.render(<App />, document.body);

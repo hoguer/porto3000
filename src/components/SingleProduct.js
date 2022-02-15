@@ -9,6 +9,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     const navigate = useNavigate();
     let { id } = useParams();
     id = parseInt(id)
+
     const retrieveProduct = async () => {
         let singleProduct;
         if (products.length === 0){
@@ -45,7 +46,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
             setProducts(remainingProducts)
         })
     }
-    
+
     return ( 
         <>   
         { product ? 

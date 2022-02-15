@@ -368,15 +368,6 @@ async function populateInitialData() {
         stripe_price_id: "price_1KRXLIDiPmSSqdKe4n9MbMkh"
       },
       {
-        name: "Extra Mature Real Yorkshire Wensleydalee",
-        description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
-        imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
-        inStock: false,
-        price: "0",
-        category: "cheese",
-        stripe_price_id: "price_1KRXLIDiPmSSqdKe4n9MbMkh"
-      },
-      {
         name: "Red Leicester",
         description: "A traditional hard English cheese made from unpasteurised cow's milk.",
         imgURL: "https://artofeating.com/wp-content/uploads/2019/03/Red-Leicester-2-1024x655.jpg",
@@ -507,26 +498,6 @@ async function createInitialOrders() {
      ]
 
     await Promise.all(ordersData.map(createOrder));
-
-  } catch (error) {
-    throw error;
-  };
-};
-
-async function createInitialOrderProducts() {
-  console.log("Starting to create order_products");
-  try {
-    const orderProductsData = [
-      {productId: 1, orderId: 1, price: 88, quantity: 1, userId:1 },
-      {productId: 2, orderId: 2, price: 35, quantity: 2, userId:2 },
-     ]
-
-    await Promise.all(orderProductsData.map(addProductToOrder));
-
-  } catch (error) {
-    throw error;
-  };
-};
 
 async function createInitialOrderProducts() {
   console.log("Starting to create order_products");
