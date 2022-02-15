@@ -59,6 +59,7 @@ async function buildTables() {
           UNIQUE("productId", "orderId")
         );
       `);
+
       await client.query(`
         CREATE TABLE reviews(
           id SERIAL PRIMARY KEY,
@@ -364,7 +365,7 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "4",
-        category: "cheese",
+        category: "cheese"
         stripe_price_id: "price_1KRXLIDiPmSSqdKe4n9MbMkh"
       },
       {
@@ -522,7 +523,6 @@ async function createInitialOrderProducts() {
      ]
 
     await Promise.all(orderProductsData.map(addProductToOrder));
-
   } catch (error) {
     throw error;
   };
@@ -537,7 +537,7 @@ async function createInitialOrderProducts() {
      ]
 
     await Promise.all(orderProductsData.map(addProductToOrder));
-    
+
   } catch (error) {
     throw error;
   };

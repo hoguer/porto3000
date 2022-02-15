@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import mainLogo from "../images/mainLogo.png"
-import "./Cart.css"
+import "./SingleOrder.css"
 
 const Cart = ({currentUser, isLoggedIn, token}) => {
     const [cart, setCart] = useState([]);
-    console.log (cart)
+
     const fetchOrderProduct = async () => {
         let userId = currentUser.id;
         const orderProduct = await axios.get("/api/orders/cart", 
@@ -14,39 +14,20 @@ const Cart = ({currentUser, isLoggedIn, token}) => {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             }
         )
-        setCart(orderProduct.data)
-        console.log(orderProduct.data)
+        setCart(orderProduct)
     };
     useEffect(fetchOrderProduct, []);
 
-    const checkoutHandler = {
-        
-    }
-
 return (<>
-        <div>
-            
-            { cart && cart.products && cart.products.length ?  
-                cart.products.map(product => {
-                return <>
-                <div className="cartContainer">
-                    <div className="innerCartContainer">
-                        <h1 className="cartHeader">Cart.</h1>
-                        <div className="itemDetails">
-                            <div>
-                                {product.name} .......... qty: {product.quantity}   
-                            </div>
-                        </div>
-                        <button className="checkout">Checkout</button>
-                    </div>
-                </div>
-                
-                
-                
-                </>
-            }) : null } 
+        <div className="sealContainer">
+            <img src={mainLogo} className="portoSeal" alt="porto quality seal"/>
+            <div className="sealDescription">
+                <p>Each product is backed by the Porto 3000 seal of quality assurance. From the care of our crops and livestock to the finest details on our packaging, the entire process is monitored to ensure the finest product is produced.</p>
+                <p>We go the extra mile because we love you 3000. </p>
+            </div>
         </div>
 </>)
 }
 
 export default Cart;
+

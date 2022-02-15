@@ -66,12 +66,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                 throw error
             }
         } 
-        console.log ("in here")
-        console.log("cart", cart)
         const currentOrder = await axios.post(`/api/orders/${(cart.id || newOrder.id)}/products`, {productId, price, quantity:1})
-        console.log ("cartId", cart.id)
-        console.log ("newOrderId", newOrder.id)
-        console.log("currentOrder", currentOrder)
         setCart(currentOrder)
         navigate("/cart")
     };
@@ -119,6 +114,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
                                                 <button className="allProductsButton" onClick={() => {addToCart("created", product)}}>Add to Cart</button>
+
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
