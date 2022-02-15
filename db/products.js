@@ -88,3 +88,4 @@ async function patchProduct(id, fields = {}) {
      patchProduct,
      destoryProduct
  }
+
