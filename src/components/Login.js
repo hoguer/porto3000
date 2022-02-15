@@ -42,19 +42,21 @@ const Login = ({currentUser, setCurrentUser, setIsLoggedIn, token}) => {
 
     return (
     <>
-        <h1 className="pageHeader">Login</h1>
-        <form onSubmit={(event) => {event.preventDefault();
-            loginUser();
-            clearForm(); }}>
-                <div className="loginForm">
-                    <input type="text" placeholder="username" onChange={event => setUsername(event.target.value)} value={username} />
-                    <input type="password" placeholder="password" onChange={event => setPassword(event.target.value)} value={password} />
-                <div>
-                    { showCredentialsError ? <div className="error">{loginError}</div> : null }
-                    <button type="submit" className="submit"> Submit </button>  
-                </div>
-                </div>   
-        </form>
+        <div className='container'>
+            <h1 className="pageHeader">Login</h1>
+            <form onSubmit={(event) => {event.preventDefault();
+                loginUser();
+                clearForm(); }}>
+                    <div className="loginForm">
+                        <input type="text" placeholder="username" onChange={event => setUsername(event.target.value)} value={username} />
+                        <input type="password" placeholder="password" onChange={event => setPassword(event.target.value)} value={password} />
+                    <div>
+                        { showCredentialsError ? <div className="error">{loginError}</div> : null }
+                        <button type="submit" className="submit"> Submit </button>  
+                    </div>
+                    </div>   
+            </form>
+        </div>
     </>
 )
 }

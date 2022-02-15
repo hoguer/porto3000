@@ -66,7 +66,13 @@ const Products = ({products, setProducts, currentUser, token}) => {
                 throw error
             }
         } 
+        console.log ("in here")
+        console.log("cart", cart)
         const currentOrder = await axios.post(`/api/orders/${(cart.id || newOrder.id)}/products`, {productId, price, quantity:1})
+        console.log ("cartId", cart.id)
+        console.log ("newOrderId", newOrder.id)
+
+        console.log("currentOrder", currentOrder)
         setCart(currentOrder)
         navigate("/cart")
     };
