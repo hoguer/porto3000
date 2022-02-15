@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+
 import { CartCheckout } from ".";
 import axios from "axios";
 import "./Cart.css"
 import { useNavigate } from "react-router-dom";
 
+
 const Cart = ({currentUser, isLoggedIn, token}) => {
     const [cart, setCart] = useState([]);
-    console.log (cart)
     const navigate = useNavigate()
+
     const fetchOrderProduct = async () => {
         let userId = currentUser.id;
         const orderProduct = await axios.get("/api/orders/cart", 
