@@ -15,7 +15,7 @@ const About = () => {
     return <>
     <div className="componentContainer">
         <div className="aboutHeader">
-                <img src={header} className="founderHeader"/>
+                <img src={header} className="founderHeader" alt="founder header"/>
                 <div className="headerText">
                     <p>From the crisp air and radiant California sun we say hello to a new world. The drinks and products of Porto 3000 are of the finest nature. Ethically sourced from our own vineyards, we strive for excellence in every sip and bite.</p>
                 </div>

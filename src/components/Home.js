@@ -11,12 +11,12 @@ import featImg3 from "../images/Oscypki.jpg"
 const Home = () => {
     return <>
       <div className="welcomeContainer">
-        <img src={header} className="welcome" alt ="welcome image"/>
+        <img src={header} className="welcome" alt ="welcome"/>
       </div>
       <div className="componentContainerHome">
         <div className="featuredContainer">
-            <img src={img2} className="img2" alt="vineyard image"/>
-            <img src={img1} className="img1" alt="grapes image"/>
+            <img src={img2} className="img2" alt="vineyard"/>
+            <img src={img1} className="img1" alt="grapes"/>
             <div><h2><i>Online Reservations Available Soon</i></h2>
             <p>OPEN 10:00 AM- 7:00 PM daily</p>
             <br></br>
@@ -38,14 +38,14 @@ const Home = () => {
                 </div>
                 <div className="featProdCards">
                     <div className="featProdL">
-                        <NavLink to="/products/1"><img src={featImg2} className="featImgL"/></NavLink>
+                        <NavLink to="/products/1"><img src={featImg2} className="featImgL" alt="porto wine"/></NavLink>
                     </div>
                     <div className="featProdRContainer">
                         <div className="featProdR">
-                            <NavLink to="/products/25"><img src={featImg1} className="featImgR"/></NavLink>
+                            <NavLink to="/products/25"><img src={featImg1} className="featImgR" alt="goat cheese"/></NavLink>
                         </div>
                         <div className="featProdR">
-                            <NavLink to="/products/36"><img src={featImg3} className="featImgR"/></NavLink> 
+                            <NavLink to="/products/36"><img src={featImg3} className="featImgR" alt="Oscypki"/></NavLink> 
                         </div>
                     </div>
                 </div>
