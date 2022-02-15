@@ -75,8 +75,10 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
                                 <i>{product.description}</i>
                             </div>
                                 <div className="singleProdButtonContainer">
-                                    <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
-                                    <NavLink to="/products" className="productsButton returnToAllProducts">Return to All Products</NavLink>
+                                    <button className="allProductsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
+                                    <button>
+                                        <NavLink to="/products" className="allProductsButton returnToAllProducts">Return to All Products</NavLink>
+                                    </button>
                                     {
                                         currentUser.isAdmin ?
                                         <>

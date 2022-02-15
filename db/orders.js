@@ -65,15 +65,16 @@ async function getOrdersByUser({id}) {
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
+            INNER JOIN orders AS o ON op. "orderId" = o.id
             WHERE "userId" = $1
         `, [id]);
 
         orders.forEach((order) => {
-            const productsForOrder = orderProducts.filter((orderProduct) => orderProduct.orderId === order.id)
+            const productsForOrder = orderProducts.filter((orderProduct) => orderProduct.orderId === order.userId)
             order.products = productsForOrder.map((op) => op.name)
         });
 
-        return orders;
+        return orderProducts;
     } catch (error) {
         throw error;
     };
@@ -112,7 +113,7 @@ async function getCartByUser({id}) {
             SELECT * 
             FROM orders
             WHERE "userId"=$1
-            AND status = "created";
+            AND status = 'created';
         `, [id])
 
         const {rows: [orderProducts]} = await client.query(`
