@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -14,10 +15,9 @@ const Products = ({products, setProducts, currentUser, token}) => {
         try {
             const response = await axios.get('api/products');
             const result = response.data
-            console.log(result)
             setProducts(result);
         } catch (error) {
-            console.log("Trouble gathering products!", error)
+            throw(error)
         }
     }
 
@@ -114,6 +114,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
                                                 <button className="allProductsButton" onClick={() => {addToCart("created", product)}}>Add to Cart</button>
+
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
