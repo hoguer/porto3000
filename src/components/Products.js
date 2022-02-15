@@ -13,9 +13,10 @@ const Products = ({products, setProducts, currentUser, token}) => {
         try {
             const response = await axios.get('api/products');
             const result = response.data
+            console.log(result)
             setProducts(result);
         } catch (error) {
-            throw(error)
+            console.log("Trouble gathering products!", error)
         }
     }
 
@@ -33,30 +34,30 @@ const Products = ({products, setProducts, currentUser, token}) => {
 
     const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
 
-    const addToCart = async (status, userId, product) => {
-        await axios.post("/api/orders", {status, userId})
+    const addToCart = (status, userId) => {
+        axios.post("/api/orders", {status, userId})
             .then(res => { 
-                const orderId = res.data.newOrder.id;
-                const productId = product.id
-                const price = product.price
-                const quantity = 1
-                axios.post(`/api/orders/${orderId}/products`, {orderId, productId, price, quantity})
-                    .then(res => {
-                        navigate("/cart")
-                })
+                // console.log("Adding item to order", res)
+                navigate("/cart")
             })
     };
 
     const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
         axios.delete("/api/products/:id", {
             headers: { 
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${localStorage.getItem('token')}` }
         })
         .then(res => {
+            console.log(res)
             const remainingProducts = products.filter((product) => productId !== product.id)
             setProducts(remainingProducts)
         })
+    }
+
+    const handleUpdateProduct = async (token, productId) => {
+        navigate(`/products/${productId}`)
     }
 
     return <>
@@ -93,9 +94,11 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>
-                                                          <div className="adminButtonsContainer">
-                                                              { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
-                                                          </div>
+                                                        <div className="adminButtonsContainer">
+                                                            { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                                            { <button className="productsButton_adminButton" onClick={() => handleUpdateProduct(token, product.id)}>Update</button>}
+                                                        </div>
+
                                                         </>
                                                     :
                                                         null

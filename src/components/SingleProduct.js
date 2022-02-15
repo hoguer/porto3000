@@ -9,13 +9,13 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     const navigate = useNavigate();
     let { id } = useParams();
     id = parseInt(id)
-    
+
     const retrieveProduct = async () => {
         let singleProduct;
         if (products.length === 0){
             try {
                 const response = await axios.get(`/api/products/${id}`);
-                singleProduct = response.data;            
+                singleProduct = response.data;              
             } catch (error) {
                 
             }
@@ -34,6 +34,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     };
 
     const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
         axios.delete("/api/products/:id", {
             headers: { 
                 'Content-Type': 'application/json',
@@ -45,16 +46,16 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
             setProducts(remainingProducts)
         })
     }
-    
+
     return ( 
         <>   
         { product ? 
         <div key={product.id}>
             <div className="productsNav">
-            <NavLink to="/products">All Products</NavLink> |
-            <NavLink to="/products?type=wine">Wines</NavLink> |
-            <NavLink to="/products?type=cheese">Cheeses</NavLink> |
-            <NavLink to="/products?type=wine%20and%20cheese">Pairings</NavLink>
+                <NavLink to="/products">All Products</NavLink> |
+                <NavLink to="/products?type=wine">Wines</NavLink> |
+                <NavLink to="/products?type=cheese">Cheeses</NavLink> |
+                <NavLink to="/products?type=wine%20and%20cheese">Pairings</NavLink>
             </div>
             <div className="productContainer">
                 <div className="productCard">
