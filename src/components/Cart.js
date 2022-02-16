@@ -16,11 +16,13 @@ const Cart = () => {
     useEffect(fetchOrderProduct, []);
 
     const checkout = async () => {
-        await axios.post(
+        const result = await axios.post(
             "/api/payments/create-checkout-session", 
             {},
             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
-        )
+        );
+        console.log(result.data);
+        window.location.href = result.data.url;
     }
 
     const paymentAlert = (event) => {

@@ -8,8 +8,9 @@ const { getCartByUser } = require("../db");
 paymentsRouter.post('/create-checkout-session', isLoggedIn, async (req, res, next) => {
   const id = req.user.id
   const cart = await getCartByUser({id});
+  console.log(cart);
   const line_items = cart.products.map(product => {
-    return { price: product.price_stripe_id, quantity: product.quantity }
+    return { price: product.stripe_price_id, quantity: product.quantity }
   })
   console.log(line_items);
   const session = await stripe.checkout.sessions.create({
@@ -18,7 +19,7 @@ paymentsRouter.post('/create-checkout-session', isLoggedIn, async (req, res, nex
     success_url: `${DOMAIN_URL}/payments/?success=true`,
     cancel_url: `${DOMAIN_URL}/payments/?canceled=true`,
   });
-  res.redirect(303, session.url);
+  res.send({url: session.url});
 });
 
 module.exports = paymentsRouter;
