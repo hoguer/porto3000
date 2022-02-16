@@ -5,7 +5,6 @@ const { createUser } = require("./users")
 const { createReview } = require("./reviews")
 const { addProductToOrder } = require ("./order_products")
 
-
 async function buildTables() {
   try {
     client.connect();
@@ -35,8 +34,7 @@ async function buildTables() {
           stripe_price_id VARCHAR(255),
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
           "inStock" BOOLEAN DEFAULT true,
-          category VARCHAR(255),
-          stripe_price_id VARCHAR(255)
+          category VARCHAR(255)
         );
       `);
 
@@ -487,17 +485,22 @@ async function createInitialUsers() {
     console.log("All initial users created")
   } catch (error) {
     throw error;
-  };
-};
+  }
+}
+
 async function createInitialOrders() {
   console.log("Starting to create orders");
   try {
     const ordersData = [
       {status: "created", userId: "1"},
       {status: "completed", userId: "2"},
-     ]
+    ]
 
     await Promise.all(ordersData.map(createOrder));
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function createInitialOrderProducts() {
   console.log("Starting to create order_products");
@@ -511,8 +514,8 @@ async function createInitialOrderProducts() {
     
   } catch (error) {
     throw error;
-  };
-};
+  }
+}
 
 async function createInitialReviews() {
   console.log("Starting to create Reviews");
@@ -522,28 +525,10 @@ async function createInitialReviews() {
       {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
       {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
       {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
-      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38}
     ]
 
-    const reviews = await Promise.all(reviewData.map(createReview));
-    console.log("All initial reviews created")
-  } catch (error) {
-    throw error;
-  }
-}
-
-async function addOrderProdcts() {
-  console.log("Starting to create Reviews");
-  try {
-    const reviewData = [
-      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
-      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
-      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
-      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
-      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38},
-    ]
-
-    const reviews = await Promise.all(reviewData.map(createReview));
+    await Promise.all(reviewData.map(createReview));
     console.log("All initial reviews created")
   } catch (error) {
     throw error;
