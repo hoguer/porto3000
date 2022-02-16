@@ -17,6 +17,10 @@ apiRouter.use("/payments", paymentsRouter);
 apiRouter.use('*', (req, res, next) =>{
   res.status(404);
   res.send({ error: 'route not found'});
-})
+});
+
+apiRouter.use((error, req, res, next) => {
+  res.send(error);
+});
 
 module.exports = apiRouter;
