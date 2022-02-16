@@ -21,7 +21,18 @@ const Products = ({products, setProducts, currentUser, token}) => {
         }
     }
 
+    const fetchCart = async () => {
+        if(token){
+            const currentCart = await axios.get(
+                "/api/orders/cart",
+                { headers: { Authorization: `Bearer ${token}` }}
+            )
+            setCart(currentCart)
+        }
+    }
+
     useEffect(fetchProducts, []); 
+    useEffect(fetchCart, []);
 
     const searchProducts = (product, text) => {
         text = text.toLowerCase();
@@ -33,17 +44,8 @@ const Products = ({products, setProducts, currentUser, token}) => {
         }
     }
     
-    const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
-
-    useEffect(async()=>{
-        if(token){
-            const currentCart = await axios.get("/api/orders/cart",
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
-            setCart(currentCart)
-        }
-    }, [])
+    let filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
+    if (productType) filteredProducts = products.filter(product => product.category === productType);
 // pass in orderId
     const addToCart = async (status, product) => {
         // if there is a cart present (req. orderId and status: created) then make an axios call to orders/:orderId/products
@@ -103,35 +105,33 @@ const Products = ({products, setProducts, currentUser, token}) => {
             <div className="productCardAll">
                 { filteredProducts && filteredProducts.length ? 
                     filteredProducts.map((product) => { 
-                        if(!productType || product.category === productType){
-                            return (
-                                    <div key={product.id}>
-                                        <div className="cardContentContainer">
-                                            <div className="cardName">
-                                                {product.name}
-                                            </div>
-                                            <div className="cardImage">
-                                                <img src={product.imgURL} className="productImg"></img>
-                                            </div>
-                                            <div className="itemPrice">
-                                                ${product.price}
-                                            </div>
-                                            <div className="productButtonsContainer">
-                                                <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
-                                                <button className="allProductsButton" onClick={() => {addToCart("created", product)}}>Add to Cart</button>
-                                                { 
-                                                    currentUser.isAdmin ?
-                                                        <>
-                                                            { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
-                                                        </>
-                                                    :
-                                                        null
-                                                }
-                                            </div>
-                                        </div>
+                        return (
+                            <div key={product.id}>
+                                <div className="cardContentContainer">
+                                    <div className="cardName">
+                                        {product.name}
                                     </div>
-                            )
-                        }
+                                    <div className="cardImage">
+                                        <img src={product.imgURL} alt={product.name} className="productImg"></img>
+                                    </div>
+                                    <div className="itemPrice">
+                                        ${product.price}
+                                    </div>
+                                    <div className="productButtonsContainer">
+                                        <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
+                                        <button className="allProductsButton" onClick={() => {addToCart("created", product)}}>Add to Cart</button>
+                                        { 
+                                            currentUser.isAdmin ?
+                                                <>
+                                                    { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                                </>
+                                            :
+                                                null
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        )
                     })
                     : null
                 }
