@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "./Products.css";
 
 const Products = ({products, setProducts, currentUser, token}) => {
     const [searchParams, setSearchParams] = useSearchParams()
+    const [cart, setCart] = useState({})
     const navigate = useNavigate();
     const searchTerm = searchParams.get("searchTerm");
     const productType = searchParams.get("type") || ''
@@ -30,24 +32,48 @@ const Products = ({products, setProducts, currentUser, token}) => {
             }
         }
     }
-
+    
     const filteredProducts = searchTerm ? products.filter(product => searchProducts(product, searchTerm)) : products;
 
-    const addToCart = async (status, userId, product) => {
-        await axios.post("/api/orders", {status, userId})
-            .then(res => { 
-                console.log("Adding item to order", res)
-                const orderId = res.data.newOrder.id;
-                console.log(orderId)
-                const productId = product.id
-                const price = product.price
-                const quantity = 1
-                axios.post(`/api/orders/${orderId}/products`, {orderId, productId, price, quantity})
-                    .then(res => {
-                        console.log(res.data)
-                        navigate("/cart")
-            })
-            })
+    useEffect(async()=>{
+        if(token){
+            const currentCart = await axios.get("/api/orders/cart",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+            setCart(currentCart)
+        }
+    }, [])
+// pass in orderId
+    const addToCart = async (status, product) => {
+        // if there is a cart present (req. orderId and status: created) then make an axios call to orders/:orderId/products
+        // if there is not a cart then make a post. api/orders/
+        // add state to setCart
+        let newOrder; 
+        console.log(Object.keys(cart).length)
+        const productId = product.id
+        const price = product.price
+
+        if(!cart || Object.keys(cart).length === 0){
+            try {
+                const result = await axios.post("/api/orders", {status}, 
+                    {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                    })
+                newOrder = result.data.newOrder
+                setCart(newOrder)
+            } catch (error) {
+                throw error
+            }
+        } 
+        console.log ("in here")
+        console.log("cart", cart)
+        const currentOrder = await axios.post(`/api/orders/${(cart.id || newOrder.id)}/products`, {productId, price, quantity:1})
+        console.log ("cartId", cart.id)
+        console.log ("newOrderId", newOrder.id)
+        console.log("currentOrder", currentOrder)
+        setCart(currentOrder)
+        navigate("/cart")
     };
 
     const handleDestroyProduct = async (token, productId) => {
@@ -92,7 +118,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                             </div>
                                             <div className="productButtonsContainer">
                                                 <NavLink to={`/products/${product.id}`} className="allProductsButton">View Product</NavLink>
-                                                <button className="allProductsButton" onClick={() => {addToCart("created", currentUser.id, product)}}>Add to Cart</button>
+                                                <button className="allProductsButton" onClick={() => {addToCart("created", product)}}>Add to Cart</button>
                                                 { 
                                                     currentUser.isAdmin ?
                                                         <>

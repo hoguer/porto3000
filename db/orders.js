@@ -112,17 +112,20 @@ async function getCartByUser({id}) {
             SELECT * 
             FROM orders
             WHERE "userId"=$1
-            AND status = "created";
+            AND status = 'created';
         `, [id])
 
-        const {rows: [orderProducts]} = await client.query(`
-            SELECT op."orderId", p.name
+        if(!order) return null;
+        const {rows: orderProducts } = await client.query(`
+            SELECT op."orderId", p.name, op.quantity, p.stripe_price_id
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
             WHERE "orderId" = $1;
         `, [order.id]);
-
-        order.products = orderProducts.map((op) => op.name)
+        
+        order.products = orderProducts ? orderProducts.map((op) => {
+            return { name: op.name, quantity: op.quantity }
+        }) : [];
 
         return order;
     } catch (error) {
@@ -172,7 +175,7 @@ async function completeOrder({ id }) {
     try {
         const {rows: [order]} = await client.query(`
             UPDATE orders
-            SET status = "completed"
+            SET status = 'completed'
             WHERE id=$1
             RETURNING *
         `, [id]);
@@ -186,7 +189,7 @@ async function cancelOrder({ id }) {
     try {
         const {rows: [order]} = await client.query(`
             Update orders
-            SET status = "canceled"
+            SET status = 'canceled'
             WHERE id=$1
             RETURNING *
         `, [id]);

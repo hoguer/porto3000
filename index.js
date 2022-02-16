@@ -14,6 +14,8 @@ server.use(express.json());
 const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));
 
+server.disable('etag')
+
 server.use(async (req, res, next) => {
   try {
     const auth = req.header('Authorization'); 
@@ -24,8 +26,10 @@ server.use(async (req, res, next) => {
       token = token.trim();
 
       const userObj = jwt.verify(token, JWT_SECRET);
+      console.log("userObj", userObj)
 
       req.user = await getUserById(userObj.id);
+      console.log("req.user", req.user)
 
       next();
     }

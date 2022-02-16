@@ -9,6 +9,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     const navigate = useNavigate();
     let { id } = useParams();
     id = parseInt(id)
+
     const retrieveProduct = async () => {
         let singleProduct;
         if (products.length === 0){
@@ -33,6 +34,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     };
 
     const handleDestroyProduct = async (token, productId) => {
+        console.log("in HandleDestoryProducts")
         axios.delete("/api/products/:id", {
             headers: { 
                 'Content-Type': 'application/json',
@@ -44,6 +46,7 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
             setProducts(remainingProducts)
         })
     }
+
     return ( 
         <>   
         { product ? 
@@ -75,7 +78,6 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
                                 <i>{product.description}</i>
                             </div>
                                 <div className="singleProdButtonContainer">
-                                    <button className="productsButton" onClick={() => {addToCart("created", currentUser.id)}}>Add to Cart</button>
                                     <NavLink to="/products" className="productsButton returnToAllProducts">Return to All Products</NavLink>
                                     {
                                         currentUser.isAdmin ?

@@ -32,9 +32,11 @@ async function buildTables() {
           name VARCHAR(255) NOT NULL, 
           description VARCHAR(1000), 
           price INTEGER NOT NULL, 
+          stripe_price_id VARCHAR(255),
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
           "inStock" BOOLEAN DEFAULT true,
-          category VARCHAR(255)
+          category VARCHAR(255),
+          stripe_price_id VARCHAR(255)
         );
       `);
 
@@ -57,7 +59,6 @@ async function buildTables() {
           UNIQUE("productId", "orderId")
         );
       `);
-
       await client.query(`
         CREATE TABLE reviews(
           id SERIAL PRIMARY KEY,
@@ -84,7 +85,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "88",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXB9DiPmSSqdKeBokVdICP"
       },
       {
         name: "Cabernet Sauvignon",
@@ -92,7 +94,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXBwDiPmSSqdKel2ZkCgmP"
       },
       {
         name: "Pinot Noir",
@@ -100,7 +103,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCDDiPmSSqdKeurR5QYGQ"
       },
       {
         name: "Merlot",
@@ -108,7 +112,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "80",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCNDiPmSSqdKeFpxfRBfI"
       },
       {
         name: "Zinfandel",
@@ -116,7 +121,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "50",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCgDiPmSSqdKebIFchA3v"
       },
       {
         name: "Petite Sirah",
@@ -124,7 +130,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "60",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCxDiPmSSqdKeCJys28FC"
       },
       {
         name: "Sauvignon Blanc",
@@ -132,7 +139,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXDIDiPmSSqdKemOyaxjT2"
       },
       {
         name: "Chardonnay",
@@ -140,7 +148,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXDcDiPmSSqdKexjQzUtM8"
       },
       {
         name: "Pinot Gris",
@@ -148,7 +157,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXDqDiPmSSqdKema23HmBb"
       },
       {
         name: "Rose",
@@ -156,7 +166,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/SX4hBNT/rose.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXE2DiPmSSqdKejOnbkBpD"
       },
       {
         name: "Cabernet Franc",
@@ -164,7 +175,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXEGDiPmSSqdKesTzTdwOu"
       },
       {
         name: "Carmenere",
@@ -172,7 +184,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "15",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXEVDiPmSSqdKe6zksZ8Vb"
       },
       {
         name: "Gewurztraminer",
@@ -180,7 +193,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "25",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXElDiPmSSqdKeZDnuePOF"
       },
       {
         name: "Grenache",
@@ -188,7 +202,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "375",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXEwDiPmSSqdKejnkgY9HC"
       },
       {
         name: "Nebbiolo",
@@ -196,7 +211,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "115",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFCDiPmSSqdKeigO3Lb5A"
       },
       {
         name: "Malbec",
@@ -204,7 +220,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "20",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFRDiPmSSqdKeh8npIhSL"
       },
       {
         name: "Muscat Ottonel",
@@ -212,7 +229,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "15",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFgDiPmSSqdKeBYMzZFYQ"
       },
       {
         name: "Riesling",
@@ -220,7 +238,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "68",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFtDiPmSSqdKerGtzJSqN"
       },
       {
         name: "Semillon",
@@ -228,7 +247,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "20",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXG8DiPmSSqdKeWut4Qba7"
       },
       {
         name: "Tempranillo",
@@ -236,7 +256,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXGNDiPmSSqdKeamIOFE0x"
       },
       {
         name: "Smoked Gouda",
@@ -244,7 +265,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "20",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXGZDiPmSSqdKe3lDzHcKp"
       },
       {
         name: "Brie",
@@ -252,7 +274,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "9",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXGkDiPmSSqdKefhBJj1ua"
       },
       {
         name: "Gruyere",
@@ -260,7 +283,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "12",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXGvDiPmSSqdKex1Ss3GmH"
       },
       {
         name: "Gorgonzola",
@@ -268,7 +292,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "8",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXH9DiPmSSqdKeyQxZbADo"
       },
       {
         name: "Goat Cheese",
@@ -276,7 +301,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "5",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXHMDiPmSSqdKeFthMHomC"
       },
       {
         name: "Aged Cheddar",
@@ -284,7 +310,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "37",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXJuDiPmSSqdKe7NUJ8XKM"
       },
       {
         name: "Havarti",
@@ -292,7 +319,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "10",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXK4DiPmSSqdKef8ly9uB4"
       },
       {
         name: "Manchego",
@@ -300,7 +328,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "18",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKJDiPmSSqdKei74Icbd9"
       },
       {
         name: "Pecorino Toscano",
@@ -308,7 +337,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "22",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKbDiPmSSqdKeWED7sGKj"
       },
       {
         name: "Fiore Sardo",
@@ -316,7 +346,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "18",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKqDiPmSSqdKeRXmtev2l"
       },
       {
         name: "Gouda",
@@ -324,7 +355,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "6",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKyDiPmSSqdKewRfyxKIR"
       },
       {
         name: "Feta",
@@ -332,15 +364,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "4",
-        category: "cheese"
-      },
-      {
-        name: "Extra Mature Real Yorkshire Wensleydalee",
-        description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
-        imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
-        inStock: false,
-        price: "0",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXLIDiPmSSqdKe4n9MbMkh"
       },
       {
         name: "Red Leicester",
@@ -348,7 +373,8 @@ async function populateInitialData() {
         imgURL: "https://artofeating.com/wp-content/uploads/2019/03/Red-Leicester-2-1024x655.jpg",
         inStock: true,
         price: "15",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXOsDiPmSSqdKeS6InQB3S"
       },
       {
         name: "Olavidia Goat Cheese",
@@ -356,7 +382,8 @@ async function populateInitialData() {
         imgURL: "https://img.republicworld.com/republic-prod/stories/promolarge/xhdpi/fnzdwfwwqpkgtorg_1636286263.jpeg?tr=w-1200,h-900",
         inStock: true,
         price: "300",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXP9DiPmSSqdKenh41H6Zp"
       },
       {
         name: "Oscypek",
@@ -364,7 +391,8 @@ async function populateInitialData() {
         imgURL: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Oscypki.jpg",
         inStock: true,
         price: "500",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXPPDiPmSSqdKeIltS84Sr"
       },
       {
         name: "Gorgonzola dolce",
@@ -372,7 +400,8 @@ async function populateInitialData() {
         imgURL: "https://www.salumeriaitaliana.com/sites/default/files/imagecache/product_full/products/gorg.%20dolce_0.jpg",
         inStock: true,
         price: "40",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXPfDiPmSSqdKeW68iG7SO"
       },
       {
         name: "Queijo de coalho",
@@ -380,7 +409,8 @@ async function populateInitialData() {
         imgURL: "https://c8.alamy.com/comp/GF5EJK/brazilian-traditional-cheese-queijo-coalho-on-wooden-board-selective-GF5EJK.jpg",
         inStock: true,
         price: "5",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXR5DiPmSSqdKe5RkI2q3B"
       },
       {
         name: "Redykołka ",
@@ -388,7 +418,8 @@ async function populateInitialData() {
         imgURL: "https://catalog-cs.info/img-cs/259_1.jpg.pagespeed.ce.yGTQVD4ZrD.jpg",
         inStock: true,
         price: "21",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXRODiPmSSqdKekRiEw994"
       },
       {
         name: "Gorgonzola dolce & Porto 3000",
@@ -396,7 +427,8 @@ async function populateInitialData() {
         imgURL: "https://en.gorgonzola.com/wp-content/uploads/sites/2/2020/01/abbinamenti-head.jpg",
         inStock: true,
         price: "50",
-        category: "wine and cheese"
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXRaDiPmSSqdKekcE98Xh3"
       },
       {
         name: "Pinot Noir & Gruyere",
@@ -404,7 +436,8 @@ async function populateInitialData() {
         imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
         inStock: true,
         price: "50",
-        category: "wine and cheese"
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXRmDiPmSSqdKey4X7xlmb"
       },
       {
         name: "Sauvignon Blanc & Goat Cheese",
@@ -412,7 +445,8 @@ async function populateInitialData() {
         imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
         inStock: true,
         price: "50",
-        category: "wine and cheese"
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXS0DiPmSSqdKe8nv9XU1J"
       },
       {
         name: "Cabernet Sauvignon & Aged Cheddar",
@@ -420,7 +454,8 @@ async function populateInitialData() {
         imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
         inStock: true,
         price: "50",
-        category: "wine and cheese"
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXSGDiPmSSqdKey6zHPSAC"
       },
     ]
 
@@ -464,11 +499,6 @@ async function createInitialOrders() {
 
     await Promise.all(ordersData.map(createOrder));
 
-  } catch (error) {
-    throw error;
-  };
-};
-
 async function createInitialOrderProducts() {
   console.log("Starting to create order_products");
   try {
@@ -478,7 +508,7 @@ async function createInitialOrderProducts() {
      ]
 
     await Promise.all(orderProductsData.map(addProductToOrder));
-
+    
   } catch (error) {
     throw error;
   };
