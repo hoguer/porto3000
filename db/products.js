@@ -68,10 +68,10 @@ async function patchProduct(id, fields = {}) {
     }
   }
 
-  async function destoryProduct({id}) {
+  async function destroyProduct({id}) {
     try {
       const { rows: [product] } = await client.query(`
-      DELETE * FROM products
+      DELETE FROM products
       WHERE id=$1
   `, [id]);
     } catch (error) {
