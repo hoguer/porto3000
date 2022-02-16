@@ -14,7 +14,7 @@ async function buildTables() {
       `);
       await client.query(`
         CREATE TABLE users(
-          id SERIAL PRIMARY KEY, 
+          id SERIAL PRIMARY KEY, git 
           firstname VARCHAR(255) NOT NULL, 
           lastname VARCHAR(255) NOT NULL, 
           email VARCHAR(255) UNIQUE NOT NULL, 

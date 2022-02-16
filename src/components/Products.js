@@ -85,7 +85,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                                 {product.name}
                                             </div>
                                             <div className="cardImage">
-                                                <img src={product.imgURL} className="productImg"></img>
+                                                <img src={product.imgURL} className="productImg" alt="product image"></img>
                                             </div>
                                             <div className="itemPrice">
                                                 ${product.price}
