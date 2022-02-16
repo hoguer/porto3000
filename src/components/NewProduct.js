@@ -3,12 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "./NewProduct.css"
 
-const NewProduct = ({currentUser}) => {
+const NewProduct = () => {
   const blankProduct = {name: "", description: "", price: "", imgURL: "", inStock: true, category: ""};
-  const [product, setProduct] = useState(blankProduct);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [showProductError, setShowProductError] = useState(false);
   const [createError, setCreateError] = useState("");
+  const [product, setProduct] = useState(blankProduct);
   const navigate = useNavigate();
 
   const createProduct = async (event) => {
@@ -17,7 +16,7 @@ const NewProduct = ({currentUser}) => {
     }
     try {
       event.preventDefault();
-      let result = await axios.post("/api/products", JSON.stringify(product), { 
+      await axios.post("/api/products", JSON.stringify(product), { 
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}` 
@@ -32,6 +31,7 @@ const NewProduct = ({currentUser}) => {
   }
 
   return <>
+    { showProductError ? <div>{createError}</div> : null }
     <h1 className="header">Create a Product!</h1>
     <form className="createProductForm" onSubmit={createProduct}>
       <p>Product Name</p>
@@ -57,7 +57,6 @@ const NewProduct = ({currentUser}) => {
       <p>Select a product category</p>
       <div>
         <select name="category" value={product.category} placeholder="Select a category" required onChange={(event) => {
-          const selectedOption = event.target.value;
           setProduct({...product, category: event.target.value})
         }}>
           <option>Please select an option</option>

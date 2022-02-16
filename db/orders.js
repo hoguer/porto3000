@@ -1,3 +1,4 @@
+const paymentsRouter = require("../routes/payments");
 const client = require("./client");
 
 async function handleSelectAllFromOrders() {
