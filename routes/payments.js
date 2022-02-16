@@ -16,8 +16,8 @@ paymentsRouter.post('/create-checkout-session', isLoggedIn, async (req, res, nex
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: 'payment',
-    success_url: `${DOMAIN_URL}/payments/?success=true`,
-    cancel_url: `${DOMAIN_URL}/payments/?canceled=true`,
+    success_url: `${DOMAIN_URL}/cart/?success=true`,
+    cancel_url: `${DOMAIN_URL}/cart/?canceled=true`,
   });
   res.send({url: session.url});
 });
