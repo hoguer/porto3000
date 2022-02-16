@@ -35,8 +35,7 @@ async function buildTables() {
           stripe_price_id VARCHAR(255),
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
           "inStock" BOOLEAN DEFAULT true,
-          category VARCHAR(255),
-          stripe_price_id VARCHAR(255)
+          category VARCHAR(255)
         );
       `);
 
