@@ -23,13 +23,13 @@ async function getAllProducts() {
     }
 }
 
-async function createProduct({name, description, price, imgURL, inStock, category}) {
+async function createProduct({name, description, price, imgURL, inStock, category, stripe_price_id}) {
     try {
         const {rows: [newProduct]} = await client.query(`
-            INSERT INTO products (name, description, price, "imgURL", "inStock", category)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO products (name, description, price, "imgURL", "inStock", category, stripe_price_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *
-        `, [name, description, price, imgURL, inStock, category]);
+        `, [name, description, price, imgURL, inStock, category, stripe_price_id]);
         return newProduct;
     } catch (error) {
         throw error;

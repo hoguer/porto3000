@@ -124,7 +124,7 @@ async function getCartByUser({id}) {
         `, [order.id]);
         
         order.products = orderProducts ? orderProducts.map((op) => {
-            return { name: op.name, quantity: op.quantity }
+            return { name: op.name, quantity: op.quantity, stripe_price_id: op.stripe_price_id }
         }) : [];
 
         return order;
