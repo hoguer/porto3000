@@ -21,7 +21,6 @@ const Cart = () => {
             {},
             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
         );
-        console.log(result.data);
         window.location.href = result.data.url;
     }
 
