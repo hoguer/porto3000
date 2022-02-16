@@ -488,6 +488,7 @@ async function createInitialUsers() {
     throw error;
   };
 };
+
 async function createInitialOrders() {
   console.log("Starting to create orders");
   try {
@@ -497,6 +498,7 @@ async function createInitialOrders() {
      ]
 
     await Promise.all(ordersData.map(createOrder));
+  
 
 async function createInitialOrderProducts() {
   console.log("Starting to create order_products");
@@ -531,7 +533,7 @@ async function createInitialReviews() {
   }
 }
 
-async function addOrderProdcts() {
+async function addOrderProducts() {
   console.log("Starting to create Reviews");
   try {
     const reviewData = [
