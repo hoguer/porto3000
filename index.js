@@ -9,6 +9,9 @@ const server = express();
 const morgan = require('morgan');
 server.use(morgan('dev'));
 
+const cors = require('cors');
+server.use(cors());
+
 server.use(express.json());
 
 const path = require('path');

@@ -1,6 +1,6 @@
 const ordersRouter = require("express").Router();
-const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
-const { isLoggedIn, isAdmin } = require("./util")
+const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db");
+const { isLoggedIn, isAdmin } = require("./util");
 
 ordersRouter.get("/", isAdmin, async (req, res, next) => {
     try {
@@ -15,10 +15,10 @@ ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
     const id = req.user.id
     try {
         const userCart = await getCartByUser({id});
-        res.send(userCart)
+        res.send(userCart);
     } catch(error) {
         throw error;
-    };
+    }
 });
 
 ordersRouter.post("/", isLoggedIn, async (req, res, next) => {
@@ -30,10 +30,10 @@ ordersRouter.post("/", isLoggedIn, async (req, res, next) => {
             name: "OrderCreated",
             message: "Your order has been made",
             newOrder,
-        })
+        });
     } catch(error) {
         throw error;
-    };
+    }
 });
 
 ordersRouter.patch("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {

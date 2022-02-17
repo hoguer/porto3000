@@ -1,4 +1,8 @@
 const apiRouter = require('express').Router();
+
+const paymentsRouter = require("./payments");
+apiRouter.use("/payments", paymentsRouter);
+
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter)
 
@@ -10,9 +14,6 @@ apiRouter.use("/orders", ordersRouter)
 
 const orderProductsRouter = require("./orderProducts");
 apiRouter.use("/", orderProductsRouter)
-
-const paymentsRouter = require("./payments");
-apiRouter.use("/payments", paymentsRouter);
 
 apiRouter.use('*', (req, res, next) =>{
   res.status(404);

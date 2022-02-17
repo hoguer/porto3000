@@ -52,7 +52,6 @@ const Products = ({products, setProducts, currentUser, token}) => {
         // if there is not a cart then make a post. api/orders/
         // add state to setCart
         let newOrder; 
-        console.log(Object.keys(cart).length)
         const productId = product.id
         const price = product.price
 
@@ -62,20 +61,15 @@ const Products = ({products, setProducts, currentUser, token}) => {
                     {
                         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                     })
-                newOrder = result.data.newOrder
-                setCart(newOrder)
+                newOrder = result.data.newOrder;
+                setCart(newOrder);
             } catch (error) {
                 throw error
             }
         } 
-        console.log ("in here")
-        console.log("cart", cart)
-        const currentOrder = await axios.post(`/api/orders/${(cart.id || newOrder.id)}/products`, {productId, price, quantity:1})
-        console.log ("cartId", cart.id)
-        console.log ("newOrderId", newOrder.id)
-        console.log("currentOrder", currentOrder)
-        setCart(currentOrder)
-        navigate("/cart")
+        const currentOrder = await axios.post(`/api/orders/${(cart.id || newOrder.id)}/products`, {productId, price, quantity:1});
+        setCart(currentOrder.data.order_product);
+        navigate("/cart");
     };
 
     const handleDestroyProduct = async (token, productId) => {

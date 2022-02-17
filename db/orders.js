@@ -1,4 +1,3 @@
-const paymentsRouter = require("../routes/payments");
 const client = require("./client");
 
 async function handleSelectAllFromOrders() {
@@ -125,7 +124,7 @@ async function getCartByUser({id}) {
         `, [order.id]);
         
         order.products = orderProducts ? orderProducts.map((op) => {
-            return { name: op.name, quantity: op.quantity, stripe_price_id: p.stripe_price_id }
+            return { name: op.name, quantity: op.quantity, stripe_price_id: op.stripe_price_id }
         }) : [];
 
         return order;
