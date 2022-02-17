@@ -1,22 +1,19 @@
-// code to build and initialize DB goes here
 const client = require('./client');
-const {
-  getProductById, 
-  getAllProducts,
-  createProduct,
-} = require("./products")
-
+const { createOrder } = require('./orders');
+const { createProduct } = require("./products")
 const { createUser } = require("./users")
+const { createReview } = require("./reviews")
+const { addProductToOrder } = require ("./order_products")
 
 async function buildTables() {
   try {
     client.connect();
       await client.query(`
-        DROP TABLE IF EXISTS users, products, orders, order_products;
+        DROP TABLE IF EXISTS users, products, orders, order_products, reviews;
       `);
       await client.query(`
         CREATE TABLE users(
-          id SERIAL PRIMARY KEY, 
+          id SERIAL PRIMARY KEY,
           firstname VARCHAR(255) NOT NULL, 
           lastname VARCHAR(255) NOT NULL, 
           email VARCHAR(255) UNIQUE NOT NULL, 
@@ -34,6 +31,7 @@ async function buildTables() {
           name VARCHAR(255) NOT NULL, 
           description VARCHAR(1000), 
           price INTEGER NOT NULL, 
+          stripe_price_id VARCHAR(255),
           "imgURL" VARCHAR(255) DEFAULT 'https://www.customscene.co/wp-content/uploads/2020/01/wine-bottle-mockup-thumbnail.jpg',
           "inStock" BOOLEAN DEFAULT true,
           category VARCHAR(255)
@@ -44,7 +42,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY, 
           status VARCHAR(255) DEFAULT 'created', 
-          "userID" INTEGER REFERENCES users(id), 
+          "userId" INTEGER REFERENCES users(id), 
           "datePlaced" timestamp DEFAULT now()
         );
       `);
@@ -56,20 +54,27 @@ async function buildTables() {
           "orderId" INTEGER REFERENCES orders(id), 
           price INTEGER NOT NULL,
           quantity INTEGER NOT NULL DEFAULT 0,
-          "userID" INTEGER REFERENCES users(id)
+          UNIQUE("productId", "orderId")
         );
       `);
-    console.log("finished building THE tables")
+      await client.query(`
+        CREATE TABLE reviews(
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          content VARCHAR(1000) CONSTRAINT CK_reviews_content CHECK (10 <= length(content)),
+          stars INTEGER NOT NULL CHECK (0 <= stars AND stars <= 5),
+          "userId" INTEGER REFERENCES users(id),
+          "productId" INTEGER REFERENCES products(id)
+        );
+      `);
+    console.log("finished building the tables")
   } catch (error) {
     throw error;
   }
 }
-/* 
-Seed data 
-*/
+
 async function populateInitialData() {
   try {
-    // create useful starting data
     console.log("populating our wine and cheese tables");
     const wineAndCheeseData = [
       {
@@ -78,7 +83,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "88",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXB9DiPmSSqdKeBokVdICP"
       },
       {
         name: "Cabernet Sauvignon",
@@ -86,7 +92,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXBwDiPmSSqdKel2ZkCgmP"
       },
       {
         name: "Pinot Noir",
@@ -94,7 +101,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCDDiPmSSqdKeurR5QYGQ"
       },
       {
         name: "Merlot",
@@ -102,7 +110,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "80",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCNDiPmSSqdKeFpxfRBfI"
       },
       {
         name: "Zinfandel",
@@ -110,7 +119,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "50",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCgDiPmSSqdKebIFchA3v"
       },
       {
         name: "Petite Sirah",
@@ -118,7 +128,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "60",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXCxDiPmSSqdKeCJys28FC"
       },
       {
         name: "Sauvignon Blanc",
@@ -126,7 +137,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXDIDiPmSSqdKemOyaxjT2"
       },
       {
         name: "Chardonnay",
@@ -134,7 +146,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXDcDiPmSSqdKexjQzUtM8"
       },
       {
         name: "Pinot Gris",
@@ -142,7 +155,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXDqDiPmSSqdKema23HmBb"
       },
       {
         name: "Rose",
@@ -150,7 +164,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/SX4hBNT/rose.jpg",
         inStock: true,
         price: "28",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXE2DiPmSSqdKejOnbkBpD"
       },
       {
         name: "Cabernet Franc",
@@ -158,7 +173,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXEGDiPmSSqdKesTzTdwOu"
       },
       {
         name: "Carmenere",
@@ -166,7 +182,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "15",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXEVDiPmSSqdKe6zksZ8Vb"
       },
       {
         name: "Gewurztraminer",
@@ -174,7 +191,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "25",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXElDiPmSSqdKeZDnuePOF"
       },
       {
         name: "Grenache",
@@ -182,7 +200,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "375",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXEwDiPmSSqdKejnkgY9HC"
       },
       {
         name: "Nebbiolo",
@@ -190,7 +209,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "115",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFCDiPmSSqdKeigO3Lb5A"
       },
       {
         name: "Malbec",
@@ -198,7 +218,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "20",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFRDiPmSSqdKeh8npIhSL"
       },
       {
         name: "Muscat Ottonel",
@@ -206,7 +227,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "15",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFgDiPmSSqdKeBYMzZFYQ"
       },
       {
         name: "Riesling",
@@ -214,7 +236,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "68",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXFtDiPmSSqdKerGtzJSqN"
       },
       {
         name: "Semillon",
@@ -222,7 +245,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/yhy94Gj/white-wine.jpg",
         inStock: true,
         price: "20",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXG8DiPmSSqdKeWut4Qba7"
       },
       {
         name: "Tempranillo",
@@ -230,7 +254,8 @@ async function populateInitialData() {
         imgURL: "https://i.ibb.co/5G1N8VP/Red-wine.jpg",
         inStock: true,
         price: "35",
-        category: "wine"
+        category: "wine",
+        stripe_price_id: "price_1KRXGNDiPmSSqdKeamIOFE0x"
       },
       {
         name: "Smoked Gouda",
@@ -238,7 +263,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "20",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXGZDiPmSSqdKe3lDzHcKp"
       },
       {
         name: "Brie",
@@ -246,15 +272,17 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "9",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXGkDiPmSSqdKefhBJj1ua"
       },
       {
         name: "Gruyere",
-        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, it's flavor is 'complicated.'",
+        description: "A firm, yellow Swiss cheese that is sweet and slightly salty. The flavor of the cheese will vary by age. Like a typical facebook relationship status, its flavor is 'complicated.'",
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "12",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXGvDiPmSSqdKex1Ss3GmH"
       },
       {
         name: "Gorgonzola",
@@ -262,7 +290,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "8",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXH9DiPmSSqdKeyQxZbADo"
       },
       {
         name: "Goat Cheese",
@@ -270,7 +299,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "5",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXHMDiPmSSqdKeFthMHomC"
       },
       {
         name: "Aged Cheddar",
@@ -278,7 +308,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "37",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXJuDiPmSSqdKe7NUJ8XKM"
       },
       {
         name: "Havarti",
@@ -286,7 +317,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "10",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXK4DiPmSSqdKef8ly9uB4"
       },
       {
         name: "Manchego",
@@ -294,7 +326,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "18",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKJDiPmSSqdKei74Icbd9"
       },
       {
         name: "Pecorino Toscano",
@@ -302,7 +335,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "22",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKbDiPmSSqdKeWED7sGKj"
       },
       {
         name: "Fiore Sardo",
@@ -310,7 +344,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "18",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKqDiPmSSqdKeRXmtev2l"
       },
       {
         name: "Gouda",
@@ -318,7 +353,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "6",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXKyDiPmSSqdKewRfyxKIR"
       },
       {
         name: "Feta",
@@ -326,47 +362,8 @@ async function populateInitialData() {
         imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         inStock: true,
         price: "4",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Brie",
-        description: "A soft pale colored cheese made from cow's milk. The cheese has a mild, buttery, and creamy taste that makes it a versatile cheese. A great choice for those new to wine and cheese pairings.",
-        imgURL: "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        inStock: true,
-        price: "9",
-        category: "cheese"
-      },
-      {
-        name: "Extra Mature Real Yorkshire Wensleydalee",
-        description: "The strongest Wensleydale cheese, matured for nine months; produced in the town of Hawes in Wensleydale.",
-        imgURL: "https://www.cheese.com/media/img/tweets/721/553711274962718.jpg",
-        inStock: false,
-        price: "0",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXLIDiPmSSqdKe4n9MbMkh"
       },
       {
         name: "Red Leicester",
@@ -374,7 +371,8 @@ async function populateInitialData() {
         imgURL: "https://artofeating.com/wp-content/uploads/2019/03/Red-Leicester-2-1024x655.jpg",
         inStock: true,
         price: "15",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXOsDiPmSSqdKeS6InQB3S"
       },
       {
         name: "Olavidia Goat Cheese",
@@ -382,7 +380,8 @@ async function populateInitialData() {
         imgURL: "https://img.republicworld.com/republic-prod/stories/promolarge/xhdpi/fnzdwfwwqpkgtorg_1636286263.jpeg?tr=w-1200,h-900",
         inStock: true,
         price: "300",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXP9DiPmSSqdKenh41H6Zp"
       },
       {
         name: "Oscypek",
@@ -390,7 +389,8 @@ async function populateInitialData() {
         imgURL: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Oscypki.jpg",
         inStock: true,
         price: "500",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXPPDiPmSSqdKeIltS84Sr"
       },
       {
         name: "Gorgonzola dolce",
@@ -398,15 +398,17 @@ async function populateInitialData() {
         imgURL: "https://www.salumeriaitaliana.com/sites/default/files/imagecache/product_full/products/gorg.%20dolce_0.jpg",
         inStock: true,
         price: "40",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXPfDiPmSSqdKeW68iG7SO"
       },
       {
-        name: "Gorgonzola dolce",
+        name: "Queijo de coalho",
         description: "Queijo de coalho is a traditional cow's milk cheese from the northeastern regions of Brazil. The cheese is characterized by its firm, yet elastic texture and a slightly yellow color. Coalho is often sold on sticks for roasting, because it can withstand high temperatures and does not melt easily.",
         imgURL: "https://c8.alamy.com/comp/GF5EJK/brazilian-traditional-cheese-queijo-coalho-on-wooden-board-selective-GF5EJK.jpg",
         inStock: true,
         price: "5",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXR5DiPmSSqdKe5RkI2q3B"
       },
       {
         name: "Redykołka ",
@@ -414,7 +416,8 @@ async function populateInitialData() {
         imgURL: "https://catalog-cs.info/img-cs/259_1.jpg.pagespeed.ce.yGTQVD4ZrD.jpg",
         inStock: true,
         price: "21",
-        category: "cheese"
+        category: "cheese",
+        stripe_price_id: "price_1KRXRODiPmSSqdKekRiEw994"
       },
       {
         name: "Gorgonzola dolce & Porto 3000",
@@ -422,13 +425,40 @@ async function populateInitialData() {
         imgURL: "https://en.gorgonzola.com/wp-content/uploads/sites/2/2020/01/abbinamenti-head.jpg",
         inStock: true,
         price: "50",
-        category: "Wine & Cheese"
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXRaDiPmSSqdKekcE98Xh3"
+      },
+      {
+        name: "Pinot Noir & Gruyere",
+        description: "A classic pairing. Neither the wine nor the cheese will overpower each other, but instead meld in harmony between the nutty flavors of the cheese and the red berry taste of the Pinot Noir",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXRmDiPmSSqdKey4X7xlmb"
+      },
+      {
+        name: "Sauvignon Blanc & Goat Cheese",
+        description: "This earthy pairing does not disappoint. The citrus and mineral notes of this wine works well to bring out the herbal and nutty flavors of goat cheese.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXS0DiPmSSqdKe8nv9XU1J"
+      },
+      {
+        name: "Cabernet Sauvignon & Aged Cheddar",
+        description: "Bold cheeses need bold partners. The Cabernet Sauvignon tastes wonderful with the fattiness of the aged cheddar. Neither will drown out the taste of the other, but instead have you pining for just one. more. bite.",
+        imgURL: "https://tiedemannonwines.com/wp-content/uploads/2020/06/merlot-and-cheese.jpg",
+        inStock: true,
+        price: "50",
+        category: "wine and cheese",
+        stripe_price_id: "price_1KRXSGDiPmSSqdKey6zHPSAC"
       },
     ]
 
     const products = await Promise.all(wineAndCheeseData.map(createProduct));
-    console.log("Wine and Cheese", wineAndCheeseData)
-    console.log("All products created", products)
+    console.log("All initial products created")
 
   } catch (error) {
     throw error;
@@ -444,17 +474,72 @@ async function createInitialUsers() {
       {firstname: "Robert ", lastname: "RectanglePants", email: "DoodleBob@BikiniBottom.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnailLover101", password: "KrustyKrab2006", isAdmin: false, address: "200 Pineapple Way"},
       {firstname: "Hernando", lastname: "Madrigal", email: "FearlessOne@Encanto.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "RatsOnB4ck", password: "future37", isAdmin: false, address: "1000 Casita Lane"},
       {firstname: "Chiba", lastname: "Lily", email: "Doggos@gmail.com", imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", username: "SnifferWiffer302", password: "tr3atsplz", isAdmin: false, address: "501 Borkley Street"},
+      {firstname: "Patrick", lastname: "Bateman", email: "PaulAllen@gmail.com", imgURL: "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg-1200-80.jpg", username: "PatrickBateman", password: "HueyLewisAndTheNewROCK", isAdmin: false, address: "2025 Psycho Path"},
+      {firstname: "Oscar", lastname: "Wilde", email: "theimportanceof@aol.com", imgURL: "https://i.guim.co.uk/img/media/7a770bbbaaf6ca9d56022829c6d31977b1d6f646/0_128_2520_1511/master/2520.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=fd5d8fd76d6a4becd6286851c194700e", username: "OscarWilde", password: "NotAGoodPass", isAdmin: false, address: "6543 toomany st"},
+      {firstname: "Dre", lastname: "Dawg", email: "DrDr@yahoo.com", imgURL: "https://pbs.twimg.com/profile_images/715341035107278848/RotN_Kmm_400x400.jpg", username: "WaltWhitman", password: "BeatsByDre", isAdmin: false, address: "360 Bad St"},
+      {firstname: "Don", lastname: "Juan", email: "DonJuan@gmail.com", imgURL: "https://cdn.britannica.com/40/66340-004-547E0283/Byron-George-Gordon-1820.jpg", username: "LordByron", password: "WhoIsAsking", isAdmin: false, address: "70 Old Guy Road"},
+      {firstname: "Victor", lastname: "Frankenstein", email: "Frankenstein@aol.com", imgURL: "https://i0.wp.com/thenerddaily.com/wp-content/uploads/2018/05/Mary-Shelley-Movie-2018.jpg?fit=1000%2C742&ssl=1", username: "MarySchelly", password: "37The37", isAdmin: false, address: "7331 Crapi Apartmens"},
     ]
 
     const users = await Promise.all(userData.map(createUser));
-
+    console.log("All initial users created")
   } catch (error) {
     throw error;
-  };
-};
+  }
+}
+
+async function createInitialOrders() {
+  console.log("Starting to create orders");
+  try {
+    const ordersData = [
+      {status: "created", userId: "1"},
+      {status: "completed", userId: "2"},
+    ]
+
+    await Promise.all(ordersData.map(createOrder));
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function createInitialOrderProducts() {
+  console.log("Starting to create order_products");
+  try {
+    const orderProductsData = [
+      {productId: 1, orderId: 1, price: 88, quantity: 1, userId:1 },
+      {productId: 2, orderId: 2, price: 35, quantity: 2, userId:2 },
+     ]
+
+    await Promise.all(orderProductsData.map(addProductToOrder));
+    
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function createInitialReviews() {
+  console.log("Starting to create Reviews");
+  try {
+    const reviewData = [
+      {title: "My Favorite!", content: "This wine has a great flavor of blackberry and the cork has a very fragrant cigar smell!", stars: 5, userId: 1, productId: 1},
+      {title: "Above average wine", content: "Excellent red wine with a dominant grape aroma. A bit too bold, but still acceptable.", stars: 4, userId: 2, productId: 19},
+      {title: "Best cheese ever!", content: "This is the greatest cheese in the world!", stars: 5, userId: 3, productId: 28},
+      {title: "No nuts no glory", content: "The aroma of the cheese was too sour when I expected a nutty scent.", stars: 3, userId: 4, productId: 35},
+      {title: "Unexpected Surprise!", content: "Texture and flavor was very delightful.", stars: 5, userId: 5, productId: 38}
+    ]
+
+    await Promise.all(reviewData.map(createReview));
+    console.log("All initial reviews created")
+  } catch (error) {
+    throw error;
+  }
+}
 
 buildTables()
   .then(populateInitialData)
   .then(createInitialUsers)
+  .then(createInitialOrders)
+  .then(createInitialOrderProducts)
+  .then(createInitialReviews)
   .catch(console.error)
   .finally(() => client.end());

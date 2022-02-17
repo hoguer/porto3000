@@ -1,99 +1,158 @@
+//Test DB 2/2/22
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
-const { rebuildDB } = require('../db/seedData');
 const { createUser, 
-    getUser, 
+    getUser,
+    getAllUsers,
     getUserById, 
-    getUserByUsername, 
-    getProductById, 
+    getUserByUsername,
+    patchUser, 
+    deleteUser,
+    getProductById,
     getAllProducts,
     createProduct,
-    getProductByName } = require('../db');
+    getProductByName,
+    patchProduct,
+    destroyProduct,
+    getOrderById,
+    getAllOrders,
+    getOrdersByUser,
+    getOrdersByProduct,
+    getCartByUser,
+    createOrder,
+    updateOrder,
+    completeOrder,
+    cancelOrder,
+    getOrderProductById,
+    addProductToOrder,
+    updateOrderProduct,
+    destroyOrderProduct,
+    rebuildDB } = require('../db');
 const client = require('../db/client');
 
 describe('Database', () => {
-    beforeAll(async() => {
-      await rebuildDB();
-    })
-    afterAll(async() => {
-      await client.end();
-    })
-    describe('Users', () => {
-      let userToCreateAndUpdate, queriedUser;
-      let userCredentials = {username: 'billybob', password: 'bobbybadboy'};
-      describe('createUser({ username, password })', () => {
-        beforeAll(async () => {
-          userToCreateAndUpdate = await createUser(userCredentials);
-          const {rows} = await client.query(`SELECT * FROM users WHERE username = $1`, [userCredentials.username]);
-          queriedUser = rows[0];
+  beforeAll(async() => {
+    await client.connect();
+  })
+  afterAll(async() => {
+    await client.end();
+  })
+  describe('Users', () => {
+    const userCredentials = {
+        firstname: "Dan", 
+        lastname: "Colomba", 
+        email: "TheBigStache@aol.com", 
+        imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Head_silhouette.svg/600px-Head_silhouette.svg.png", 
+        username: "DanColomba", 
+        password: "TheStache", 
+        isAdmin: true, 
+        address: "Port 5432"};
+    describe('createUser({ username, password })', () => {
+      let queriedUser;
+      beforeAll(async () => {
+        await createUser(userCredentials);
+        const {rows} = await client.query(`SELECT * FROM users WHERE username = $1`, [userCredentials.username]);
+        queriedUser = rows[0];
+      })
+      it('Creates the user with 8 credentials', async () => {
+        expect(queriedUser.firstname).toBe(userCredentials.firstname);
+        // expect(queriedUser.lastname).toBe(userCredentials.lastname);
+        // expect(queriedUser.email).toBe(userCredentials.email);
+        // expect(queriedUser.imgURL).toBe(userCredentials.imgURL);
+        // expect(queriedUser.username).toBe(userCredentials.username);
+        // expect(queriedUser.password).toBe(userCredentials.password);
+        // expect(queriedUser.isAdmin).toBe(userCredentials.isAdmin);
+        // expect(queriedUser.address).toBe(userCredentials.address);
+      });
         })
-        it('Creates the user', async () => {
-          expect(userToCreateAndUpdate.username).toBe(userCredentials.username);
-          expect(queriedUser.username).toBe(userCredentials.username);
-        });
-        it('EXTRA CREDIT: Does not store plaintext password in the database', async () => {
-          expect(queriedUser.password).not.toBe(userCredentials.password);
-        });
-        it('EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database', async () => {
-          const hashedVersion = bcrypt.compareSync(userCredentials.password, queriedUser.password);
-          expect(hashedVersion).toBe(true);
-        });
-        it('Does NOT return the password', async () => {
-          expect(userToCreateAndUpdate.password).toBeFalsy();
+  })
+})
+      it('Does not store plaintext password in the database', async () => {
+        expect(queriedUser.password).not.toBe(userCredentials.password);
+      });
+      it('Hashes the password before storing it to the database', async () => {
+        const hashedVersion = bcrypt.compareSync(userCredentials.password, queriedUser.password);
+        expect(hashedVersion).toBe(true);
+      });
+      it('Does not return the password', async () => {
+        expect(userToCreateAndUpdate.password).toBeFalsy();
+      })
+  
+      describe('getUser({ username, password })', () => {
+        it('Uses getUserByUsername to get the user', () =>{ 
+          expect(getUserByUsername).toBeInTheDocument();
+        })
+        describe('getUserByUsername({ username })', () => {
+          it('Gets a user based on the user username', async () => {
+            let foundUser
+            let user = await getUserByUsername(foundUser);
+            expect(user.username).toBeTruthy();
+          })
         })
       })
-      describe('getUser({ username, password })', () => {
         let verifiedUser;
         beforeAll(async () => {
           verifiedUser = await getUser(userCredentials);
         })
         it('Verifies the passed-in, plain-text password against the password in the database (the hashed password, if this portion is complete)', async () => {
+          //do we want to keep this?
           const unVerifiedUser = await getUser({username: userCredentials.username, password: 'badPassword'});
           expect(verifiedUser).toBeTruthy();
           expect(verifiedUser.username).toBe(userCredentials.username);
           expect(unVerifiedUser).toBeFalsy();
         })
-        it('Does NOT return the password', async () => {
+        it('Does not return the password', async () => {
           expect(verifiedUser.password).toBeFalsy();
         })
+
+      describe('getAllUsers', () => {
+        it('Gets an array of objects, the users seed data', async () => {
+          let users = await getAllUsers()
+          expect(users).toBeTruthy();
+          expect(users.length > 0).toBeTruthy();
+        })
       })
+
+
       describe('getUserById', () => {
+        //so the id is cerealize so will this pass? ...
         it('Gets a user based on the user Id', async () => {
-          const user = await getUserById(userToCreateAndUpdate.id);
+          let user = await getUserById(userToCreate.id);
           expect(user).toBeTruthy();
           expect(user.id).toBe(userToCreateAndUpdate.id);
         })
       })
-    })
-    describe('getUserByUsername', () => {
-        it('Gets a user based on the user Id', async () => {
-          const user = await getUserByUsername(userToCreateAndUpdate.userToCreateAndUpdate);
-          expect(user).toBeTruthy();
-          expect(user.username).toBe(userToCreateAndUpdate.username);
+
+      describe('products', () => {
+        describe('createProduct', () => {
+          let createdProduct;
+          it('Creates and returns the new product', async () => {
+            const productValues = {
+              name: "Test_Wine_Or_Cheese", 
+              description: "Test_Description", 
+              price: "2", 
+              imgURL: "imageUrl", 
+              inStock: true, 
+              category: "Test category"};
+            const createdProduct = await createProduct(productValues);
+            expect(createdProduct.name).toBe(productValues.name);
+            expect(createdProduct.description).toBe(productValues.description);
+            expect(createdProduct.price).toBe(productValues.price);
+            expect(createdProduct.imgURL).toBe(productValues.imgURL);
+            expect(createdProduct.inStock).toBe(productValues.inStock);
+            expect(createdProduct.category).toBe(productValues.category);
+          })
         })
-      })
-    })
-      describe('createProduct({ name, description })', () => {
-        it('Creates and returns the new activity', async () => {
-          const productToCreate = {name: "Test_Wine_Or_Cheese", description: "Test_Description", price: "$Test", imgURL: "imageUrl", inStock: true, category: "Test category"};
-          const createdProduct = await createProduct(productToCreate);
-          expect(createdProduct.name).toBe(productToCreate.name);
-          expect(createdProduct.description).toBe(productToCreate.description);
-          expect(createdProduct.price).toBe(productToCreate.price);
-          expect(createdProduct.imgURL).toBe(productToCreate.imgURL);
-          expect(createdProduct.inStock).toBe(productToCreate.inStock);
-          expect(createdProduct.category).toBe(productToCreate.category);
-        })
-      })
+
       describe('getAllProducts', () => {
         let product;
         beforeAll(async() => {
-          [routine] = await getAllProducts();
+          [product] = await getAllProducts();
         })
-        it('selects and returns an array of all products', async () => {
-          expect(routine).toEqual(expect.objectContaining({
-            id: expect.any(Number),
+        it('Returns an array of all products which are objects', async () => {
+          expect(product).toEqual(expect.objectContaining({
+            name: expect.any(String),
             description: expect.any(String),
             price: expect.any(String),
             imgURL: expect.any(String),
@@ -102,18 +161,34 @@ describe('Database', () => {
           }));
         })
       })
-        describe('getProductById', () => {
-          it('gets a product by its id', async () => {
-            const product = await getProductById(1);
-            expect(activity).toBeTruthy();
-          })
+
+    describe('getProductById', () => {
+      it('Gets a product by its id', async () => {
+        const productValues = {
+          name: "Test_Wine_Or_Cheese", 
+          description: "Test_Description", 
+          price: "2", 
+          imgURL: "imageUrl", 
+          inStock: true, 
+          category: "Test category"};
+        const createdProduct = await createProduct(productValues);
+        const product = await getProductById(createdProduct.id);
+        expect(product.id).toBe(createdProduct.id);
+      })
     })
+
     describe('getProductByName', () => {
-      let productToCreate;
-      describe('getProductById', () => {
-        it('gets a product by its id', async () => {
-          const product = await getProductByName();
-          expect(product).toBeTruthy();
+         it('Gets a product by its name', async () => {
+          const productValues = {
+            name: "Test_Wine_Or_Cheese", 
+            description: "Test_Description", 
+            price: "2", 
+            imgURL: "imageUrl", 
+            inStock: true, 
+            category: "Test category"};
+          const createdProduct = await createProduct(productValues);
+          const product = await getProductByName(createdProduct.name);
+          expect(createdProduct).toBeTruthy();
         });
       });
     })
