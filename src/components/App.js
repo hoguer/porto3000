@@ -1,30 +1,25 @@
 import React, { useState } from 'react';
-import { Routes, Route, NavLink, useParams } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import './App.css';
 import carticon from '../images/carticon.png';
 import navName from '../images/navName.png'
 import {
   About,
   Cart,
-  // CartCheckout,
   Home,
   Login,
   NewProduct,
   Products,
-  SingleOrder,
   SingleProduct,
   Register,
   Account
 } from "."
 
 const App = () => {
-  const [message, setMessage] = useState('');
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [isAdmin, setIsAdmin] = useState(false);
   const [products, setProducts] = useState([]);
-  let { orderId } = useParams();
   
   return <> 
     <div className="App">
@@ -44,7 +39,6 @@ const App = () => {
                   setToken("")
                   setIsLoggedIn(false)
                   setCurrentUser(false)
-                  setIsAdmin(false)
                 }}> Logout  </NavLink>
               </>
               :
@@ -67,7 +61,7 @@ const App = () => {
         <Route path="/register" exact element={<Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} currentUser= {currentUser} token={token} />}/>
         <Route path="/account" exact element={<Account currentUser={currentUser} setCurrentUser={setCurrentUser} token={token} setIsLoggedIn={setIsLoggedIn}/>}/>
         {/* <Route path="/orders/:orderId" exact element={<Cart currentUser={currentUser} />}/> */}
-        <Route path="/newproduct" element={<NewProduct currentUser={currentUser} token={token}/>}/>
+        <Route path="/newproduct" element={<NewProduct />}/>
       </Routes>
     </div>
   </>;

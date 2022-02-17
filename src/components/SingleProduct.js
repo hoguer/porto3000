@@ -26,13 +26,6 @@ const SingleProduct = ({products, setProducts, currentUser, token}) => {
     }
     useEffect(retrieveProduct, [])
 
-    const addToCart = (status, userId) => {
-        axios.post("/api/orders", {status, userId})
-            .then(res => { 
-                navigate("/cart")
-            })
-    };
-
     const handleDestroyProduct = async (token, productId) => {
         console.log("in HandleDestoryProducts")
         axios.delete("/api/products/:id", {

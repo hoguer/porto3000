@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { CartCheckout } from ".";
 import axios from "axios";
 import "./Cart.css"
 import { useNavigate } from "react-router-dom";
@@ -11,7 +10,6 @@ const Cart = ({currentUser, isLoggedIn, token}) => {
     const navigate = useNavigate()
 
     const fetchOrderProduct = async () => {
-        let userId = currentUser.id;
         const orderProduct = await axios.get("/api/orders/cart", 
             {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -49,7 +47,7 @@ return (<>
                             <p>Credit Card</p>
                             <input className="cardInput" type="text" placeholder="name on credit card" required/>
                             <input className="cardInput" type="text" placeholder="ZIP" required/>
-                            <input className="cardInput" type="text" required pattern="[0-9]{16}" placeholder="1111-2222-3333-4444" required/>
+                            <input className="cardInput" type="text" pattern="[0-9]{16}" placeholder="1111-2222-3333-4444" required/>
                             <input className="cardInput" type="text" placeholder="exp 02/25" required/>
                             <input className="cardInput" type="text" placeholder="CVV" required/>
                             <button type="submit" className="checkout">Checkout</button>
