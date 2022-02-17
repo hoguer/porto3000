@@ -30,22 +30,23 @@ const Cart = () => {
     
     return (<>
         <div>
-            { cart && cart.products && cart.products.length ?  
-                cart.products.map((product, idx) => {
-                return <div key={idx} className="cartContainer">
-                    <div className="innerCartContainer">
-                        <h1 className="cartHeader">Cart.</h1>
-                        <div className="itemDetails">
+            <div className="cartContainer">
+                <h1 className="cartHeader">Cart.</h1>
+                <div className="innerCartContainer">
+                    { cart && cart.products && cart.products.length ?  
+                        cart.products.map((product, idx) => {
+                            return (
+                                <>
+                        <div key={idx} className="itemDetails">
                             <div>
                                 {product.name} .......... qty: {product.quantity}   
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <button onClick={checkout} className="checkout">Checkout</button>
-                    </div>
+                        </>)
+                        }) : null } 
+                    <button onClick={checkout} className="checkout">Checkout</button>
                 </div>
-            }) : null } 
+            </div>
         </div>
     </>)
 }
