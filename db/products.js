@@ -23,13 +23,13 @@ async function getAllProducts() {
     }
 }
 
-async function createProduct({name, description, price, imgURL, inStock, category}) {
+async function createProduct({name, description, price, imgURL, inStock, category, stripe_price_id}) {
     try {
         const {rows: [newProduct]} = await client.query(`
-            INSERT INTO products (name, description, price, "imgURL", "inStock", category)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO products (name, description, price, "imgURL", "inStock", category, stripe_price_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *
-        `, [name, description, price, imgURL, inStock, category]);
+        `, [name, description, price, imgURL, inStock, category, stripe_price_id]);
         return newProduct;
     } catch (error) {
         throw error;
@@ -48,7 +48,6 @@ async function getProductByName(name) {
     }
 }
 
-//NEW PATCHPRODUCT
 async function patchProduct(id, fields = {}) {
     const setString = Object.keys(fields)
       .map((key, index) => `"${key}"=$${index + 1}`)
@@ -69,10 +68,23 @@ async function patchProduct(id, fields = {}) {
     }
   }
 
+  async function destroyProduct({id}) {
+    try {
+      const { rows: [product] } = await client.query(`
+      DELETE FROM products
+      WHERE id=$1
+  `, [id]);
+    } catch (error) {
+      console.error("Error with deleteProduct in db/users.");
+      throw error;
+    }
+}
+
  module.exports = {
      getProductById,
      getAllProducts,
      createProduct,
      getProductByName,
-     patchProduct
+     patchProduct,
+     destroyProduct
  }

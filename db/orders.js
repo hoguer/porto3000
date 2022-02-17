@@ -20,14 +20,14 @@ async function getOrderById (id) {
             WHERE id=$1
         `, [id])
 
-        const {rows: [orderProducts]} = await client.query(`
+        const {rows: orderProducts} = await client.query(`
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
             WHERE "orderId"=$1;
         `, [id]);
 
-        order.products = orderProducts.map((op) => op.name)
+        order.products = orderProducts ? orderProducts.map((op) => op.name) : [];
 
         return order;
     } catch (error) {
@@ -37,18 +37,16 @@ async function getOrderById (id) {
 
 async function getAllOrders() {
     try {
-        handleSelectAllFromOrders()
+        const orders = await handleSelectAllFromOrders()
         const {rows: orderProducts} = await client.query(`
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op."productId" = p.id;
         `);
-
         orders.forEach((order) => {
             const productsForOrder = orderProducts.filter((orderProduct) => orderProduct.orderId === order.id)
             order.products = productsForOrder.map((op) => op.name)
         })
-
         return orders;
     } catch (error) {
         throw error;
@@ -67,7 +65,7 @@ async function getOrdersByUser({id}) {
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
-            WHERE "userId" = $1;
+            WHERE "userId" = $1
         `, [id]);
 
         orders.forEach((order) => {
@@ -114,17 +112,20 @@ async function getCartByUser({id}) {
             SELECT * 
             FROM orders
             WHERE "userId"=$1
-            AND status = "created";
+            AND status = 'created';
         `, [id])
 
-        const {rows: [orderProducts]} = await client.query(`
-            SELECT op."orderId", p.name
+        if(!order) return null;
+        const {rows: orderProducts } = await client.query(`
+            SELECT op."orderId", p.name, op.quantity, p.stripe_price_id
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
             WHERE "orderId" = $1;
         `, [order.id]);
-
-        order.products = orderProducts.map((op) => op.name)
+        
+        order.products = orderProducts ? orderProducts.map((op) => {
+            return { name: op.name, quantity: op.quantity, stripe_price_id: op.stripe_price_id }
+        }) : [];
 
         return order;
     } catch (error) {
@@ -132,13 +133,13 @@ async function getCartByUser({id}) {
     };
 };
 
-async function createOrder({status, userID}) {
+async function createOrder({status, userId}) {
     try {
         const {rows: [order]} = await client.query(`
             INSERT INTO orders(status, "userId")
             VALUES ($1, $2)
             RETURNING *
-        `, [status, userID]);
+        `, [status, userId]);
         return order;
     } catch (error) {
         throw error;
@@ -174,7 +175,7 @@ async function completeOrder({ id }) {
     try {
         const {rows: [order]} = await client.query(`
             UPDATE orders
-            SET status = "completed"
+            SET status = 'completed'
             WHERE id=$1
             RETURNING *
         `, [id]);
@@ -188,7 +189,7 @@ async function cancelOrder({ id }) {
     try {
         const {rows: [order]} = await client.query(`
             Update orders
-            SET status = "canceled"
+            SET status = 'canceled'
             WHERE id=$1
             RETURNING *
         `, [id]);

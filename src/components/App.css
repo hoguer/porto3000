@@ -1,15 +1,23 @@
 body {
-    background-color:#262b2b;
-    margin: 0;
-    padding: 0;
+    background-color: black;
+    height: 100vh;
 }
-
+.mainLogo {
+    width: 30vw;
+    height:20vh;
+}
 .header { 
     display: flex;
     justify-content: center;  
     padding: 20px;
-    background-color: black;
-    color: #e7e4e3;
+    background-color: blanchedalmond;
+    color: white
+}
+.pageHeader {
+    text-align: center;
+    padding: 6px;
+    background-color: #5E080D;
+    color: white;
 }
 .navigation {
     display: flex;

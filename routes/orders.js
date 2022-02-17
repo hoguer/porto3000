@@ -1,8 +1,8 @@
 const ordersRouter = require("express").Router();
-const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db")
-const { isLoggedIn, isAdmin } = require("./util")
+const { getAllOrders, getCartByUser, createOrder, updateOrder } = require("../db");
+const { isLoggedIn, isAdmin } = require("./util");
 
-ordersRouter.get("/", isLoggedIn, isAdmin, async (req, res, next) => {
+ordersRouter.get("/", isAdmin, async (req, res, next) => {
     try {
         const allOrders = await getAllOrders();
         res.send(allOrders);
@@ -12,26 +12,28 @@ ordersRouter.get("/", isLoggedIn, isAdmin, async (req, res, next) => {
 });
 
 ordersRouter.get("/cart", isLoggedIn, async (req, res, next) => {
-    const { id } = req.body
+    const id = req.user.id
     try {
         const userCart = await getCartByUser({id});
-        res.send(userCart)
+        res.send(userCart);
     } catch(error) {
         throw error;
-    };
+    }
 });
 
 ordersRouter.post("/", isLoggedIn, async (req, res, next) => {
-    const { status, userId } = req.body;
+    const { status } = req.body;
+    const userId = req.user.id
     try {
         const newOrder = await createOrder({status, userId})
         res.send({
             name: "OrderCreated",
-            message: "Your order has been made"
-        }, newOrder)
+            message: "Your order has been made",
+            newOrder,
+        });
     } catch(error) {
         throw error;
-    };
+    }
 });
 
 ordersRouter.patch("/:orderId", isLoggedIn, isAdmin, async (req, res, next) => {

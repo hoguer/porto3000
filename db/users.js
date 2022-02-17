@@ -22,7 +22,6 @@ async function getUser({username, password}) {
   if (!username || !password) {
     return;
   }
-
   try {
     const user = await getUserByUsername(username);
     if(!user) return;
@@ -39,11 +38,11 @@ async function getUser({username, password}) {
 
 async function getAllUsers() {
   try {
-    const {rows} = await client.query(`
+    const {rows: users} = await client.query(`
       SELECT * FROM users
     `);
-    delete user.password;
-    return rows;
+    users.forEach((user) => delete user.password)
+    return users;
   } catch (error) {
     throw error;
   };
@@ -77,7 +76,6 @@ async function getUserByUsername(userName){
   }
 }
 
-//NEW Patch and Delete Users (Admin)
 async function patchUser(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -100,12 +98,11 @@ async function patchUser(id, fields = {}) {
     throw error;
   }
 }
+
 async function deleteUser(id) {
     try {
-      const {
-        rows: [user],
-      } = await client.query(`
-      DELETE FROM users
+      const { rows: [user] } = await client.query(`
+      DELETE * FROM users
       WHERE id=$1
   `, [id]);
     } catch (error) {

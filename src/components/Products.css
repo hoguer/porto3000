@@ -2,7 +2,7 @@
     text-align: center;
 }
 .productsNav{
-    background-color: rgb(119, 20, 3);
+    background-color: #5E080D;
     color: white;
     display: flex;
     justify-content: center;
@@ -13,62 +13,93 @@
     background-image: url("../images/vineyard.jpg");
     background-repeat: no-repeat;
     background-position: fixed;
-    background-size: 100vw;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
     overflow: auto;
-    width: 99vw;
+    width: 100vw;
     height: 100vh;
     color:black;
-    
 }
 .productCardAll {
     color:black;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    width: 878px;
+    justify-content: center;
+    width: 85vw;
 }
 .productImg {
+    width: 170px;
     height: 200px;
-    width: 150px;
-    
+    transition: .2s ease-in-out;
+}
+.productImg:hover {
+    transform: scale(1.1);
 }
 .cardContentContainer {
     padding: 10px;
 }
-.cardContent {
+.cardName, .cardImage{
     background-color: white;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     border: solid white 3px;
-    padding: 20px;
+    padding: 10px;
+    width:250px;
 }
 .itemPrice{
     text-align: center;
     background-color: white;
     color: black;
+    font-size: 18px;
 }
-.productButtonsContainer {
+.productButtonsContainer{
     background-color: white;
     display: flex;
+    flex-wrap: wrap;
+    /* display: flex; */
+    align-items: center;
+    justify-content:space-evenly;
+    padding:10px;
+    width:250px;
+}
+.adminButtonsContainer{
+    display: flex;
+    justify-content: center;
+    background: rgb(255, 255, 255);
+}
+.productsButton_adminButton {
+    display: flex;
     justify-content: space-evenly;
-    padding: 8px;
+    margin-top:4px;
+    margin-bottom:5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding:6px;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    width:101px;
+    background-color: rgb(184, 182, 182);
 }
-.vProdButtonAll {
-    padding: 5px;
+
+.allProductsButton {
+    padding: 6px;
     background-color: rgb(184, 182, 182);
     font-family: 'Times New Roman', Times, serif;
-    font-size: 11px;
+    font-size: 15px;
     color: black;
+    text-align: center;
+    width: 100px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
-.addToCartButton{
-    padding: 5px;
-    background-color: rgb(184, 182, 182);
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 11px;
-    color: black;
+.allProductsButton:hover, .productsButton_adminButton:hover{
+    background-color:#5E080D;
+    color: white;
 }

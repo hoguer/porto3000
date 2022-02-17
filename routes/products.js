@@ -1,7 +1,7 @@
 const productsRouter = require("express").Router();
-const {isAdmin}= require('./util')
+const { isAdmin }= require('./util')
 
-const { getProductById, getAllProducts, createProduct, getProductByName, patchProduct } = require("../db")
+const { getProductById, getAllProducts, createProduct, getProductByName, patchProduct, deleteProduct } = require("../db")
   
 productsRouter.get("/", async (req, res, next) =>{
     try {
@@ -35,14 +35,14 @@ productsRouter.post("/", isAdmin, async (req, res, next) => {
         const newProduct = await createProduct({ name, description, price, imgURL, inStock, category})
         res.send({
             name: "new product successful",
-            message: "Successfully created a new product"
-        }, newProduct)
+            message: "Successfully created a new product",
+            newProduct
+        })
     } catch (error) {
         throw error
     }
 })
 
-//  NEW PATCH PRODUCTS
 productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
     try{
         const {id} = req.params;
@@ -59,5 +59,18 @@ productsRouter.patch('/:id', isAdmin, async (req, res, next)=>{
         });
     }
 });
+
+productsRouter.delete('/:id', isAdmin, async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const destroyedProduct = await destoryProduct(req.id);
+        res.send(destroyedProduct);
+      } catch (error) {
+        next({
+          name: "DeleteError",
+          message: "Could not delete product",
+        });
+      }
+  });
   
 module.exports = productsRouter;
