@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "./Products.css";
 
-const Products = ({products, setProducts, currentUser, token}) => {
+const Products = ({products, setProducts, currentUser}) => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [cart, setCart] = useState({})
     const navigate = useNavigate();
@@ -22,12 +22,13 @@ const Products = ({products, setProducts, currentUser, token}) => {
     }
 
     const fetchCart = async () => {
+        const token = localStorage.getItem('token');
         if(token){
             const currentCart = await axios.get(
                 "/api/orders/cart",
                 { headers: { Authorization: `Bearer ${token}` }}
             )
-            setCart(currentCart)
+            setCart(currentCart.data)
         }
     }
 
@@ -72,7 +73,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
         navigate("/cart");
     };
 
-    const handleDestroyProduct = async (token, productId) => {
+    const handleDestroyProduct = async (productId) => {
         axios.delete("/api/products/:id", {
             headers: { 
                 'Content-Type': 'application/json',
@@ -117,7 +118,7 @@ const Products = ({products, setProducts, currentUser, token}) => {
                                         { 
                                             currentUser.isAdmin ?
                                                 <>
-                                                    { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(token, product.id)}>Delete</button>}
+                                                    { <button className="productsButton_adminButton" onClick={() => handleDestroyProduct(product.id)}>Delete</button>}
                                                 </>
                                             :
                                                 null

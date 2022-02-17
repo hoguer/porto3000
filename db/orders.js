@@ -20,14 +20,14 @@ async function getOrderById (id) {
             WHERE id=$1
         `, [id])
 
-        const {rows: [orderProducts]} = await client.query(`
+        const {rows: orderProducts} = await client.query(`
             SELECT op."orderId", p.name
             FROM order_products AS op
             INNER JOIN products AS p ON op. "productId" = p.id
             WHERE "orderId"=$1;
         `, [id]);
 
-        order.products = (orderProducts || []).map((op) => op.name)
+        order.products = orderProducts ? orderProducts.map((op) => op.name) : [];
 
         return order;
     } catch (error) {
